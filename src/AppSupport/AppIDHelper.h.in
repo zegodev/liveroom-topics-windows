@@ -1,0 +1,39 @@
+//
+// AppIDHelper.h
+//
+// Copyright 2018 Zego. All rights reserved.
+// 
+#ifndef AppIDHelper_h__
+#define AppIDHelper_h__
+#include <string>
+#include <vector>
+#include "AppSupport/ZGUtilTools.h"
+using std::string;
+using std::vector;
+// appid
+unsigned int GetAppId()
+{
+    // 向zego申请获取，然后把appid和sign存放于自己的服务器上，运行时通过网络请求动态获取，防止泄露
+    return $appid$;
+}
+// app sign
+unsigned char * GetAppSign(int & len)
+{
+    // 向zego申请获取，然后把appid和sign存放于自己的服务器上，运行时通过网络请求动态获取，防止泄露
+    // 格式  "0x01, 0x03, 0x44, ...."
+    string sig_str = $appkey$;
+    vector<string> sig_str_vec;
+    static vector<unsigned char> sig_data;
+    SplitString(sig_str, sig_str_vec, ",");
+
+    sig_data.clear();
+    for (int i = 0; i < sig_str_vec.size(); ++i)
+    {
+        int data;
+        sscanf_s(sig_str_vec[i].c_str(), "%x", &data);
+        sig_data.push_back(data);
+    }
+    len = sig_data.size();
+    return &sig_data[0];
+}
+#endif // AppIDHelper_h__

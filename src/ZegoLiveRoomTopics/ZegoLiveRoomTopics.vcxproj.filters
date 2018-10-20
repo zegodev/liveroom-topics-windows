@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Topics">
+      <UniqueIdentifier>{2c00fadd-84e5-426a-a800-840b617c5328}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Topics\MediaPlayer">
+      <UniqueIdentifier>{1ecf1778-f7b0-4244-aa76-840715aca02e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AppSupport">
+      <UniqueIdentifier>{094c3552-a0d7-4fd8-a55a-c3a5154ff463}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Topics\MediaPlayer\MediaPlayerUI">
+      <UniqueIdentifier>{3bf86164-d799-4f5e-83b6-1443cb5221e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="zegosdk">
+      <UniqueIdentifier>{2306dd51-ae6f-416f-8ac5-f138cec1e9b9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ZegoLiveRoomTopics.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\MediaPlayer\ZGMediaPlayerDemo.h">
+      <Filter>Topics\MediaPlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\AppSupport\ZGHelper.h">
+      <Filter>AppSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="..\AppSupport\ZGManager.h">
+      <Filter>AppSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="ZegoLiveRoomTopicsDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\MediaPlayer\MediaPlayerUI\MediaPlayerDialog.h">
+      <Filter>Topics\MediaPlayer\MediaPlayerUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\MediaPlayer\MediaPlayerUI\resource.h">
+      <Filter>Topics\MediaPlayer\MediaPlayerUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\MediaPlayer\ZGMediaPlayerDemoHelper.h">
+      <Filter>Topics\MediaPlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\AppSupport\ZGUtilTools.h">
+      <Filter>AppSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\MediaPlayer\ZGVideoCaptureForMediaPlayer.h">
+      <Filter>Topics\MediaPlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\zegosdk\include\ZegoLiveRoom\audio_capture.h">
+      <Filter>zegosdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\zegosdk\include\ZegoLiveRoom\audio_in_output.h">
+      <Filter>zegosdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\zegosdk\include\ZegoLiveRoom\AVDefines.h">
+      <Filter>zegosdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\zegosdk\include\ZegoLiveRoom\ChatRoom.h">
+      <Filter>zegosdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\zegosdk\include\ZegoLiveRoom\ChatRoomCallback.h">
+      <Filter>zegosdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\zegosdk\include\ZegoLiveRoom\LiveRoom.h">
+      <Filter>zegosdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\zegosdk\include\ZegoLiveRoom\LiveRoomCallback.h">
+      <Filter>zegosdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\zegosdk\include\ZegoLiveRoom\LiveRoomCallback-IM.h">
+      <Filter>zegosdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\zegosdk\include\ZegoLiveRoom\LiveRoomCallback-Player.h">
+      <Filter>zegosdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\zegosdk\include\ZegoLiveRoom\LiveRoomCallback-Publisher.h">
+      <Filter>zegosdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\zegosdk\include\ZegoLiveRoom\LiveRoomDefines.h">
+      <Filter>zegosdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\zegosdk\include\ZegoLiveRoom\LiveRoomDefines-IM.h">
+      <Filter>zegosdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\zegosdk\include\ZegoLiveRoom\LiveRoomDefines-Publisher.h">
+      <Filter>zegosdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\zegosdk\include\ZegoLiveRoom\LiveRoom-IM.h">
+      <Filter>zegosdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\zegosdk\include\ZegoLiveRoom\LiveRoom-Player.h">
+      <Filter>zegosdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\zegosdk\include\ZegoLiveRoom\LiveRoom-Publisher.h">
+      <Filter>zegosdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\zegosdk\include\ZegoLiveRoom\media_player.h">
+      <Filter>zegosdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\zegosdk\include\ZegoLiveRoom\RoomDefines.h">
+      <Filter>zegosdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\zegosdk\include\ZegoLiveRoom\video_capture.h">
+      <Filter>zegosdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\zegosdk\include\ZegoLiveRoom\video_format.h">
+      <Filter>zegosdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\zegosdk\include\ZegoLiveRoom\zego-api-defines.h">
+      <Filter>zegosdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\zegosdk\include\ZegoLiveRoom\zego-api-external-video-capture.h">
+      <Filter>zegosdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\zegosdk\include\ZegoLiveRoom\zego-api-external-video-filter.h">
+      <Filter>zegosdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\zegosdk\include\ZegoLiveRoom\zego-api-mediaplayer.h">
+      <Filter>zegosdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\zegosdk\include\ZegoLiveRoom\zego-api-mix-engine-playout.h">
+      <Filter>zegosdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\zegosdk\include\ZegoLiveRoom\zego-api-mix-stream.h">
+      <Filter>zegosdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\AppSupport\ZGUIOperator.h">
+      <Filter>AppSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="..\AppSupport\ZGLog.h">
+      <Filter>AppSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\MediaPlayer\MediaPlayerUI\ZGSlider.h">
+      <Filter>Topics\MediaPlayer\MediaPlayerUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\MediaPlayer\ZGMediaPlayerPublishHelper.h">
+      <Filter>Topics\MediaPlayer</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ZegoLiveRoomTopics.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\MediaPlayer\ZGMediaPlayerDemo.cpp">
+      <Filter>Topics\MediaPlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\AppSupport\ZGHelper.cpp">
+      <Filter>AppSupport</Filter>
+    </ClCompile>
+    <ClCompile Include="..\AppSupport\ZGManager.cpp">
+      <Filter>AppSupport</Filter>
+    </ClCompile>
+    <ClCompile Include="ZegoLiveRoomTopicsDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\MediaPlayer\MediaPlayerUI\MediaPlayerDialog.cpp">
+      <Filter>Topics\MediaPlayer\MediaPlayerUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\MediaPlayer\ZGMediaPlayerDemoHelper.cpp">
+      <Filter>Topics\MediaPlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\AppSupport\ZGUtilTools.cpp">
+      <Filter>AppSupport</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\MediaPlayer\ZGVideoCaptureForMediaPlayer.cpp">
+      <Filter>Topics\MediaPlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\AppSupport\ZGUIOperator.cpp">
+      <Filter>AppSupport</Filter>
+    </ClCompile>
+    <ClCompile Include="..\AppSupport\ZGLog.cpp">
+      <Filter>AppSupport</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\MediaPlayer\MediaPlayerUI\ZGSlider.cpp">
+      <Filter>Topics\MediaPlayer\MediaPlayerUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\MediaPlayer\ZGMediaPlayerPublishHelper.cpp">
+      <Filter>Topics\MediaPlayer</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ZegoLiveRoomTopics.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="..\Topics\MediaPlayer\MediaPlayerUI\MediaPlayerRc.rc">
+      <Filter>Topics\MediaPlayer\MediaPlayerUI</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\ZegoLiveRoomTopics.rc2">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="..\Topics\MediaPlayer\MediaPlayerUI\MediaPlayerRc.aps">
+      <Filter>Topics\MediaPlayer\MediaPlayerUI</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\ZegoLiveRoomTopics.ico">
+      <Filter>资源文件</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
