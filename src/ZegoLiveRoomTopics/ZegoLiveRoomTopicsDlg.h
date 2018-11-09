@@ -4,7 +4,14 @@
 
 #pragma once
 
+
+#include <vector>
+
 #include "MediaPlayer/MediaPlayerUI/MediaPlayerDialog.h"
+#include "MediaSideInfo/MediaSideInfoUI/MediaSideInfoDlg.h"
+
+
+using std::vector;
 
 // CZegoLiveRoomTopicsDlg 对话框
 class CZegoLiveRoomTopicsDlg : public CDialogEx
@@ -27,6 +34,8 @@ public:
 protected:
 	HICON m_hIcon;
 
+    void ShowDlg(void * dlg);
+
 	// 生成的消息映射函数
 	virtual BOOL OnInitDialog();
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
@@ -34,7 +43,11 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 
-    MediaPlayerDialog * media_play_dlg_pointer_;
+    MediaPlayerDialog * media_play_dlg_ptr_;
+    CMediaSideInfoDlg * media_side_info_dlg_ptr_;
+
+    std::vector<void*> dlg_list_;
+
 private:
     void InitTopicList();
     CListBox topic_list_contronl_;

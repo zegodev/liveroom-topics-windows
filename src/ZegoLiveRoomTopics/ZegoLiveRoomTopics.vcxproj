@@ -298,6 +298,10 @@ echo F |xcopy /y "$(OutDir)$(TargetName).pdb" "$(SolutionDir)\compile_product_ou
     <ClInclude Include="..\Topics\MediaPlayer\ZGMediaPlayerDemoHelper.h" />
     <ClInclude Include="..\Topics\MediaPlayer\ZGMediaPlayerPublishHelper.h" />
     <ClInclude Include="..\Topics\MediaPlayer\ZGVideoCaptureForMediaPlayer.h" />
+    <ClInclude Include="..\Topics\MediaSideInfo\MediaSideInfoUI\MediaSideInfoDlg.h" />
+    <ClInclude Include="..\Topics\MediaSideInfo\MediaSideInfoUI\resource.h" />
+    <ClInclude Include="..\Topics\MediaSideInfo\ZGMediaSideInfoDemo.h" />
+    <ClInclude Include="..\Topics\MediaSideInfo\ZGMediaSideInfoDemoEnvirentmentHelper.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -316,6 +320,9 @@ echo F |xcopy /y "$(OutDir)$(TargetName).pdb" "$(SolutionDir)\compile_product_ou
     <ClCompile Include="..\Topics\MediaPlayer\ZGMediaPlayerDemoHelper.cpp" />
     <ClCompile Include="..\Topics\MediaPlayer\ZGMediaPlayerPublishHelper.cpp" />
     <ClCompile Include="..\Topics\MediaPlayer\ZGVideoCaptureForMediaPlayer.cpp" />
+    <ClCompile Include="..\Topics\MediaSideInfo\MediaSideInfoUI\MediaSideInfoDlg.cpp" />
+    <ClCompile Include="..\Topics\MediaSideInfo\ZGMediaSideInfoDemo.cpp" />
+    <ClCompile Include="..\Topics\MediaSideInfo\ZGMediaSideInfoDemoEnvirentmentHelper.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -327,6 +334,7 @@ echo F |xcopy /y "$(OutDir)$(TargetName).pdb" "$(SolutionDir)\compile_product_ou
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\Topics\MediaPlayer\MediaPlayerUI\MediaPlayerRc.rc" />
+    <ResourceCompile Include="..\Topics\MediaSideInfo\MediaSideInfoUI\MediaSideInfo.rc" />
     <ResourceCompile Include="ZegoLiveRoomTopics.rc" />
   </ItemGroup>
   <ItemGroup>

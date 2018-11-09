@@ -12,6 +12,10 @@
 #endif
 
 
+#define TOPIC_MIDIA_PLAYER      _T("MediaPlayer")
+#define TOPIC_MEDIA_SIDE_INFO   _T("Media Side Info")
+
+
 // 用于应用程序“关于”菜单项的 CAboutDlg 对话框
 
 class CAboutDlg : public CDialogEx
@@ -51,7 +55,8 @@ END_MESSAGE_MAP()
 
 CZegoLiveRoomTopicsDlg::CZegoLiveRoomTopicsDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_ZEGOLIVEROOMTOPICS_DIALOG, pParent),
-    media_play_dlg_pointer_(nullptr)
+    media_play_dlg_ptr_(nullptr),
+    media_side_info_dlg_ptr_(nullptr)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -164,12 +169,28 @@ HCURSOR CZegoLiveRoomTopicsDlg::OnQueryDragIcon()
 
 void CZegoLiveRoomTopicsDlg::InitTopicList()
 {
-    topic_list_contronl_.AddString(_T("MediaPlayer"));
+    topic_list_contronl_.AddString(TOPIC_MIDIA_PLAYER);
+    topic_list_contronl_.AddString(TOPIC_MEDIA_SIDE_INFO);
 }
 
 void CZegoLiveRoomTopicsDlg::OnLButtonDown(UINT nFlags, CPoint point)
 {
     CDialogEx::OnLButtonDown(nFlags, point);
+}
+
+void CZegoLiveRoomTopicsDlg::ShowDlg(void * dlg)
+{
+    for (auto p : dlg_list_)
+    {
+        if (p == dlg)
+        {
+            ((CDialogEx*)p)->ShowWindow(SW_SHOW);
+        }
+        else 
+        {
+            ((CDialogEx*)p)->ShowWindow(SW_HIDE);
+        }
+    }
 }
 
 void CZegoLiveRoomTopicsDlg::OnLbnSelchangeListTopic()
@@ -180,19 +201,38 @@ void CZegoLiveRoomTopicsDlg::OnLbnSelchangeListTopic()
         CString str;
         topic_list_contronl_.GetText(cur_sel, str);
         //MessageBox(str);
-        if (str == _T("MediaPlayer"))
+        if (str == TOPIC_MIDIA_PLAYER)
         {
-            if (media_play_dlg_pointer_ == nullptr)
+            if (media_play_dlg_ptr_ == nullptr)
             {
-                media_play_dlg_pointer_ = new MediaPlayerDialog();
-                media_play_dlg_pointer_->Create(IDD_MEDIAPLAYER_DIALOG, this);
+                media_play_dlg_ptr_ = new MediaPlayerDialog();
+                media_play_dlg_ptr_->Create(IDD_MEDIAPLAYER_DIALOG, this);
+                dlg_list_.push_back(media_play_dlg_ptr_);
             }
 
             CRect rect;
             GetDlgItem(IDC_PANEL)->GetWindowRect(rect);
             ScreenToClient(&rect);
-            media_play_dlg_pointer_->MoveWindow(rect.left, rect.top, rect.Width(), rect.Height());
-            media_play_dlg_pointer_->ShowWindow(SW_SHOW);
+            media_play_dlg_ptr_->MoveWindow(rect.left, rect.top, rect.Width(), rect.Height());
+            ShowDlg(media_play_dlg_ptr_);
+            media_play_dlg_ptr_->StartMediaPlayer();
+        }
+        else if (str == TOPIC_MEDIA_SIDE_INFO)
+        {
+            if (media_side_info_dlg_ptr_ == nullptr)
+            {
+                media_side_info_dlg_ptr_ = new CMediaSideInfoDlg();
+                media_side_info_dlg_ptr_->Create(IDD_MEDIASIDEINFO_DIALOG, this);
+                dlg_list_.push_back(media_side_info_dlg_ptr_);
+            }
+
+            CRect rect;
+            GetDlgItem(IDC_PANEL)->GetWindowRect(rect);
+            ScreenToClient(&rect);
+            media_side_info_dlg_ptr_->MoveWindow(rect.left, rect.top, rect.Width(), rect.Height());
+            ShowDlg(media_side_info_dlg_ptr_);
+            media_side_info_dlg_ptr_->LoginRoom();
         }
     }
 }
+

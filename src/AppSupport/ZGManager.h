@@ -27,10 +27,12 @@ public:
     }
     void EnableExternalVideoCapture(AVE::VideoCaptureFactory* factory, LIVEROOM::IZegoVideoRenderCallback* randerer);
     void EnableMic(bool enableMic);
-    bool InitSdk(unsigned int uiAppID, unsigned char* sign, int len);
+    bool InitSdk();
     void UninitSdk();
 
 private:
+
+    bool InitSdk(unsigned int uiAppID, unsigned char* sign, int len);
     ZGManager();
     ~ZGManager();
 

@@ -28,6 +28,12 @@
     <Filter Include="zegosdk">
       <UniqueIdentifier>{2306dd51-ae6f-416f-8ac5-f138cec1e9b9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Topics\MediaSideInfo">
+      <UniqueIdentifier>{cbbab482-1287-495a-b50a-5382674db0a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Topics\MediaSideInfo\MediaSideInfoUI">
+      <UniqueIdentifier>{1d418b7b-6cac-4d35-af27-75415cf19910}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -162,6 +168,18 @@
     <ClInclude Include="..\Topics\MediaPlayer\ZGMediaPlayerPublishHelper.h">
       <Filter>Topics\MediaPlayer</Filter>
     </ClInclude>
+    <ClInclude Include="..\Topics\MediaSideInfo\ZGMediaSideInfoDemo.h">
+      <Filter>Topics\MediaSideInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\MediaSideInfo\MediaSideInfoUI\MediaSideInfoDlg.h">
+      <Filter>Topics\MediaSideInfo\MediaSideInfoUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\MediaSideInfo\MediaSideInfoUI\resource.h">
+      <Filter>Topics\MediaSideInfo\MediaSideInfoUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\MediaSideInfo\ZGMediaSideInfoDemoEnvirentmentHelper.h">
+      <Filter>Topics\MediaSideInfo</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -206,6 +224,15 @@
     <ClCompile Include="..\Topics\MediaPlayer\ZGMediaPlayerPublishHelper.cpp">
       <Filter>Topics\MediaPlayer</Filter>
     </ClCompile>
+    <ClCompile Include="..\Topics\MediaSideInfo\ZGMediaSideInfoDemo.cpp">
+      <Filter>Topics\MediaSideInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\MediaSideInfo\MediaSideInfoUI\MediaSideInfoDlg.cpp">
+      <Filter>Topics\MediaSideInfo\MediaSideInfoUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\MediaSideInfo\ZGMediaSideInfoDemoEnvirentmentHelper.cpp">
+      <Filter>Topics\MediaSideInfo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ZegoLiveRoomTopics.rc">
@@ -213,6 +240,9 @@
     </ResourceCompile>
     <ResourceCompile Include="..\Topics\MediaPlayer\MediaPlayerUI\MediaPlayerRc.rc">
       <Filter>Topics\MediaPlayer\MediaPlayerUI</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="..\Topics\MediaSideInfo\MediaSideInfoUI\MediaSideInfo.rc">
+      <Filter>Topics\MediaSideInfo\MediaSideInfoUI</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>

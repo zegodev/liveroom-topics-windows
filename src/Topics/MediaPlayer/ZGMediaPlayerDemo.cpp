@@ -10,7 +10,7 @@
 #include "AppSupport/ZGUtilTools.h"
 #include "AppSupport/ZGLog.h"
 #include "AppSupport/ZGHelper.h"
-#include "AppSupport/AppIDHelper.h"
+
 
 using std::vector;
 using std::string;
@@ -37,20 +37,10 @@ bool ZGMediaPlayerDemo::InitMediaPlayer()
 
     ZGManagerInstance()->EnableExternalVideoCapture(&video_capture_, nullptr);
 
-    unsigned int appid = GetAppId();
-    int sign_len = 0;
-    unsigned char * sign_data = GetAppSign(sign_len);
-
-    bool ret = ZGManagerInstance()->InitSdk(appid, sign_data, sign_len);
-    if (!ret)
-    {
-        return false;
-    }
-
     MEDIAPLAYER::InitWithType(MEDIAPLAYER::ZegoMediaPlayerType::ZegoMediaPlayerTypeAux);
     MEDIAPLAYER::SetEventCallback(this);
     MEDIAPLAYER::SetVideoDataCallback(&video_capture_, MEDIAPLAYER::ZegoMediaPlayerVideoPixelFormatRGBA32);
-    ret = LIVEROOM::StartPreview();
+    bool ret = LIVEROOM::StartPreview();
     if (!ret)
     {
         ZGLog("preview failed");
