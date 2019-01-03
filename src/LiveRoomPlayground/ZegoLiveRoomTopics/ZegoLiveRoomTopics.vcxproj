@@ -111,6 +111,7 @@
       <SubSystem>Windows</SubSystem>
       <AdditionalDependencies>./../libs/zegosdk/libs/$(Platform)/ZegoLiveRoom.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -132,6 +133,8 @@ xcopy /y "$(SolutionDir)\Res" "$(SolutionDir)\bin\$(Platform)\$(Configuration)\R
 echo D | xcopy /y "$(SolutionDir)\Res" "$(SolutionDir)\compile_product_output\bin\Res\"
 echo F | xcopy /y "$(SolutionDir)\libs\zegosdk\libs\$(Platform)\ZegoLiveRoom.dll" "$(SolutionDir)\compile_product_output\bin\ZegoLiveRoom.dll"
 echo F |xcopy /y "$(SolutionDir)\bin\$(Platform)\$(Configuration)\$(ProjectName).exe" "$(SolutionDir)\compile_product_output\bin\$(ProjectName).exe"
+echo F | xcopy /y "$(SolutionDir)\Topics\ExternalVideoCapture\ScreenCapture\libs\x86\ZegoScreenCapture.dll" "$(SolutionDir)\compile_product_output\bin\ZegoScreenCapture.dll"
+echo F | xcopy /y "$(SolutionDir)\Topics\ExternalVideoCapture\ScreenCapture\libs\x86\ZegoScreenCapture.dll" "$(SolutionDir)\bin\$(Platform)\$(Configuration)\ZegoScreenCapture.dll"
 echo F |xcopy /y "$(OutDir)$(TargetName).pdb" "$(SolutionDir)\compile_product_output\$(TargetName).pdb"
 </Command>
     </PostBuildEvent>
@@ -171,6 +174,8 @@ xcopy /y "$(SolutionDir)\Res" "$(SolutionDir)\bin\$(Platform)\$(Configuration)\R
 echo D | xcopy /y "$(SolutionDir)\Res" "$(SolutionDir)\compile_product_output\bin\Res\"
 echo F | xcopy /y "$(SolutionDir)\libs\zegosdk\libs\$(Platform)\ZegoLiveRoom.dll" "$(SolutionDir)\compile_product_output\bin\ZegoLiveRoom.dll"
 echo F |xcopy /y "$(SolutionDir)\bin\$(Platform)\$(Configuration)\$(ProjectName).exe" "$(SolutionDir)\compile_product_output\bin\$(ProjectName).exe"
+echo F | xcopy /y "$(SolutionDir)\Topics\ExternalVideoCapture\ScreenCapture\libs\x86\ZegoScreenCapture.dll" "$(SolutionDir)\compile_product_output\bin\ZegoScreenCapture.dll"
+echo F | xcopy /y "$(SolutionDir)\Topics\ExternalVideoCapture\ScreenCapture\libs\x86\ZegoScreenCapture.dll" "$(SolutionDir)\bin\$(Platform)\$(Configuration)\ZegoScreenCapture.dll"
 echo F |xcopy /y "$(OutDir)$(TargetName).pdb" "$(SolutionDir)\compile_product_output\$(TargetName).pdb"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -213,6 +218,8 @@ xcopy /y "$(SolutionDir)\Res" "$(SolutionDir)\bin\$(Platform)\$(Configuration)\R
 echo D | xcopy /y "$(SolutionDir)\Res" "$(SolutionDir)\compile_product_output\bin\Res\"
 echo F | xcopy /y "$(SolutionDir)\libs\zegosdk\libs\$(Platform)\ZegoLiveRoom.dll" "$(SolutionDir)\compile_product_output\bin\ZegoLiveRoom.dll"
 echo F |xcopy /y "$(SolutionDir)\bin\$(Platform)\$(Configuration)\$(ProjectName).exe" "$(SolutionDir)\compile_product_output\bin\$(ProjectName).exe"
+echo F | xcopy /y "$(SolutionDir)\Topics\ExternalVideoCapture\ScreenCapture\libs\x86\ZegoScreenCapture.dll" "$(SolutionDir)\compile_product_output\bin\ZegoScreenCapture.dll"
+echo F | xcopy /y "$(SolutionDir)\Topics\ExternalVideoCapture\ScreenCapture\libs\x86\ZegoScreenCapture.dll" "$(SolutionDir)\bin\$(Platform)\$(Configuration)\ZegoScreenCapture.dll"
 echo F |xcopy /y "$(OutDir)$(TargetName).pdb" "$(SolutionDir)\compile_product_output\$(TargetName).pdb"
 </Command>
     </PostBuildEvent>
@@ -256,6 +263,8 @@ xcopy /y "$(SolutionDir)\Res" "$(SolutionDir)\bin\$(Platform)\$(Configuration)\R
 echo D | xcopy /y "$(SolutionDir)\Res" "$(SolutionDir)\compile_product_output\bin\Res\"
 echo F | xcopy /y "$(SolutionDir)\libs\zegosdk\libs\$(Platform)\ZegoLiveRoom.dll" "$(SolutionDir)\compile_product_output\bin\ZegoLiveRoom.dll"
 echo F |xcopy /y "$(SolutionDir)\bin\$(Platform)\$(Configuration)\$(ProjectName).exe" "$(SolutionDir)\compile_product_output\bin\$(ProjectName).exe"
+echo F | xcopy /y "$(SolutionDir)\Topics\ExternalVideoCapture\ScreenCapture\libs\x86\ZegoScreenCapture.dll" "$(SolutionDir)\compile_product_output\bin\ZegoScreenCapture.dll"
+echo F | xcopy /y "$(SolutionDir)\Topics\ExternalVideoCapture\ScreenCapture\libs\x86\ZegoScreenCapture.dll" "$(SolutionDir)\bin\$(Platform)\$(Configuration)\ZegoScreenCapture.dll"
 echo F |xcopy /y "$(OutDir)$(TargetName).pdb" "$(SolutionDir)\compile_product_output\$(TargetName).pdb"
 </Command>
     </PostBuildEvent>
@@ -267,6 +276,7 @@ echo F |xcopy /y "$(OutDir)$(TargetName).pdb" "$(SolutionDir)\compile_product_ou
     <ClInclude Include="..\AppSupport\ZGHelper.h" />
     <ClInclude Include="..\AppSupport\ZGLog.h" />
     <ClInclude Include="..\AppSupport\ZGManager.h" />
+    <ClInclude Include="..\AppSupport\ZGTimer.h" />
     <ClInclude Include="..\AppSupport\ZGUIOperator.h" />
     <ClInclude Include="..\AppSupport\ZGUtilTools.h" />
     <ClInclude Include="..\libs\zegosdk\include\ZegoLiveRoom\audio_capture.h" />
@@ -295,6 +305,17 @@ echo F |xcopy /y "$(OutDir)$(TargetName).pdb" "$(SolutionDir)\compile_product_ou
     <ClInclude Include="..\libs\zegosdk\include\ZegoLiveRoom\zego-api-mediaplayer.h" />
     <ClInclude Include="..\libs\zegosdk\include\ZegoLiveRoom\zego-api-mix-engine-playout.h" />
     <ClInclude Include="..\libs\zegosdk\include\ZegoLiveRoom\zego-api-mix-stream.h" />
+    <ClInclude Include="..\Topics\ExternalVideoCapture\ExternalVideoCaptureUI\resource.h" />
+    <ClInclude Include="..\Topics\ExternalVideoCapture\ExternalVideoCaptureUI\ZGExternalVideoCaptureDlg.h" />
+    <ClInclude Include="..\Topics\ExternalVideoCapture\stb_image.h" />
+    <ClInclude Include="..\Topics\ExternalVideoCapture\ZegoCamera.h" />
+    <ClInclude Include="..\Topics\ExternalVideoCapture\ZGCameraSource.h" />
+    <ClInclude Include="..\Topics\ExternalVideoCapture\ZGScreenSource.h" />
+    <ClInclude Include="..\Topics\ExternalVideoCapture\ZGExternalVideoCaptureDemo.h" />
+    <ClInclude Include="..\Topics\ExternalVideoCapture\ZGExternalVideoCaptureManager.h" />
+    <ClInclude Include="..\Topics\ExternalVideoCapture\ZGExternalVideoCatpureDemoHelper.h" />
+    <ClInclude Include="..\Topics\ExternalVideoCapture\ZGExternalVideoSource.h" />
+    <ClInclude Include="..\Topics\ExternalVideoCapture\ZGImageSource.h" />
     <ClInclude Include="..\Topics\MediaPlayer\MediaPlayerUI\MediaPlayerDialog.h" />
     <ClInclude Include="..\Topics\MediaPlayer\MediaPlayerUI\resource.h" />
     <ClInclude Include="..\Topics\MediaPlayer\MediaPlayerUI\ZGSlider.h" />
@@ -323,8 +344,19 @@ echo F |xcopy /y "$(OutDir)$(TargetName).pdb" "$(SolutionDir)\compile_product_ou
     <ClCompile Include="..\AppSupport\ZGHelper.cpp" />
     <ClCompile Include="..\AppSupport\ZGLog.cpp" />
     <ClCompile Include="..\AppSupport\ZGManager.cpp" />
+    <ClCompile Include="..\AppSupport\ZGTimer.cpp" />
     <ClCompile Include="..\AppSupport\ZGUIOperator.cpp" />
     <ClCompile Include="..\AppSupport\ZGUtilTools.cpp" />
+    <ClCompile Include="..\Topics\ExternalVideoCapture\ExternalVideoCaptureUI\ZGExternalVideoCaptureDlg.cpp" />
+    <ClCompile Include="..\Topics\ExternalVideoCapture\ZegoCamera.cpp" />
+    <ClCompile Include="..\Topics\ExternalVideoCapture\ZGCameraSource.cpp" />
+    <ClCompile Include="..\Topics\ExternalVideoCapture\ZGScreenSource.cpp" />
+    <ClCompile Include="..\Topics\ExternalVideoCapture\ZGExternalVideoCaptureDemo.cpp" />
+    <ClCompile Include="..\Topics\ExternalVideoCapture\ZGExternalVideoCaptureManager.cpp" />
+    <ClCompile Include="..\Topics\ExternalVideoCapture\ZGExternalVideoCatpureDemoHelper.cpp" />
+    <ClCompile Include="..\Topics\ExternalVideoCapture\ZGExternalVideoSource.cpp" />
+    <ClCompile Include="..\Topics\ExternalVideoCapture\ZGImageSource.cpp" />
+    <ClCompile Include="..\Topics\ExternalVideoCapture\ZGVideoRender.cpp" />
     <ClCompile Include="..\Topics\MediaPlayer\MediaPlayerUI\MediaPlayerDialog.cpp" />
     <ClCompile Include="..\Topics\MediaPlayer\MediaPlayerUI\ZGSlider.cpp" />
     <ClCompile Include="..\Topics\MediaPlayer\ZGMediaPlayerDemo.cpp" />
@@ -349,6 +381,7 @@ echo F |xcopy /y "$(OutDir)$(TargetName).pdb" "$(SolutionDir)\compile_product_ou
     <ClCompile Include="ZegoLiveRoomTopicsDlg.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ResourceCompile Include="..\Topics\ExternalVideoCapture\ExternalVideoCaptureUI\ZGExternalVideoCaptureDlg.rc" />
     <ResourceCompile Include="..\Topics\MediaPlayer\MediaPlayerUI\MediaPlayerRc.rc" />
     <ResourceCompile Include="..\Topics\MediaRecorder\MediaRecorderUI\MediaRecorder.rc" />
     <ResourceCompile Include="..\Topics\MediaSideInfo\MediaSideInfoUI\MediaSideInfo.rc" />

@@ -15,6 +15,7 @@
 #define TOPIC_MIDIA_PLAYER      _T("MediaPlayer")
 #define TOPIC_MEDIA_SIDE_INFO   _T("Media Side Info")
 #define TOPIC_MEDIA_RECORDER   _T("Media Recorder")
+#define TOPIC_EXTERNAL_VIDEO_CAPTURE _T("External Video Capture")
 
 // 用于应用程序“关于”菜单项的 CAboutDlg 对话框
 
@@ -172,6 +173,7 @@ void CZegoLiveRoomTopicsDlg::InitTopicList()
     topic_list_contronl_.AddString(TOPIC_MIDIA_PLAYER);
     topic_list_contronl_.AddString(TOPIC_MEDIA_SIDE_INFO);
     topic_list_contronl_.AddString(TOPIC_MEDIA_RECORDER);
+    topic_list_contronl_.AddString(TOPIC_EXTERNAL_VIDEO_CAPTURE);
 }
 
 void CZegoLiveRoomTopicsDlg::OnLButtonDown(UINT nFlags, CPoint point)
@@ -243,6 +245,19 @@ void CZegoLiveRoomTopicsDlg::OnLbnSelchangeListTopic()
             media_recorder_dlg_ptr_->MoveWindow(rect.left, rect.top, rect.Width(), rect.Height());
             ShowDlg(media_recorder_dlg_ptr_);
             media_recorder_dlg_ptr_->LoginAndPreview();
+
+        }else if (str == TOPIC_EXTERNAL_VIDEO_CAPTURE)
+        {
+            if (external_video_capture_dlg_ptr_ == nullptr)
+            {
+                external_video_capture_dlg_ptr_ = CZGExternalVideoCaptureDlg::CreateDlgInstance(this);
+                dlg_list_.push_back(external_video_capture_dlg_ptr_);
+            }
+            CRect rect;
+            GetDlgItem(IDC_PANEL)->GetWindowRect(rect);
+            ScreenToClient(&rect);
+            external_video_capture_dlg_ptr_->MoveWindow(rect.left, rect.top, rect.Width(), rect.Height());
+            ShowDlg(external_video_capture_dlg_ptr_);
         }
     }
 }

@@ -11,6 +11,7 @@
 #include "MediaSideInfo/MediaSideInfoUI/MediaSideInfoDlg.h"
 #include "MediaRecorder/MediaRecorderUI/MediaRecorderDlg.h"
 #include "MediaSideInfo/MediaSideInfoUI/MediaSideInfoPannelDlg.h"
+#include "ExternalVideoCapture/ExternalVideoCaptureUI/ZGExternalVideoCaptureDlg.h"
 
 using std::vector;
 
@@ -47,6 +48,7 @@ protected:
     MediaPlayerDialog * media_play_dlg_ptr_ = nullptr;    
     CMediaRecorderDlg * media_recorder_dlg_ptr_ = nullptr;
     MediaSideInfoPannelDlg * media_side_info_dlg_ptr_ = nullptr;
+    CZGExternalVideoCaptureDlg * external_video_capture_dlg_ptr_ = nullptr;
 
     std::vector<void*> dlg_list_;
 

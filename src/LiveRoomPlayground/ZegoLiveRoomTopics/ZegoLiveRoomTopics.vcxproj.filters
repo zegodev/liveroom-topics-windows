@@ -40,6 +40,12 @@
     <Filter Include="Topics\MediaRecorder\MediaRecorderUI">
       <UniqueIdentifier>{c71f1b98-5698-49bb-a029-dc3cb4448146}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Topics\ExternalVideoCapture">
+      <UniqueIdentifier>{b303479c-60dd-46fc-ac1d-a8e67f857786}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Topics\ExternalVideoCapture\ExternalVideoCaptureUI">
+      <UniqueIdentifier>{9df5b877-6e9d-4b68-bc01-639ec7ce3d10}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -207,6 +213,42 @@
     <ClInclude Include="..\Topics\MediaSideInfo\MediaSideInfoUI\MediaSideInfoPannelDlg.h">
       <Filter>Topics\MediaSideInfo\MediaSideInfoUI</Filter>
     </ClInclude>
+    <ClInclude Include="..\Topics\ExternalVideoCapture\ZGExternalVideoCaptureDemo.h">
+      <Filter>Topics\ExternalVideoCapture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\ExternalVideoCapture\ZGExternalVideoSource.h">
+      <Filter>Topics\ExternalVideoCapture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\ExternalVideoCapture\ZGImageSource.h">
+      <Filter>Topics\ExternalVideoCapture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\ExternalVideoCapture\stb_image.h">
+      <Filter>Topics\ExternalVideoCapture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\ExternalVideoCapture\ZGExternalVideoCaptureManager.h">
+      <Filter>Topics\ExternalVideoCapture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\ExternalVideoCapture\ZGExternalVideoCatpureDemoHelper.h">
+      <Filter>Topics\ExternalVideoCapture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\ExternalVideoCapture\ExternalVideoCaptureUI\resource.h">
+      <Filter>Topics\ExternalVideoCapture\ExternalVideoCaptureUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\ExternalVideoCapture\ExternalVideoCaptureUI\ZGExternalVideoCaptureDlg.h">
+      <Filter>Topics\ExternalVideoCapture\ExternalVideoCaptureUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\ExternalVideoCapture\ZegoCamera.h">
+      <Filter>Topics\ExternalVideoCapture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\ExternalVideoCapture\ZGCameraSource.h">
+      <Filter>Topics\ExternalVideoCapture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\AppSupport\ZGTimer.h">
+      <Filter>AppSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\ExternalVideoCapture\ZGScreenSource.h">
+      <Filter>Topics\ExternalVideoCapture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -275,6 +317,39 @@
     <ClCompile Include="..\Topics\MediaSideInfo\MediaSideInfoUI\MediaSideInfoPannelDlg.cpp">
       <Filter>Topics\MediaSideInfo\MediaSideInfoUI</Filter>
     </ClCompile>
+    <ClCompile Include="..\Topics\ExternalVideoCapture\ZGExternalVideoCaptureDemo.cpp">
+      <Filter>Topics\ExternalVideoCapture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\ExternalVideoCapture\ZGExternalVideoSource.cpp">
+      <Filter>Topics\ExternalVideoCapture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\ExternalVideoCapture\ZGImageSource.cpp">
+      <Filter>Topics\ExternalVideoCapture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\ExternalVideoCapture\ZGExternalVideoCaptureManager.cpp">
+      <Filter>Topics\ExternalVideoCapture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\ExternalVideoCapture\ZGExternalVideoCatpureDemoHelper.cpp">
+      <Filter>Topics\ExternalVideoCapture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\ExternalVideoCapture\ExternalVideoCaptureUI\ZGExternalVideoCaptureDlg.cpp">
+      <Filter>Topics\ExternalVideoCapture\ExternalVideoCaptureUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\ExternalVideoCapture\ZGVideoRender.cpp">
+      <Filter>Topics\ExternalVideoCapture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\ExternalVideoCapture\ZegoCamera.cpp">
+      <Filter>Topics\ExternalVideoCapture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\ExternalVideoCapture\ZGCameraSource.cpp">
+      <Filter>Topics\ExternalVideoCapture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\AppSupport\ZGTimer.cpp">
+      <Filter>AppSupport</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\ExternalVideoCapture\ZGScreenSource.cpp">
+      <Filter>Topics\ExternalVideoCapture</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ZegoLiveRoomTopics.rc">
@@ -288,6 +363,9 @@
     </ResourceCompile>
     <ResourceCompile Include="..\Topics\MediaRecorder\MediaRecorderUI\MediaRecorder.rc">
       <Filter>Topics\MediaRecorder\MediaRecorderUI</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="..\Topics\ExternalVideoCapture\ExternalVideoCaptureUI\ZGExternalVideoCaptureDlg.rc">
+      <Filter>Topics\ExternalVideoCapture\ExternalVideoCaptureUI</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
