@@ -9,6 +9,8 @@
 
 #include <string>
 
+#include "ZegoLiveRoom/video_format.h"
+
 using std::string;
 
 class ZGHelper
@@ -21,6 +23,10 @@ public:
     }
 
     string GetDeviceUUID();
+
+    string GetMachineName();
+
+    string GetPixelFormatDesc(AVE::VideoPixelFormat format);
 
 private:
     ZGHelper();

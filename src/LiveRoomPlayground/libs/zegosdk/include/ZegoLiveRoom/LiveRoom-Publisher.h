@@ -226,6 +226,16 @@ namespace ZEGO
         ZEGO_API bool SetVideoCaptureResolution(int nWidth, int nHeight, AV::PublishChannelIndex idx = AV::PUBLISH_CHN_MAIN);
         
         /**
+         设置视频关键帧间隔
+         
+         @param nIntervalSecond 关键帧间隔，单位为秒，默认2秒
+         @param idx 推流 channel Index. 默认为主Channel
+         @return true 成功，false 失败
+         @attention 推流开始前调用本 API 进行参数配置
+         */
+        ZEGO_API bool SetVideoKeyFrameInterval(int nIntervalSecond, AV::PublishChannelIndex idx = AV::PUBLISH_CHN_MAIN);
+        
+        /**
          主播开启美颜功能
 
          @param nFeature 美颜特性。默认无美颜
@@ -390,13 +400,14 @@ namespace ZEGO
 
          @param bEnable true 打开，false 关闭。默认 false
          @return true 成功，false 失败
+         @discussion 推流时可调用本 API 进行参数配置。连接耳麦时设置才实际生效。开启采集监听，主播方讲话后，会听到自己的声音。
          */
         ZEGO_API bool EnableLoopback(bool bEnable);
         
         /**
          设置监听音量
 
-         @param volume 音量大小，取值（0, 100）。默认 100
+         @param volume 音量大小，取值（0, 100）。默认 80
          @attention 推流时可调用本 API 进行参数配置
          */
         ZEGO_API void SetLoopbackVolume(int volume);
@@ -509,10 +520,10 @@ namespace ZEGO
          设置编码器码率控制策略
 
          @param strategy 策略配置，参考 ZegoVideoEncoderRateControlStrategy
-         @param encoderCRF 当策略为恒定质量（ZEGO_RC_VBR/ZEGO_RC_CRF）有效，取值范围 [0~51]，越小质量越好，建议取值范围 [18, 28]
+         @param encoderCRF 当策略为恒定质量（ZEGO_RC_VBR/ZEGO_RC_CRF）有效，取值范围 [0~51]，越小质量越好，但是码率会相应变大。建议取值范围 [18, 28]
          @param idx 推流 channel Index. 默认为主Channel
          */
-        ZEGO_API void SetVideoEncoderRateControlConfig(int strategy, int encoderCRF, AV::PublishChannelIndex idx = AV::PUBLISH_CHN_MAIN);
+        ZEGO_API void SetVideoEncoderRateControlConfig(AV::ZegoVideoEncoderRateControlStrategy strategy, int encoderCRF, AV::PublishChannelIndex idx = AV::PUBLISH_CHN_MAIN);
         
         /**
          发送媒体次要信息开关
@@ -563,7 +574,8 @@ namespace ZEGO
          
          @param count 声道数，1 或 2，默认为 1（单声道）
          @attention 必须在推流前设置
-         @note SetLatencyMode 设置为 ZEGO_LATENCY_MODE_NORMAL 或 ZEGO_LATENCY_MODE_NORMAL2 才能设置双声道，在移动端双声道通常需要配合音频前处理才能体现效果。
+         @note SetLatencyMode 设置为 ZEGO_LATENCY_MODE_NORMAL, ZEGO_LATENCY_MODE_NORMAL2, ZEGO_LATENCY_MODE_LOW3 才能设置双声道
+         @note 在移动端双声道通常需要配合音频前处理才能体现效果。
          */
         ZEGO_API void SetAudioChannelCount(int count);
         
@@ -583,6 +595,14 @@ namespace ZEGO
         ZEGO_API void EnableDTX(bool bEnable);
         
         /**
+         是否开启语音活动检测
+         
+         @param bEnable true 开启；false 关闭，默认关闭
+         @attention 确保在推流前调用，只有纯 UDP 方案才可以调用此接口
+         */
+        ZEGO_API void EnableVAD(bool bEnable);
+        
+        /**
          是否开启流量控制
 
          @param properites 流量控制属性 (帧率，分辨率），参考 ZegoTrafficControlProperty 定义。默认 ZEGO_TRAFFIC_CONTROL_ADAPTIVE_FPS
@@ -591,6 +611,15 @@ namespace ZEGO
          @attention 确保在推流前调用，在纯 UDP 方案才可以调用此接口
          */
         ZEGO_API void EnableTrafficControl(int properites, bool bEnable);
+        
+        /**
+         设置TrafficControl视频码率最小值
+         
+         @param nBitrate 码率，单位为bps
+         @attention InitSDK 之后调用有效
+         @note 设置一个在traffic control中video码率的一个最小值，当网络不足以发送这个最小值的时候视频会被卡住，而不是以低于该码率继续发送。初始化SDK后默认情况下没有设置改值，即尽可能的保持视频流畅，InitSDK之后可以随时修改，未重新InitSDK之前如果需要取消该设置值的限制可以设置为0
+         */
+        ZEGO_API void SetMinVideoBitrateForTrafficControl(int nBitrate);
         
         /**
         音频采集噪声抑制开关

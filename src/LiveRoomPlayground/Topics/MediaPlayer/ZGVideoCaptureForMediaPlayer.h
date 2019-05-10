@@ -52,7 +52,6 @@ public:
     virtual int StartCapture() override;
     virtual int StopCapture() override;
 
-
     virtual void OnPlayVideoData(const char* data, int len, ZegoMediaPlayerVideoDataFormat& format) override;
 
 private:

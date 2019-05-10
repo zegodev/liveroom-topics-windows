@@ -51,7 +51,6 @@ void ZGExternalVideoCaptureDemo::PushExternalVideoData(const char* data, int len
                 LIVEROOM::SetVideoCaptureResolution(width_, height_);
                 // …Ë÷√±‡¬Î∑÷±Ê¬ 
                 LIVEROOM::SetVideoEncodeResolution(width_, height_);
-
             }
 
             //ZGLog("push external video data to sdk , data len = %d", len);

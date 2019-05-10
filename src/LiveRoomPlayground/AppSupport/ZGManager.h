@@ -18,6 +18,7 @@
 
 using namespace ZEGO;
 
+
 class ZGManager
 {
 public:
@@ -31,6 +32,8 @@ public:
     bool InitSdk(unsigned int uiAppID, unsigned char* sign, int len);
     bool InitSdk();
     void UninitSdk();
+    bool SdkIsInited();
+
 
 private:
 

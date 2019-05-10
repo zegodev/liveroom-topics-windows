@@ -46,6 +46,30 @@
     <Filter Include="Topics\ExternalVideoCapture\ExternalVideoCaptureUI">
       <UniqueIdentifier>{9df5b877-6e9d-4b68-bc01-639ec7ce3d10}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Topics\ExternalVideoRender">
+      <UniqueIdentifier>{3915803a-d26e-4213-af0e-99775a1883f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Topics\ExternalVideoRender\ExternalVideoRenderUI">
+      <UniqueIdentifier>{1ed82aef-3993-420c-aa25-57f0598ddf9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Topics\Publish">
+      <UniqueIdentifier>{3fc3d325-6e64-43df-bbaf-f89915f68617}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Topics\Publish\PublishUI">
+      <UniqueIdentifier>{b63ff058-3f37-430e-819a-7bba2ceae368}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Topics\ExternalVideoFilter">
+      <UniqueIdentifier>{4d90d47d-35ee-430f-8d44-6cc207b935e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Topics\ExternalVideoFilter\ExternalVideoFilterUI">
+      <UniqueIdentifier>{8029428d-0389-4354-954f-17bb3dcd4efc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Topics\Play">
+      <UniqueIdentifier>{ed46b81a-2d4e-4f1f-801a-61c2ef62733b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Topics\Play\PlayUI">
+      <UniqueIdentifier>{5c011c02-c151-4caf-8d4e-8b0f1bb6ed0b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -71,9 +95,6 @@
     </ClInclude>
     <ClInclude Include="..\AppSupport\ZGManager.h">
       <Filter>AppSupport</Filter>
-    </ClInclude>
-    <ClInclude Include="ZegoLiveRoomTopicsDlg.h">
-      <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\Topics\MediaPlayer\MediaPlayerUI\MediaPlayerDialog.h">
       <Filter>Topics\MediaPlayer\MediaPlayerUI</Filter>
@@ -243,11 +264,98 @@
     <ClInclude Include="..\Topics\ExternalVideoCapture\ZGCameraSource.h">
       <Filter>Topics\ExternalVideoCapture</Filter>
     </ClInclude>
-    <ClInclude Include="..\AppSupport\ZGTimer.h">
-      <Filter>AppSupport</Filter>
-    </ClInclude>
     <ClInclude Include="..\Topics\ExternalVideoCapture\ZGScreenSource.h">
       <Filter>Topics\ExternalVideoCapture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\ExternalVideoRender\ExternalVideoRenderUI\ExternalVideoRenderDlg.h">
+      <Filter>Topics\ExternalVideoRender\ExternalVideoRenderUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\ExternalVideoRender\ExternalVideoRenderUI\resource.h">
+      <Filter>Topics\ExternalVideoRender\ExternalVideoRenderUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ZegoLiveRoomTopicsDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\ExternalVideoRender\ZGExternalVideoRenderDemo.h">
+      <Filter>Topics\ExternalVideoRender</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\ExternalVideoRender\ZGExternalVideoRenderDemoHelper.h">
+      <Filter>Topics\ExternalVideoRender</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\ExternalVideoRender\ZGVideoRender.h">
+      <Filter>Topics\ExternalVideoRender</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\Publish\PublishUI\PublishDlg.h">
+      <Filter>Topics\Publish\PublishUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\Publish\PublishUI\Resource.h">
+      <Filter>Topics\Publish\PublishUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\Publish\PublishDemo.h">
+      <Filter>Topics\Publish</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\Publish\PublishUI\InitSDKConfigDlg.h">
+      <Filter>Topics\Publish\PublishUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\Publish\PublishUI\PublishConfigDlg.h">
+      <Filter>Topics\Publish\PublishUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\Publish\PublishUI\LoginRoomConfigDlg.h">
+      <Filter>Topics\Publish\PublishUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\AppSupport\ZGTimer.h">
+      <Filter>Topics\MediaPlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\Publish\PublishUI\BaseConfigDlg.h">
+      <Filter>Topics\Publish\PublishUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\AppSupport\ZGConfigHelper.h">
+      <Filter>AppSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\ExternalVideoFilter\ExternalVideoFilterUI\ExternalVideoFilterDlg.h">
+      <Filter>Topics\ExternalVideoFilter\ExternalVideoFilterUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\ExternalVideoFilter\ExternalVideoFilterUI\resource.h">
+      <Filter>Topics\ExternalVideoFilter\ExternalVideoFilterUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\ExternalVideoFilter\ZGExternalVideoFilterDemoHelper.h">
+      <Filter>Topics\ExternalVideoFilter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\ExternalVideoFilter\ZGExternalVideoFilterDemo.h">
+      <Filter>Topics\ExternalVideoFilter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\ExternalVideoFilter\BeautifyFilter.h">
+      <Filter>Topics\ExternalVideoFilter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\ExternalVideoFilter\VideoFilterProcessBase.h">
+      <Filter>Topics\ExternalVideoFilter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\Publish\PublishUI\RealDataDlg.h">
+      <Filter>Topics\Publish\PublishUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\Play\PlayDemo.h">
+      <Filter>Topics\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\Play\PlayUI\PlayBaseConfigDlg.h">
+      <Filter>Topics\Play\PlayUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\Play\PlayUI\PlayConfigDlg.h">
+      <Filter>Topics\Play\PlayUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\Play\PlayUI\PlayDlg.h">
+      <Filter>Topics\Play\PlayUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\Play\PlayUI\PlayInitSDKConfigDlg.h">
+      <Filter>Topics\Play\PlayUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\Play\PlayUI\PlayLoginRoomConfigDlg.h">
+      <Filter>Topics\Play\PlayUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\Play\PlayUI\PlayRealDataDlg.h">
+      <Filter>Topics\Play\PlayUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\Play\PlayUI\resource.h">
+      <Filter>Topics\Play\PlayUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -265,9 +373,6 @@
     </ClCompile>
     <ClCompile Include="..\AppSupport\ZGManager.cpp">
       <Filter>AppSupport</Filter>
-    </ClCompile>
-    <ClCompile Include="ZegoLiveRoomTopicsDlg.cpp">
-      <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="..\Topics\MediaPlayer\MediaPlayerUI\MediaPlayerDialog.cpp">
       <Filter>Topics\MediaPlayer\MediaPlayerUI</Filter>
@@ -350,6 +455,81 @@
     <ClCompile Include="..\Topics\ExternalVideoCapture\ZGScreenSource.cpp">
       <Filter>Topics\ExternalVideoCapture</Filter>
     </ClCompile>
+    <ClCompile Include="..\Topics\ExternalVideoRender\ExternalVideoRenderUI\ExternalVideoRenderDlg.cpp">
+      <Filter>Topics\ExternalVideoRender\ExternalVideoRenderUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ZegoLiveRoomTopicsDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\ExternalVideoRender\ZGExternalVideoRenderDemo.cpp">
+      <Filter>Topics\ExternalVideoRender</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\ExternalVideoRender\ZGExternalVideoRenderDemoHelper.cpp">
+      <Filter>Topics\ExternalVideoRender</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\ExternalVideoRender\ZGVideoRender.cpp">
+      <Filter>Topics\ExternalVideoRender</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\Publish\PublishUI\PublishDlg.cpp">
+      <Filter>Topics\Publish\PublishUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\Publish\PublishDemo.cpp">
+      <Filter>Topics\Publish</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\Publish\PublishUI\InitSDKConfigDlg.cpp">
+      <Filter>Topics\Publish\PublishUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\Publish\PublishUI\PublishConfigDlg.cpp">
+      <Filter>Topics\Publish\PublishUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\Publish\PublishUI\LoginRoomConfigDlg.cpp">
+      <Filter>Topics\Publish\PublishUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\Publish\PublishUI\BaseConfigDlg.cpp">
+      <Filter>Topics\Publish\PublishUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\AppSupport\ZGConfigHelper.cpp">
+      <Filter>AppSupport</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\ExternalVideoFilter\ExternalVideoFilterUI\ExternalVideoFilterDlg.cpp">
+      <Filter>Topics\ExternalVideoFilter\ExternalVideoFilterUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\ExternalVideoFilter\ZGExternalVideoFilterDemoHelper.cpp">
+      <Filter>Topics\ExternalVideoFilter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\ExternalVideoFilter\ZGExternalVideoFilterDemo.cpp">
+      <Filter>Topics\ExternalVideoFilter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\ExternalVideoFilter\BeautifyFilter.cpp">
+      <Filter>Topics\ExternalVideoFilter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\ExternalVideoFilter\VideoFilterProcessBase.cpp">
+      <Filter>Topics\ExternalVideoFilter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\Publish\PublishUI\RealDataDlg.cpp">
+      <Filter>Topics\Publish\PublishUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\Play\PlayDemo.cpp">
+      <Filter>Topics\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\Play\PlayUI\PlayBaseConfigDlg.cpp">
+      <Filter>Topics\Play\PlayUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\Play\PlayUI\PlayConfigDlg.cpp">
+      <Filter>Topics\Play\PlayUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\Play\PlayUI\PlayDlg.cpp">
+      <Filter>Topics\Play\PlayUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\Play\PlayUI\PlayInitSDKConfigDlg.cpp">
+      <Filter>Topics\Play\PlayUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\Play\PlayUI\PlayLoginRoomConfigDlg.cpp">
+      <Filter>Topics\Play\PlayUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\Play\PlayUI\PlayRealDataDlg.cpp">
+      <Filter>Topics\Play\PlayUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ZegoLiveRoomTopics.rc">
@@ -367,6 +547,18 @@
     <ResourceCompile Include="..\Topics\ExternalVideoCapture\ExternalVideoCaptureUI\ZGExternalVideoCaptureDlg.rc">
       <Filter>Topics\ExternalVideoCapture\ExternalVideoCaptureUI</Filter>
     </ResourceCompile>
+    <ResourceCompile Include="..\Topics\ExternalVideoRender\ExternalVideoRenderUI\ExternalVideoRender.rc">
+      <Filter>Topics\ExternalVideoRender\ExternalVideoRenderUI</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="..\Topics\Publish\PublishUI\Publish.rc">
+      <Filter>Topics\Publish\PublishUI</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="..\Topics\ExternalVideoFilter\ExternalVideoFilterUI\ExternalVideoFilter.rc">
+      <Filter>Topics\ExternalVideoFilter\ExternalVideoFilterUI</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="..\Topics\Play\PlayUI\Play.rc">
+      <Filter>Topics\Play\PlayUI</Filter>
+    </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\ZegoLiveRoomTopics.rc2">
@@ -375,9 +567,24 @@
     <None Include="..\Topics\MediaPlayer\MediaPlayerUI\MediaPlayerRc.aps">
       <Filter>Topics\MediaPlayer\MediaPlayerUI</Filter>
     </None>
+    <None Include="..\Topics\ExternalVideoFilter\ExternalVideoFilterUI\ExternalVideoFilter.vcxproj">
+      <Filter>Topics\ExternalVideoFilter\ExternalVideoFilterUI</Filter>
+    </None>
+    <None Include="..\Topics\ExternalVideoFilter\ExternalVideoFilterUI\ExternalVideoFilter.vcxproj.filters">
+      <Filter>Topics\ExternalVideoFilter\ExternalVideoFilterUI</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\ZegoLiveRoomTopics.ico">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\app_res\wh.png">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\Topics\Publish\PublishUI\app_res\wh.png">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\Topics\Play\PlayUI\app_res\wh.png">
       <Filter>资源文件</Filter>
     </Image>
   </ItemGroup>

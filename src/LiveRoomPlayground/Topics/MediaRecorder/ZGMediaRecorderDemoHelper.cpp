@@ -116,7 +116,7 @@ void ZGMediaRecorderDemoHelper::OnLoginRoom(int errorCode, const char *pszRoomID
     }
     else {
         SetCurStatus(kZGMediaRecord_PublishStatus_Login_OK);
-        StartPreview();
+        
     }
 }
 

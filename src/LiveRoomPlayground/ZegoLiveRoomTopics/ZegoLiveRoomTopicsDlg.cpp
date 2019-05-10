@@ -11,11 +11,17 @@
 #define new DEBUG_NEW
 #endif
 
+#define TOPIC_PUBLISH _T("推流")
+#define TOPIC_PLAY _T("拉流")
 
 #define TOPIC_MIDIA_PLAYER      _T("MediaPlayer")
 #define TOPIC_MEDIA_SIDE_INFO   _T("Media Side Info")
 #define TOPIC_MEDIA_RECORDER   _T("Media Recorder")
 #define TOPIC_EXTERNAL_VIDEO_CAPTURE _T("External Video Capture")
+#define TOPIC_EXTERNAL_VIDEO_RENDER _T("External Video Render")
+
+#define TOPIC_EXTERNAL_VIDEO_FILTER _T("External Video Filter")
+
 
 // 用于应用程序“关于”菜单项的 CAboutDlg 对话框
 
@@ -35,6 +41,8 @@ public:
 // 实现
 protected:
 	DECLARE_MESSAGE_MAP()
+public:
+    afx_msg void OnBnClickedOk();
 };
 
 CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX)
@@ -47,6 +55,7 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 }
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
+    ON_BN_CLICKED(IDOK, &CAboutDlg::OnBnClickedOk)
 END_MESSAGE_MAP()
 
 
@@ -59,7 +68,7 @@ CZegoLiveRoomTopicsDlg::CZegoLiveRoomTopicsDlg(CWnd* pParent /*=NULL*/)
     media_play_dlg_ptr_(nullptr),
     media_recorder_dlg_ptr_(nullptr)
 {
-	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	//m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
 CZegoLiveRoomTopicsDlg::~CZegoLiveRoomTopicsDlg()
@@ -69,7 +78,8 @@ CZegoLiveRoomTopicsDlg::~CZegoLiveRoomTopicsDlg()
 void CZegoLiveRoomTopicsDlg::DoDataExchange(CDataExchange* pDX)
 {
     CDialogEx::DoDataExchange(pDX);
-    DDX_Control(pDX, IDC_LIST_TOPIC, topic_list_contronl_);
+    DDX_Control(pDX, IDC_LIST_TOPIC_BASIC, basic_topic_list_contronl_);
+    DDX_Control(pDX, IDC_LIST_TOPIC_ADVANCED, advanced_topic_list_contronl_);
 }
 
 BEGIN_MESSAGE_MAP(CZegoLiveRoomTopicsDlg, CDialogEx)
@@ -77,7 +87,11 @@ BEGIN_MESSAGE_MAP(CZegoLiveRoomTopicsDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
     ON_WM_LBUTTONDOWN()
-    ON_LBN_SELCHANGE(IDC_LIST_TOPIC, &CZegoLiveRoomTopicsDlg::OnLbnSelchangeListTopic)
+    ON_LBN_SELCHANGE(IDC_LIST_TOPIC_BASIC, &CZegoLiveRoomTopicsDlg::OnLbnSelchangeListTopicBasic)
+    ON_LBN_SELCHANGE(IDC_LIST_TOPIC_ADVANCED, &CZegoLiveRoomTopicsDlg::OnLbnSelchangeListTopicAdvanced)
+    ON_BN_CLICKED(IDC_BUTTON_DOC, &CZegoLiveRoomTopicsDlg::OnBnClickedButtonDoc)
+    ON_BN_CLICKED(IDC_BUTTON_CODE, &CZegoLiveRoomTopicsDlg::OnBnClickedButtonCode)
+    ON_BN_CLICKED(IDC_BUTTON_FAQ, &CZegoLiveRoomTopicsDlg::OnBnClickedButtonFaq)
 END_MESSAGE_MAP()
 
 
@@ -109,8 +123,8 @@ BOOL CZegoLiveRoomTopicsDlg::OnInitDialog()
 
 	// 设置此对话框的图标。  当应用程序主窗口不是对话框时，框架将自动
 	//  执行此操作
-	SetIcon(m_hIcon, TRUE);			// 设置大图标
-	SetIcon(m_hIcon, FALSE);		// 设置小图标
+	//SetIcon(m_hIcon, TRUE);			// 设置大图标
+	//SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
 
@@ -142,18 +156,18 @@ void CZegoLiveRoomTopicsDlg::OnPaint()
 	{
 		CPaintDC dc(this); // 用于绘制的设备上下文
 
-		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
-
-		// 使图标在工作区矩形中居中
-		int cxIcon = GetSystemMetrics(SM_CXICON);
-		int cyIcon = GetSystemMetrics(SM_CYICON);
-		CRect rect;
-		GetClientRect(&rect);
-		int x = (rect.Width() - cxIcon + 1) / 2;
-		int y = (rect.Height() - cyIcon + 1) / 2;
+// 		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
+// 
+// 		// 使图标在工作区矩形中居中
+// 		int cxIcon = GetSystemMetrics(SM_CXICON);
+// 		int cyIcon = GetSystemMetrics(SM_CYICON);
+// 		CRect rect;
+// 		GetClientRect(&rect);
+// 		int x = (rect.Width() - cxIcon + 1) / 2;
+// 		int y = (rect.Height() - cyIcon + 1) / 2;
 
 		// 绘制图标
-		dc.DrawIcon(x, y, m_hIcon);
+		//dc.DrawIcon(x, y, m_hIcon);
 	}
 	else
 	{
@@ -163,17 +177,22 @@ void CZegoLiveRoomTopicsDlg::OnPaint()
 
 //当用户拖动最小化窗口时系统调用此函数取得光标
 //显示。
-HCURSOR CZegoLiveRoomTopicsDlg::OnQueryDragIcon()
-{
-	return static_cast<HCURSOR>(m_hIcon);
-}
+// HCURSOR CZegoLiveRoomTopicsDlg::OnQueryDragIcon()
+// {
+// 	return static_cast<HCURSOR>(m_hIcon);
+// }
 
 void CZegoLiveRoomTopicsDlg::InitTopicList()
 {
-    topic_list_contronl_.AddString(TOPIC_MIDIA_PLAYER);
-    topic_list_contronl_.AddString(TOPIC_MEDIA_SIDE_INFO);
-    topic_list_contronl_.AddString(TOPIC_MEDIA_RECORDER);
-    topic_list_contronl_.AddString(TOPIC_EXTERNAL_VIDEO_CAPTURE);
+    basic_topic_list_contronl_.AddString(TOPIC_PUBLISH);
+    basic_topic_list_contronl_.AddString(TOPIC_PLAY);
+
+    advanced_topic_list_contronl_.AddString(TOPIC_MIDIA_PLAYER);
+    advanced_topic_list_contronl_.AddString(TOPIC_MEDIA_SIDE_INFO);
+    advanced_topic_list_contronl_.AddString(TOPIC_MEDIA_RECORDER);
+    advanced_topic_list_contronl_.AddString(TOPIC_EXTERNAL_VIDEO_CAPTURE);
+    advanced_topic_list_contronl_.AddString(TOPIC_EXTERNAL_VIDEO_RENDER);
+    //advanced_topic_list_contronl_.AddString(TOPIC_EXTERNAL_VIDEO_FILTER);
 }
 
 void CZegoLiveRoomTopicsDlg::OnLButtonDown(UINT nFlags, CPoint point)
@@ -198,11 +217,67 @@ void CZegoLiveRoomTopicsDlg::ShowDlg(void * dlg)
 
 void CZegoLiveRoomTopicsDlg::OnLbnSelchangeListTopic()
 {
-    int cur_sel = topic_list_contronl_.GetCurSel();
+
+}
+
+
+
+void CZegoLiveRoomTopicsDlg::OnLbnSelchangeListTopicBasic()
+{
+    int cur_sel = basic_topic_list_contronl_.GetCurSel();
+    bool have_processed = false;
     if (cur_sel >= 0)
     {
         CString str;
-        topic_list_contronl_.GetText(cur_sel, str);
+        basic_topic_list_contronl_.GetText(cur_sel, str);
+        if (str == TOPIC_PUBLISH)
+        {
+            if (publish_dlg_ptr_ == nullptr)
+            {
+                publish_dlg_ptr_ = CPublishDlg::CreateDlgInstance(this);
+                dlg_list_.push_back(publish_dlg_ptr_);
+            }
+            CRect rect;
+            GetDlgItem(IDC_PANEL)->GetWindowRect(rect);
+            ScreenToClient(&rect);
+            publish_dlg_ptr_->MoveWindow(rect.left, rect.top, rect.Width(), rect.Height());
+            ShowDlg(publish_dlg_ptr_);
+            publish_dlg_ptr_->InitDlg();
+            have_processed = true;
+        }else if (str == TOPIC_PLAY)
+        {
+            if (play_dlg_ptr_ == nullptr)
+            {
+                play_dlg_ptr_ = CPlayDlg::CreateDlgInstance(this);
+                dlg_list_.push_back(play_dlg_ptr_);
+            }
+            CRect rect;
+            GetDlgItem(IDC_PANEL)->GetWindowRect(rect);
+            ScreenToClient(&rect);
+            play_dlg_ptr_->MoveWindow(rect.left, rect.top, rect.Width(), rect.Height());
+            ShowDlg(play_dlg_ptr_);
+            
+            play_dlg_ptr_->InitDlg();
+            
+            have_processed = true;
+        }
+    }
+
+    if (have_processed)
+    {
+        advanced_topic_list_contronl_.SetCurSel(-1);
+    }
+}
+
+
+void CZegoLiveRoomTopicsDlg::OnLbnSelchangeListTopicAdvanced()
+{
+    int cur_sel = advanced_topic_list_contronl_.GetCurSel();
+    bool have_processed = false;
+    if (cur_sel >= 0)
+    {
+        CString str;
+        advanced_topic_list_contronl_.GetText(cur_sel, str);
         //MessageBox(str);
         if (str == TOPIC_MIDIA_PLAYER)
         {
@@ -218,6 +293,7 @@ void CZegoLiveRoomTopicsDlg::OnLbnSelchangeListTopic()
             media_play_dlg_ptr_->MoveWindow(rect.left, rect.top, rect.Width(), rect.Height());
             ShowDlg(media_play_dlg_ptr_);
             media_play_dlg_ptr_->StartMediaPlayer();
+            have_processed = true;
         }
         else if (str == TOPIC_MEDIA_SIDE_INFO)
         {
@@ -231,13 +307,14 @@ void CZegoLiveRoomTopicsDlg::OnLbnSelchangeListTopic()
             ScreenToClient(&rect);
             media_side_info_dlg_ptr_->MoveWindow(rect.left, rect.top, rect.Width(), rect.Height());
             ShowDlg(media_side_info_dlg_ptr_);
+            have_processed = true;
         }
         else if (str == TOPIC_MEDIA_RECORDER)
         {
             if (media_recorder_dlg_ptr_ == nullptr)
             {
                 media_recorder_dlg_ptr_ = CMediaRecorderDlg::CreateDlgInstance(this);
-                dlg_list_.push_back(media_recorder_dlg_ptr_);            
+                dlg_list_.push_back(media_recorder_dlg_ptr_);
             }
             CRect rect;
             GetDlgItem(IDC_PANEL)->GetWindowRect(rect);
@@ -245,8 +322,10 @@ void CZegoLiveRoomTopicsDlg::OnLbnSelchangeListTopic()
             media_recorder_dlg_ptr_->MoveWindow(rect.left, rect.top, rect.Width(), rect.Height());
             ShowDlg(media_recorder_dlg_ptr_);
             media_recorder_dlg_ptr_->LoginAndPreview();
+            have_processed = true;
 
-        }else if (str == TOPIC_EXTERNAL_VIDEO_CAPTURE)
+        }
+        else if (str == TOPIC_EXTERNAL_VIDEO_CAPTURE)
         {
             if (external_video_capture_dlg_ptr_ == nullptr)
             {
@@ -258,7 +337,66 @@ void CZegoLiveRoomTopicsDlg::OnLbnSelchangeListTopic()
             ScreenToClient(&rect);
             external_video_capture_dlg_ptr_->MoveWindow(rect.left, rect.top, rect.Width(), rect.Height());
             ShowDlg(external_video_capture_dlg_ptr_);
+            have_processed = true;
         }
+        else if (str == TOPIC_EXTERNAL_VIDEO_RENDER)
+        {
+            if (external_video_render_dlg_ptr_ == nullptr)
+            {
+                external_video_render_dlg_ptr_ = CExternalVideoRenderDlg::CreateDlgInstance(this);
+                dlg_list_.push_back(external_video_render_dlg_ptr_);
+            }
+            CRect rect;
+            GetDlgItem(IDC_PANEL)->GetWindowRect(rect);
+            ScreenToClient(&rect);
+            external_video_render_dlg_ptr_->MoveWindow(rect.left, rect.top, rect.Width(), rect.Height());
+            ShowDlg(external_video_render_dlg_ptr_);
+            have_processed = true;
+        }
+        else if (str == TOPIC_EXTERNAL_VIDEO_FILTER)
+        {
+            if (external_video_filter_ == nullptr)
+            {
+                external_video_filter_ = CExternalVideoFilterDlg::CreateDlgInstance(this);
+                dlg_list_.push_back(external_video_filter_);
+            }
+            CRect rect;
+            GetDlgItem(IDC_PANEL)->GetWindowRect(rect);
+            ScreenToClient(&rect);
+            external_video_filter_->MoveWindow(rect.left, rect.top, rect.Width(), rect.Height());
+            ShowDlg(external_video_filter_);
+            have_processed = true;
+        }
+    }
+
+
+    if (have_processed)
+    {
+        basic_topic_list_contronl_.SetCurSel(-1);
     }
 }
 
+
+void CZegoLiveRoomTopicsDlg::OnBnClickedButtonDoc()
+{
+    ShellExecute(NULL, L"open" , L"https://doc.zego.im/CN/197.html",  NULL, NULL, SW_SHOWNORMAL); 
+}
+
+
+void CZegoLiveRoomTopicsDlg::OnBnClickedButtonCode()
+{
+    ShellExecute(NULL, L"open", L"https://github.com/zegodev/liveroom-topics-windows", NULL, NULL, SW_SHOWNORMAL);
+}
+
+
+void CZegoLiveRoomTopicsDlg::OnBnClickedButtonFaq()
+{
+    ShellExecute(NULL, L"open", L"https://doc.zego.im/CN/496.html", NULL, NULL, SW_SHOWNORMAL);
+}
+
+
+void CAboutDlg::OnBnClickedOk()
+{
+    ShellExecute(NULL, L"open", L"https://doc.zego.im/CN/621.html", NULL, NULL, SW_SHOWNORMAL);
+
+}

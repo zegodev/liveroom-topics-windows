@@ -77,7 +77,7 @@
     <LinkIncremental>true</LinkIncremental>
     <IntDir>$(SolutionDir)\build_dir\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)\bin\$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath>$(SolutionDir)/libs/zegosdk/include/ZegoLiveRoom;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)/libs/zegosdk/include/ZegoLiveRoom;$(SolutionDir)/libs/tencent_beauty/;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -89,7 +89,7 @@
     <LinkIncremental>false</LinkIncremental>
     <IntDir>$(SolutionDir)\build_dir\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)\bin\$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath>./../;$(IncludePath)</IncludePath>
+    <IncludePath>./../;$(SolutionDir)/libs/tencent_beauty/;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -109,7 +109,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>./../libs/zegosdk/libs/$(Platform)/ZegoLiveRoom.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>./../libs/zegosdk/libs/$(Platform)/ZegoLiveRoom.lib;./../libs/tencent_beauty/ilivefiltersdk.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
     </Link>
@@ -136,7 +136,8 @@ echo F |xcopy /y "$(SolutionDir)\bin\$(Platform)\$(Configuration)\$(ProjectName)
 echo F | xcopy /y "$(SolutionDir)\Topics\ExternalVideoCapture\ScreenCapture\libs\x86\ZegoScreenCapture.dll" "$(SolutionDir)\compile_product_output\bin\ZegoScreenCapture.dll"
 echo F | xcopy /y "$(SolutionDir)\Topics\ExternalVideoCapture\ScreenCapture\libs\x86\ZegoScreenCapture.dll" "$(SolutionDir)\bin\$(Platform)\$(Configuration)\ZegoScreenCapture.dll"
 echo F |xcopy /y "$(OutDir)$(TargetName).pdb" "$(SolutionDir)\compile_product_output\$(TargetName).pdb"
-</Command>
+echo F | xcopy /y "$(SolutionDir)\libs\tencent_beauty\ilivefiltersdk.dll" "$(SolutionDir)\bin\$(Platform)\$(Configuration)\ilivefiltersdk.dll"    
+echo F | xcopy /y "$(SolutionDir)\libs\tencent_beauty\ilivefiltersdk.dll" "$(SolutionDir)\compile_product_output\bin\ilivefiltersdk.dll"  </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -195,7 +196,7 @@ echo F |xcopy /y "$(OutDir)$(TargetName).pdb" "$(SolutionDir)\compile_product_ou
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>./../libs/zegosdk/libs/$(Platform)/ZegoLiveRoom.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>./../libs/zegosdk/libs/$(Platform)/ZegoLiveRoom.lib;./../libs/tencent_beauty/ilivefiltersdk.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Midl>
@@ -221,7 +222,8 @@ echo F |xcopy /y "$(SolutionDir)\bin\$(Platform)\$(Configuration)\$(ProjectName)
 echo F | xcopy /y "$(SolutionDir)\Topics\ExternalVideoCapture\ScreenCapture\libs\x86\ZegoScreenCapture.dll" "$(SolutionDir)\compile_product_output\bin\ZegoScreenCapture.dll"
 echo F | xcopy /y "$(SolutionDir)\Topics\ExternalVideoCapture\ScreenCapture\libs\x86\ZegoScreenCapture.dll" "$(SolutionDir)\bin\$(Platform)\$(Configuration)\ZegoScreenCapture.dll"
 echo F |xcopy /y "$(OutDir)$(TargetName).pdb" "$(SolutionDir)\compile_product_output\$(TargetName).pdb"
-</Command>
+echo F | xcopy /y "$(SolutionDir)\libs\tencent_beauty\ilivefiltersdk.dll" "$(SolutionDir)\bin\$(Platform)\$(Configuration)\ilivefiltersdk.dll"    
+echo F | xcopy /y "$(SolutionDir)\libs\tencent_beauty\ilivefiltersdk.dll" "$(SolutionDir)\compile_product_output\bin\ilivefiltersdk.dll"  </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -273,6 +275,7 @@ echo F |xcopy /y "$(OutDir)$(TargetName).pdb" "$(SolutionDir)\compile_product_ou
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\AppSupport\ZGConfigHelper.h" />
     <ClInclude Include="..\AppSupport\ZGHelper.h" />
     <ClInclude Include="..\AppSupport\ZGLog.h" />
     <ClInclude Include="..\AppSupport\ZGManager.h" />
@@ -316,6 +319,17 @@ echo F |xcopy /y "$(OutDir)$(TargetName).pdb" "$(SolutionDir)\compile_product_ou
     <ClInclude Include="..\Topics\ExternalVideoCapture\ZGExternalVideoCatpureDemoHelper.h" />
     <ClInclude Include="..\Topics\ExternalVideoCapture\ZGExternalVideoSource.h" />
     <ClInclude Include="..\Topics\ExternalVideoCapture\ZGImageSource.h" />
+    <ClInclude Include="..\Topics\ExternalVideoFilter\BeautifyFilter.h" />
+    <ClInclude Include="..\Topics\ExternalVideoFilter\ExternalVideoFilterUI\ExternalVideoFilterDlg.h" />
+    <ClInclude Include="..\Topics\ExternalVideoFilter\ExternalVideoFilterUI\resource.h" />
+    <ClInclude Include="..\Topics\ExternalVideoFilter\VideoFilterProcessBase.h" />
+    <ClInclude Include="..\Topics\ExternalVideoFilter\ZGExternalVideoFilterDemo.h" />
+    <ClInclude Include="..\Topics\ExternalVideoFilter\ZGExternalVideoFilterDemoHelper.h" />
+    <ClInclude Include="..\Topics\ExternalVideoRender\ZGExternalVideoRenderDemo.h" />
+    <ClInclude Include="..\Topics\ExternalVideoRender\ExternalVideoRenderUI\ExternalVideoRenderDlg.h" />
+    <ClInclude Include="..\Topics\ExternalVideoRender\ExternalVideoRenderUI\resource.h" />
+    <ClInclude Include="..\Topics\ExternalVideoRender\ZGExternalVideoRenderDemoHelper.h" />
+    <ClInclude Include="..\Topics\ExternalVideoRender\ZGVideoRender.h" />
     <ClInclude Include="..\Topics\MediaPlayer\MediaPlayerUI\MediaPlayerDialog.h" />
     <ClInclude Include="..\Topics\MediaPlayer\MediaPlayerUI\resource.h" />
     <ClInclude Include="..\Topics\MediaPlayer\MediaPlayerUI\ZGSlider.h" />
@@ -333,6 +347,22 @@ echo F |xcopy /y "$(OutDir)$(TargetName).pdb" "$(SolutionDir)\compile_product_ou
     <ClInclude Include="..\Topics\MediaSideInfo\MediaSideInfoUI\resource.h" />
     <ClInclude Include="..\Topics\MediaSideInfo\ZGMediaSideInfoDemo.h" />
     <ClInclude Include="..\Topics\MediaSideInfo\ZGMediaSideInfoDemoEnvirentmentHelper.h" />
+    <ClInclude Include="..\Topics\Play\PlayDemo.h" />
+    <ClInclude Include="..\Topics\Play\PlayUI\PlayBaseConfigDlg.h" />
+    <ClInclude Include="..\Topics\Play\PlayUI\PlayConfigDlg.h" />
+    <ClInclude Include="..\Topics\Play\PlayUI\PlayDlg.h" />
+    <ClInclude Include="..\Topics\Play\PlayUI\PlayInitSDKConfigDlg.h" />
+    <ClInclude Include="..\Topics\Play\PlayUI\PlayLoginRoomConfigDlg.h" />
+    <ClInclude Include="..\Topics\Play\PlayUI\PlayRealDataDlg.h" />
+    <ClInclude Include="..\Topics\Play\PlayUI\resource.h" />
+    <ClInclude Include="..\Topics\Publish\PublishDemo.h" />
+    <ClInclude Include="..\Topics\Publish\PublishUI\BaseConfigDlg.h" />
+    <ClInclude Include="..\Topics\Publish\PublishUI\InitSDKConfigDlg.h" />
+    <ClInclude Include="..\Topics\Publish\PublishUI\LoginRoomConfigDlg.h" />
+    <ClInclude Include="..\Topics\Publish\PublishUI\PublishConfigDlg.h" />
+    <ClInclude Include="..\Topics\Publish\PublishUI\PublishDlg.h" />
+    <ClInclude Include="..\Topics\Publish\PublishUI\RealDataDlg.h" />
+    <ClInclude Include="..\Topics\Publish\PublishUI\Resource.h" />
     <ClInclude Include="MediaRecorderDemo.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -341,6 +371,7 @@ echo F |xcopy /y "$(OutDir)$(TargetName).pdb" "$(SolutionDir)\compile_product_ou
     <ClInclude Include="ZegoLiveRoomTopicsDlg.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\AppSupport\ZGConfigHelper.cpp" />
     <ClCompile Include="..\AppSupport\ZGHelper.cpp" />
     <ClCompile Include="..\AppSupport\ZGLog.cpp" />
     <ClCompile Include="..\AppSupport\ZGManager.cpp" />
@@ -357,6 +388,15 @@ echo F |xcopy /y "$(OutDir)$(TargetName).pdb" "$(SolutionDir)\compile_product_ou
     <ClCompile Include="..\Topics\ExternalVideoCapture\ZGExternalVideoSource.cpp" />
     <ClCompile Include="..\Topics\ExternalVideoCapture\ZGImageSource.cpp" />
     <ClCompile Include="..\Topics\ExternalVideoCapture\ZGVideoRender.cpp" />
+    <ClCompile Include="..\Topics\ExternalVideoFilter\BeautifyFilter.cpp" />
+    <ClCompile Include="..\Topics\ExternalVideoFilter\ExternalVideoFilterUI\ExternalVideoFilterDlg.cpp" />
+    <ClCompile Include="..\Topics\ExternalVideoFilter\VideoFilterProcessBase.cpp" />
+    <ClCompile Include="..\Topics\ExternalVideoFilter\ZGExternalVideoFilterDemo.cpp" />
+    <ClCompile Include="..\Topics\ExternalVideoFilter\ZGExternalVideoFilterDemoHelper.cpp" />
+    <ClCompile Include="..\Topics\ExternalVideoRender\ZGExternalVideoRenderDemo.cpp" />
+    <ClCompile Include="..\Topics\ExternalVideoRender\ExternalVideoRenderUI\ExternalVideoRenderDlg.cpp" />
+    <ClCompile Include="..\Topics\ExternalVideoRender\ZGExternalVideoRenderDemoHelper.cpp" />
+    <ClCompile Include="..\Topics\ExternalVideoRender\ZGVideoRender.cpp" />
     <ClCompile Include="..\Topics\MediaPlayer\MediaPlayerUI\MediaPlayerDialog.cpp" />
     <ClCompile Include="..\Topics\MediaPlayer\MediaPlayerUI\ZGSlider.cpp" />
     <ClCompile Include="..\Topics\MediaPlayer\ZGMediaPlayerDemo.cpp" />
@@ -371,6 +411,20 @@ echo F |xcopy /y "$(OutDir)$(TargetName).pdb" "$(SolutionDir)\compile_product_ou
     <ClCompile Include="..\Topics\MediaSideInfo\MediaSideInfoUI\MediaSideinfoPlayVideoDlg.cpp" />
     <ClCompile Include="..\Topics\MediaSideInfo\ZGMediaSideInfoDemo.cpp" />
     <ClCompile Include="..\Topics\MediaSideInfo\ZGMediaSideInfoDemoEnvirentmentHelper.cpp" />
+    <ClCompile Include="..\Topics\Play\PlayDemo.cpp" />
+    <ClCompile Include="..\Topics\Play\PlayUI\PlayBaseConfigDlg.cpp" />
+    <ClCompile Include="..\Topics\Play\PlayUI\PlayConfigDlg.cpp" />
+    <ClCompile Include="..\Topics\Play\PlayUI\PlayDlg.cpp" />
+    <ClCompile Include="..\Topics\Play\PlayUI\PlayInitSDKConfigDlg.cpp" />
+    <ClCompile Include="..\Topics\Play\PlayUI\PlayLoginRoomConfigDlg.cpp" />
+    <ClCompile Include="..\Topics\Play\PlayUI\PlayRealDataDlg.cpp" />
+    <ClCompile Include="..\Topics\Publish\PublishDemo.cpp" />
+    <ClCompile Include="..\Topics\Publish\PublishUI\BaseConfigDlg.cpp" />
+    <ClCompile Include="..\Topics\Publish\PublishUI\InitSDKConfigDlg.cpp" />
+    <ClCompile Include="..\Topics\Publish\PublishUI\LoginRoomConfigDlg.cpp" />
+    <ClCompile Include="..\Topics\Publish\PublishUI\PublishConfigDlg.cpp" />
+    <ClCompile Include="..\Topics\Publish\PublishUI\PublishDlg.cpp" />
+    <ClCompile Include="..\Topics\Publish\PublishUI\RealDataDlg.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -382,16 +436,25 @@ echo F |xcopy /y "$(OutDir)$(TargetName).pdb" "$(SolutionDir)\compile_product_ou
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\Topics\ExternalVideoCapture\ExternalVideoCaptureUI\ZGExternalVideoCaptureDlg.rc" />
+    <ResourceCompile Include="..\Topics\ExternalVideoFilter\ExternalVideoFilterUI\ExternalVideoFilter.rc" />
+    <ResourceCompile Include="..\Topics\ExternalVideoRender\ExternalVideoRenderUI\ExternalVideoRender.rc" />
     <ResourceCompile Include="..\Topics\MediaPlayer\MediaPlayerUI\MediaPlayerRc.rc" />
     <ResourceCompile Include="..\Topics\MediaRecorder\MediaRecorderUI\MediaRecorder.rc" />
     <ResourceCompile Include="..\Topics\MediaSideInfo\MediaSideInfoUI\MediaSideInfo.rc" />
+    <ResourceCompile Include="..\Topics\Play\PlayUI\Play.rc" />
+    <ResourceCompile Include="..\Topics\Publish\PublishUI\Publish.rc" />
     <ResourceCompile Include="ZegoLiveRoomTopics.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Topics\ExternalVideoFilter\ExternalVideoFilterUI\ExternalVideoFilter.vcxproj" />
+    <None Include="..\Topics\ExternalVideoFilter\ExternalVideoFilterUI\ExternalVideoFilter.vcxproj.filters" />
     <None Include="..\Topics\MediaPlayer\MediaPlayerUI\MediaPlayerRc.aps" />
     <None Include="res\ZegoLiveRoomTopics.rc2" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\app_res\wh.png" />
+    <Image Include="..\Topics\Play\PlayUI\app_res\wh.png" />
+    <Image Include="..\Topics\Publish\PublishUI\app_res\wh.png" />
     <Image Include="res\ZegoLiveRoomTopics.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

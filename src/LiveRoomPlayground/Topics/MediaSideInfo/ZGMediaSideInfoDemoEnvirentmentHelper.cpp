@@ -26,12 +26,12 @@ void ZGMediaSideInfoDemoEnvirentmentHelper::InitSetLoginAndPlayConfig(HelperConf
 
 void ZGMediaSideInfoDemoEnvirentmentHelper::LoginByConfig()
 {
-    ZGManagerInstance()->InitSdk(login_and_play_config_.app_id, login_and_play_config_.sign.data(), login_and_play_config_.sign.size());
     string user_id = device_uuid_ + "_user_id";
     string user_name = device_uuid_ + "_user_name";
     LIVEROOM::SetUser(user_id.c_str(), user_name.c_str());
     LIVEROOM::SetLivePlayerCallback(this);
     LIVEROOM::SetRoomCallback(this);
+    ZGManagerInstance()->InitSdk(login_and_play_config_.app_id, login_and_play_config_.sign.data(), login_and_play_config_.sign.size());
     LIVEROOM::LoginRoom(login_and_play_config_.room_id.c_str(), ZEGO::LIVEROOM::Audience, login_and_play_config_.stream_id.c_str());
     SetCurStatus(kZGMediaSideTopicStatus_Starting_Login_Room);
 }

@@ -70,7 +70,6 @@ void ZGMediaPlayerDemo::SetVolume(int volume)
 
 void ZGMediaPlayerDemo::StartPlaying(const char * url, bool repeat)
 {
-
     if (player_state_ == ZGPlayerState_Playing)
     {
         MEDIAPLAYER::Stop();

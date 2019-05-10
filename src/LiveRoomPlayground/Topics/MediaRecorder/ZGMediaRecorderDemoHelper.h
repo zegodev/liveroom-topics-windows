@@ -50,13 +50,13 @@ public:
 
     void SetPublishStateObserver(PublishStateObserverType cb);
 
+    void StartPreview();
+
 protected:
 
     void LoginRoom();
 
     void InitVideoView(void * local_video_view);
-
-    void StartPreview();
 
     string DescOfStatus(ZGMediaRecord_PublishStatus status);
 

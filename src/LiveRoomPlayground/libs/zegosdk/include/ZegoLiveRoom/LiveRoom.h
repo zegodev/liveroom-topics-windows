@@ -116,7 +116,7 @@ namespace ZEGO
          登录房间
 
          @param pszRoomID 房间 ID
-         @param role 成员角色
+         @param role 成员角色, 参见 ZegoRoomRole
          @param pszRoomName 房间名称
          @return true 成功，false 失败
          */
