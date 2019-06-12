@@ -17,6 +17,7 @@
 
 #define ZEGO_MAX_USERID_LEN         (64)
 #define ZEGO_MAX_USERNAME_LEN       (256)
+#define ZEGO_MAX_EXTRA_INFO_LEN     (1024)
 
 #if defined(_MSC_VER) || defined(__BORLANDC__)
 #	define _I64_				"I64"
@@ -182,44 +183,6 @@ namespace ZEGO
             ZegoStreamRelayCDNState state;
             ZegoStreamRelayCDNDetail detail;   //转推停止或重试时有效
             unsigned int stateTime;
-        };
-        
-        const unsigned int SEG_PUBLISH_FATAL_ERROR = 0x0001 << 16;   ///< 推流严重错误段
-        const unsigned int SEG_PUBLISH_NORMAL_ERROR = 0x0002 << 16;  ///< 推流普通错误段
-        const unsigned int SEG_PLAY_FATAL_ERROR = 0x0003 << 16;      ///< 拉流严重错误段
-        const unsigned int SEG_PLAY_NORMAL_ERROR = 0x0004 << 16;     ///< 拉流普通错误段
-        
-        enum ZegoAVAPIState
-        {
-            AVStateBegin = 0,               ///< 直播开始
-            AVStateEnd = 1,                 ///< 直播正常停止
-            TempBroken = 2 ZEGO_DEPRECATED, ///< 直播异常中断
-            FatalError = 3,                 ///< 直播遇到严重的问题（如出现，请联系 ZEGO 技术支持）
-            
-            CreateStreamError = 4,          ///< 创建直播流失败
-            FetchStreamError = 5,           ///< 获取流信息失败
-            NoStreamError = 6,              ///< 无流信息
-            MediaServerNetWorkError = 7,    ///< 媒体服务器连接失败
-            DNSResolveError = 8,            ///< DNS 解析失败
-            
-            NotLoginError = 9,              ///< 未登陆
-            LogicServerNetWrokError = 10,   ///< 逻辑服务器网络错误
-            
-            InitConfigError = 11,           ///< 初始化配置失败
-            
-            PublishBadNameError = 105,
-            HttpDNSResolveError = 106 ZEGO_DEPRECATED,
-            
-            PublishForbidError = (SEG_PUBLISH_FATAL_ERROR | 0x03f3),             ///< 禁止推流, 低8位为服务端返回错误码：1011
-            
-            PublishStopError = (SEG_PUBLISH_FATAL_ERROR | 0x03f6),             ///< 停止推流, 低8位为服务端返回错误码：1014
-            
-            PublishDeniedError = (SEG_PUBLISH_NORMAL_ERROR | 0x1),              ///< 推流被拒绝
-
-            PlayStreamNotExistError = (SEG_PLAY_FATAL_ERROR | 0x03ec),          ///< 拉的流不存在, 低8位为服务端返回错误码：1004
-            PlayForbidError = (SEG_PLAY_FATAL_ERROR | 0x03f3),                  ///< 禁止拉流, 低8位为服务端返回错误码：1011
-            
-            PlayDeniedError = (SEG_PLAY_NORMAL_ERROR | 0x1),                   ///< 拉流被拒绝
         };
         
         enum ZEGONetType
@@ -447,10 +410,21 @@ namespace ZEGO
             /**< 自适应分辨率 */
             ZEGO_TRAFFIC_CONTROL_ADAPTIVE_RESOLUTION = 1 << 1,
             
+            /**< 音频流量控制*/
+            ZEGO_TRAFFIC_CONTROL_ADAPTIVE_AUDIO_BITRATE = 1 << 2,
+            
             /**< 废弃 */
             ZEGO_TRAFFIC_NONE = ZEGO_TRAFFIC_CONTROL_BASIC,
             ZEGO_TRAFFIC_FPS = ZEGO_TRAFFIC_CONTROL_ADAPTIVE_FPS,
             ZEGO_TRAFFIC_RESOLUTION = ZEGO_TRAFFIC_CONTROL_ADAPTIVE_RESOLUTION,
+        };
+        
+        enum ZegoTrafficControlMinVideoBitrateMode
+        {
+            /** 低于设置的最低码率时，停止视频发送 */
+            ZEGO_TRAFFIC_CONTROL_MIN_VIDEO_BITRATE_NO_VIDEO = 0,
+            /** 低于设置的最低码率时，视频以极低的频率发送 （不超过2FPS) */
+            ZEGO_TRAFFIC_CONTROL_MIN_VIDEO_BITRATE_ULTRA_LOW_FPS
         };
         
         /** 音频录制类型 */
@@ -533,25 +507,36 @@ namespace ZEGO
             VideoStreamLayer_ExtendLayer = 1       /**< 指定拉扩展层（大分辨率)  */
         };
         
+        /** MediaInfo类型 */
+        enum MediaInfoType
+        {
+            SideInfoZegoDefined = 0,            /**< side info  */
+            SeiZegoDefined = 1,                 /**< sei (nalu type = 6,payload type = 243), sei recommend useing this  */
+            SeiUserUnregisted = 2               /**< sei (nalu type = 6,payload type = 5) */
+        };
+
+        /** SEI发送类型 */
+        enum SeiSendType
+        {
+            SeiSendSingleFrame = 0,             /**< sei send single frame  */
+            SeiSendInVideoFrame = 1             /**< sei send in any video frame(IDR, B, P)  */
+        };
+        
         struct SoundLevelInfo
         {
             unsigned int soundLevelID;          ///< soundlevel ID
             unsigned char soundLevel;           ///< soundlevel 的值
         };
+        
+        /** 回声消除模式 */
+        enum ZegoAECMode
+        {
+            AEC_MODE_AGGRESSIVE,
+            AEC_MODE_MEDIUM,
+            AEC_MODE_SOFT
+        };
     }
 }
-
-/** 接口调用返回错误码 */
-enum ZegoErrorCode
-{
-    kZegoErrorCodeOK = 0,    /**< 没有错误 */
-    kZegoErrorCodeInvalidParameter = 1,  /** 调用输入参数错误 */
-    
-    // * 5101 外部音频设备
-    kZegoErrorCodeExternalAudioDeviceWasNotEnabled = 5101, /** 没有启用外部音频设备 */
-    kZegoErrorCodeExternalAudioDeviceEngineError = 5102, /** 处理音频数据异常 */
-};
-
 
 #ifdef __cplusplus
 extern "C" {
@@ -564,6 +549,7 @@ extern "C" {
     ZEGOAVKIT_API void zego_stream_extra_info_add_rtmp_url(struct ZegoStreamExtraPlayInfo* info, const char* url);
     ZEGOAVKIT_API void zego_stream_extra_info_add_flv_url(struct ZegoStreamExtraPlayInfo* info, const char* url);
     ZEGOAVKIT_API void zego_stream_extra_info_set_params(struct ZegoStreamExtraPlayInfo* info, const char* params);
+    ZEGOAVKIT_API void zego_stream_extra_info_should_switch_server(struct ZegoStreamExtraPlayInfo* info, bool should);
     
 #ifdef __cplusplus
 } // __cplusplus defined.

@@ -31,12 +31,28 @@ void ZGMediaPlayerPublishHelper::SetPublishStateObserver(PublishStateObserverTyp
     publish_state_observer_ = cb;
 }
 
+void ZGMediaPlayerPublishHelper::InitMainHwnd(HWND hwnd)
+{
+    main_hwnd_ = hwnd;
+}
+
 void ZGMediaPlayerPublishHelper::OnLoginRoom(int errorCode, const char *pszRoomID, const ZegoStreamInfo *pStreamInfo, unsigned int streamCount)
 {
     ZGENTER_FUN_LOG;
     if (errorCode == 0)
     {
-        LIVEROOM::StartPublishing(ZGHelperInstance()->GetDeviceUUID().c_str(), ZGHelperInstance()->GetDeviceUUID().c_str(), 0);
+        // 切线程后开始推流
+        PostUIData * pdata = CreateUIData();
+        pdata->cb_in_ui_fun = [pdata, this]()->void
+        {
+
+            LIVEROOM::StartPublishing(ZGHelperInstance()->GetDeviceUUID().c_str(), ZGHelperInstance()->GetDeviceUUID().c_str(), 0);
+
+            DestroyUIData(pdata);
+        };
+
+        GlobalPostMsgDataToUI(main_hwnd_, pdata);
+
     }
 }
 

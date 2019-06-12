@@ -7,6 +7,8 @@
 #include "AppSupport/ZGHelper.h"
 #include "AppSupport/ZGLog.h"
 #include "AppSupport/ZGUtilTools.h"
+#include "AppSupport/ZGUIOperator.h"
+
 
 
 ZGExternalVideoCatpureDemoHelper::ZGExternalVideoCatpureDemoHelper()
@@ -117,6 +119,11 @@ void ZGExternalVideoCatpureDemoHelper::SetBitrate(int bitrate)
     LIVEROOM::SetVideoBitrate(bitrate);
 }
 
+void ZGExternalVideoCatpureDemoHelper::InitMainHwnd(HWND hwnd)
+{
+    main_hwnd_ = hwnd;
+}
+
 void ZGExternalVideoCatpureDemoHelper::OnPublishQualityUpdate(const char* pszStreamID, LIVEROOM::ZegoPublishQuality publishQuality)
 {
     ZGLog("publish fps = %.4f", publishQuality.fps);
@@ -140,17 +147,26 @@ void ZGExternalVideoCatpureDemoHelper::OnLoginRoom(int errorCode, const char *ps
     if (errorCode != 0)
     {
         SetCurStatus(kZGExternalVideoCaptureStatus_None);
-
     }
     else {
         SetCurStatus(kZGExternalVideoCaptureStatus_Login_OK);
 
-        // 登录成功，开始推流
-        bool ret = LIVEROOM::StartPublishing(device_uuid_.c_str(), device_uuid_.c_str(), 0);
-        if (ret)
+        // 登录成功，切线程后开始推流
+        PostUIData * pdata = CreateUIData();
+        pdata->cb_in_ui_fun = [pdata, this]()->void
         {
-            SetCurStatus(kZGExternalVideoCaptureStatus_Starting_Publishing);
-        }
+            // 开始推流
+            bool ret = LIVEROOM::StartPublishing(device_uuid_.c_str(), device_uuid_.c_str(), 0);
+            if (ret)
+            {
+                SetCurStatus(kZGExternalVideoCaptureStatus_Starting_Publishing);
+            }
+
+            DestroyUIData(pdata);
+        };
+
+        GlobalPostMsgDataToUI(main_hwnd_, pdata);
+
     }
 }
 
@@ -184,7 +200,6 @@ void ZGExternalVideoCatpureDemoHelper::OnPublishStateUpdate(int stateCode, const
 {
     if (stateCode == 0)
     {
-        assert(cur_status_ == kZGExternalVideoCaptureStatus_Starting_Publishing);
         void * remote_view = remote_video_view_;
 
         // 推流成功，开始拉流
@@ -203,7 +218,6 @@ void ZGExternalVideoCatpureDemoHelper::OnPlayStateUpdate(int stateCode, const ch
 {
     if (stateCode == 0)
     {
-        assert(cur_status_ == kZGExternalVideoCaptureStatus_Starting_Playing);
         SetCurStatus(kZGExternalVideoCaptureStatus_Playing);
     }
     else {

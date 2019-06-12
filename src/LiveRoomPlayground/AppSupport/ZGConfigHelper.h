@@ -47,6 +47,9 @@ public:
     std::vector< AudioDeviceInfo> GetMicDevicesList();
     bool GetDefaultMicDevice(AudioDeviceInfo & info);
 
+    std::vector< AudioDeviceInfo> GetSpeakerDevicesList();
+    bool GetDefaultSpeakerDevice(AudioDeviceInfo & info);
+
     void EnableCamera(bool enable);
     void EnableMic(bool enable);
     void EnableSpeaker(bool enable);
@@ -59,6 +62,7 @@ public:
     void SetPublishVideoFps(int fps);
     void SetVideoDevice(std::string device_id);
     void SetMicDevice(std::string device_id);
+    void SetSpeakerDevice(std::string device_id);
 
     void SetViewLogCallBack(ILogToView * log_cb);
 

@@ -142,7 +142,7 @@ void PlayDemo::OnDisconnect(int errorCode, const char *pszRoomID)
 
 void PlayDemo::OnStreamUpdated(ZegoStreamUpdateType type, ZegoStreamInfo *pStreamInfo, unsigned int streamCount, const char *pszRoomID)
 {
-    PrintLogToView("流更新通知，", type == COMMON::StreamAdded ? "流新增":"流删除");
+    PrintLogToView("流更新通知，%s", type == COMMON::StreamAdded ? "流新增":"流删除");
 }
 
 void PlayDemo::OnStreamExtraInfoUpdated(ZegoStreamInfo *pStreamInfo, unsigned int streamCount, const char *pszRoomID)

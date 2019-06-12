@@ -75,6 +75,8 @@ public:
     // 设置码率
     void SetBitrate(int bitrate);
 
+    void InitMainHwnd(HWND hwnd);
+
 protected:
     virtual void OnPublishQualityUpdate(const char* pszStreamID, LIVEROOM::ZegoPublishQuality publishQuality) override;
     virtual void OnPlayQualityUpdate(const char* pszStreamID, LIVEROOM::ZegoPlayQuality playQuality) override;
@@ -103,6 +105,8 @@ private:
 
     // 初始化sdk回调
     ZGInitSdkCallBackType init_sdk_cb_;
+
+    HWND main_hwnd_ = nullptr;
 
 };
 

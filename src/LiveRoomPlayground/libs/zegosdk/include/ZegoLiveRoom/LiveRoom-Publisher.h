@@ -64,7 +64,7 @@ namespace ZEGO
         /**
          设置或更新推流的附加信息
 
-         @param pszStreamExtraInfo 流附加信息
+         @param pszStreamExtraInfo 流附加信息, 最大为 1024 字节
          @param idx 推流 channel Index. 默认为主Channel
          @return 更新流附加信息成功后，同一房间内的其他人会收到 OnStreamExtraInfoUpdated 通知
          */
@@ -77,6 +77,24 @@ namespace ZEGO
          @param idx 推流 channel Index. 默认为主Channel
          */
         ZEGO_API void SetCustomPublishTarget(const char *pszCustomPublishTarget, AV::PublishChannelIndex idx = AV::PUBLISH_CHN_MAIN);
+        
+        /**
+         添加转推地址
+         
+         @param strTarget 转推地址（支持rtmp/avertp）
+         @param pszStreamID 推流ID
+         @attention 在InitSDK之后调用
+         */
+        ZEGO_API int AddPublishTarget(const char *strTarget, const char* pszStreamID);
+        
+        /**
+         删除转推地址
+         
+         @param strTarget 转推地址（支持rtmp/avertp）
+         @param pszStreamID 推流ID
+         @attention 在InitSDK之后调用
+         */
+        ZEGO_API int DeletePublishTarget(const char *strTarget, const char* pszStreamID);
         
         /**
          开始直播
@@ -355,7 +373,7 @@ namespace ZEGO
         /**
          设置音频设备模式
 
-         @param mode 模式
+         @param mode 模式, 默认 ZEGO_AUDIO_DEVICE_MODE_AUTO
          @attention 确保在 Init 前调用
          */
         ZEGO_API void SetAudioDeviceMode(AV::ZegoAVAPIAudioDeviceMode mode);
@@ -377,6 +395,15 @@ namespace ZEGO
          @discussion 建议在推流前调用设置
          */
         ZEGO_API bool EnableAEC(bool bEnable);
+        
+        
+        /**
+         设置回声消除模式
+
+         @param mode 回声消除模式
+         @discussion 建议在推流前调用设置
+         */
+        ZEGO_API void SetAECMode(AV::ZegoAECMode mode);
         
         /**
          开启摄像头
@@ -482,6 +509,7 @@ namespace ZEGO
          @param factory 工厂对象
          @param idx 推流 channel Index. 默认为主Channel
          @note 必须在 InitSDK 前调用，并且不能置空
+         @warning Deprecated 请使用 zego-api-external-video-capture.h 的 SetVideoCaptureFactory 代替
          */
         ZEGO_API void SetVideoCaptureFactory(AVE::VideoCaptureFactory* factory, AV::PublishChannelIndex idx = AV::PUBLISH_CHN_MAIN);
         
@@ -498,6 +526,7 @@ namespace ZEGO
          @param factory 工厂对象
          @param idx 推流 channel Index. 默认为主Channel
          @note 必须在 InitSDK 前调用，并且不能置空
+         @waring Deprecated，请使用 zego-api-external-video-filter.h 的 SetVideoFilterFactory
          */
         ZEGO_API void SetVideoFilterFactory(AVE::VideoFilterFactory* factory, AV::PublishChannelIndex idx = AV::PUBLISH_CHN_MAIN);
         
@@ -530,10 +559,12 @@ namespace ZEGO
 
          @param bStart true 开启, false 关闭
          @param bOnlyAudioPublish true 纯音频直播，不传输视频数据, false 音视频直播，传输视频数据
+		 @param mediaInfoType 请参考 MediaInfoType 定义，建议使用 SeiZegoDefined
+         @param seiSendType 请参考 SeiSendType 定义，此参数只对发送SEI时有效，当mediaInfoType为 SideInfoZegoDefined 时此参数无效，当发送SEI时建议使用 SeiSendInVideoFrame
          @param idx 推流 channel Index. 默认为主Channel
          @attention onlyAudioPublish 开关在 start 开关开启时才生效
          */
-        ZEGO_API void SetMediaSideFlags(bool bStart, bool bOnlyAudioPublish, AV::PublishChannelIndex idx = AV::PUBLISH_CHN_MAIN);
+        ZEGO_API void SetMediaSideFlags(bool bStart, bool bOnlyAudioPublish, int mediaInfoType = AV::SideInfoZegoDefined, int seiSendType = AV::SeiSendSingleFrame, AV::PublishChannelIndex idx = AV::PUBLISH_CHN_MAIN);
         
         /**
          发送媒体次要信息
@@ -616,10 +647,11 @@ namespace ZEGO
          设置TrafficControl视频码率最小值
          
          @param nBitrate 码率，单位为bps
+         @param mode 低于最低码率时的视频发送模式
          @attention InitSDK 之后调用有效
-         @note 设置一个在traffic control中video码率的一个最小值，当网络不足以发送这个最小值的时候视频会被卡住，而不是以低于该码率继续发送。初始化SDK后默认情况下没有设置改值，即尽可能的保持视频流畅，InitSDK之后可以随时修改，未重新InitSDK之前如果需要取消该设置值的限制可以设置为0
+         @note 设置一个在traffic control中video码率的一个最小值，当网络不足以发送这个最小值的时候视频会被卡住，而不是以低于该码率继续发送。初始化SDK后默认情况下没有设置该值，即尽可能的保持视频流畅，InitSDK之后可以随时修改，未重新InitSDK之前如果需要取消该设置值的限制可以设置为0
          */
-        ZEGO_API void SetMinVideoBitrateForTrafficControl(int nBitrate);
+        ZEGO_API void SetMinVideoBitrateForTrafficControl(int nBitrate, AV::ZegoTrafficControlMinVideoBitrateMode mode = AV::ZEGO_TRAFFIC_CONTROL_MIN_VIDEO_BITRATE_NO_VIDEO);
         
         /**
         音频采集噪声抑制开关

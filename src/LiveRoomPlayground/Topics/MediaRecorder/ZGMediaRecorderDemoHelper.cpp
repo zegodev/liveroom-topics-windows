@@ -150,7 +150,6 @@ void ZGMediaRecorderDemoHelper::OnPublishStateUpdate(int stateCode, const char* 
 {
     if (stateCode == 0)
     {
-        assert(cur_status_ == kZGMediaRecord_PublishStatus_Starting_Publishing);
         SetCurStatus(kZGMediaRecord_PublishStatus_Publishing);
     }
 }

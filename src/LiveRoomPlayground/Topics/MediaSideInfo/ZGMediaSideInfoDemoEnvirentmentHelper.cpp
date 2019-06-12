@@ -206,7 +206,6 @@ void ZGMediaSideInfoDemoEnvirentmentHelper::OnPublishStateUpdate(int stateCode, 
 {
     if (stateCode == 0)
     {
-        assert(cur_status_ == kZGMediaSideTopicStatus_Starting_Publishing);
         void * remote_view = remote_video_view_;
         if (config_.only_audio_publish)
         {
@@ -228,8 +227,6 @@ void ZGMediaSideInfoDemoEnvirentmentHelper::OnPlayStateUpdate(int stateCode, con
 {
     if (stateCode == 0)
     {
-        assert(cur_status_ == kZGMediaSideTopicStatus_Starting_Playing);
-
         SetCurStatus(kZGMediaSideTopicStatus_Ready_For_Messaging);
     }
     else {

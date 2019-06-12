@@ -13,6 +13,7 @@
 #include "ZegoLiveRoom/LiveRoomCallback-Publisher.h"
 #include "ZegoLiveRoom/LiveRoomCallBack.h"
 
+#include "AppSupport/ZGUIOperator.h"
 using std::string;
 
 using namespace ZEGO;
@@ -34,6 +35,7 @@ public:
     void StartPublishing();
     void SetPublishStateObserver(PublishStateObserverType cb);
 
+    void InitMainHwnd(HWND hwnd);
 protected:
     virtual void OnLoginRoom(int errorCode, const char *pszRoomID, const ZegoStreamInfo *pStreamInfo, unsigned int streamCount) override;
     virtual void OnKickOut(int reason, const char *pszRoomID) override;
@@ -46,6 +48,7 @@ protected:
 
 private:
     PublishStateObserverType publish_state_observer_;
+    HWND main_hwnd_ = nullptr;
 };
 
 

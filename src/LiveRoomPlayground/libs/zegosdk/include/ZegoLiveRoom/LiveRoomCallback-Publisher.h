@@ -132,6 +132,14 @@ namespace ZEGO
              */
             virtual void OnRelayCDNStateUpdate(const char *streamID, AV::ZegoStreamRelayCDNInfo* statesInfo, unsigned int statesInfoCount) {}
             
+            /**
+             添加/删除转推地址状态回调
+             
+             @param pszStreamID 流 ID
+             @param strTarget 转推地址（支持rtmp/avertp）
+             @param errorCode 错误码
+             */
+            virtual void OnUpdatePublishTargetState(int errorCode, const char *streamID, int seq) {}
             
             /**
              采集视频的首帧通知

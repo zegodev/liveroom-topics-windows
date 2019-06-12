@@ -137,7 +137,6 @@ void ZGExternalVideoFilterDemoHelper::OnPublishStateUpdate(int stateCode, const 
 {
     if (stateCode == 0)
     {
-        assert(cur_status_ == kZGExternalVideoFilter_PublishStatus_Starting_Publishing);
         SetCurStatus(kZGExternalVideoFilter_PublishStatus_Publishing);
     }
 }

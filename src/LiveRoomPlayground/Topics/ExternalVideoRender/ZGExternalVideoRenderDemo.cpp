@@ -60,7 +60,6 @@ void ZGExternalVideoRenderDemo::SetVideoDataCallBack(ExternalVideoRenderDataCall
 void ZGExternalVideoRenderDemo::OnVideoDataCallback2(const unsigned char **pData, int* dataLen, const char* pszStreamID, int width, int height, int strides[4], AVE::VideoPixelFormat pixelFormat)
 {
 //    ZGENTER_FUN_LOG;
-
     ZGLog("ZGExternalVideoRenderDemo::OnVideoDataCallback2 , pixelFormat = %s", ZGHelperInstance()->GetPixelFormatDesc(pixelFormat).c_str());
 
     // 通过pszStreamID 判断是 kZegoVideoDataMainPublishingStream 还是 kZegoVideoDataAuxPublishingStream 

@@ -10,6 +10,7 @@ void ZGConfigHelper::EnableCamera(bool enable)
 {
     if (ZGManagerInstance()->SdkIsInited())
     {
+        PrintLogToView("%s", enable ? "使用Camera" : "不使用Camera");
         LIVEROOM::EnableCamera(enable);
     }
 }
@@ -18,6 +19,7 @@ void ZGConfigHelper::EnableMic(bool enable)
 {
     if (ZGManagerInstance()->SdkIsInited())
     {
+        PrintLogToView("%s", enable ? "使用Mic" : "不使用Mic");
         LIVEROOM::EnableMic(enable);
     }
 }
@@ -109,6 +111,12 @@ void ZGConfigHelper::SetMicDevice(std::string device_id)
     LIVEROOM::SetAudioDevice(AV::AudioDevice_Input,device_id.c_str());
 }
 
+void ZGConfigHelper::SetSpeakerDevice(std::string device_id)
+{
+    PrintLogToView("设置扬声器设备为：device id = %s ", device_id.c_str());
+    LIVEROOM::SetAudioDevice(AV::AudioDevice_Output, device_id.c_str());
+}
+
 void ZGConfigHelper::SetViewLogCallBack(ILogToView * log_cb)
 {
     view_log_ = log_cb;
@@ -186,6 +194,47 @@ bool ZGConfigHelper::GetDefaultMicDevice(AudioDeviceInfo & info)
         {
             info = vec[i];
             PrintLogToView("读取默认的麦克风设备为：");
+            PrintLogToView("device id = %s", info.device_id.c_str());
+            PrintLogToView("device name = %s", info.device_name.c_str());
+            return true;
+        }
+    }
+    return false;
+}
+
+std::vector< AudioDeviceInfo> ZGConfigHelper::GetSpeakerDevicesList()
+{
+    int audio_device_count = 0;
+
+    AV::DeviceInfo * device_info = LIVEROOM::GetAudioDeviceList(AV::AudioDevice_Output, audio_device_count);
+
+    std::vector<AudioDeviceInfo> audio_device_list;
+    for (int i = 0; i < audio_device_count; ++i)
+    {
+        AudioDeviceInfo item;
+        item.device_id = device_info[i].szDeviceId;
+        item.device_name = UTF8ToGBK(device_info[i].szDeviceName);
+        item.index = i;
+
+        audio_device_list.push_back(item);
+    }
+    return audio_device_list;
+}
+
+bool ZGConfigHelper::GetDefaultSpeakerDevice(AudioDeviceInfo & info)
+{
+    char device_id[512] = { 0 };
+    unsigned int len = 512;
+    LIVEROOM::GetDefaultAudioDeviceId(AV::AudioDevice_Output, device_id, &len);
+    std::string default_id = device_id;
+
+    std::vector<AudioDeviceInfo> vec = GetSpeakerDevicesList();
+    for (int i = 0; i < vec.size(); ++i)
+    {
+        if (vec[i].device_id == default_id)
+        {
+            info = vec[i];
+            PrintLogToView("读取默认的扬声器设备为：");
             PrintLogToView("device id = %s", info.device_id.c_str());
             PrintLogToView("device name = %s", info.device_name.c_str());
             return true;

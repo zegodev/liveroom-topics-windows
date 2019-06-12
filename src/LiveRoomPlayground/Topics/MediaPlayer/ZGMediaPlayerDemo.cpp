@@ -324,3 +324,8 @@ void ZGMediaPlayerDemo::SetAudioStream(long stream_index)
 {
     MEDIAPLAYER::SetAudioStream(stream_index);
 }
+
+void ZGMediaPlayerDemo::InitMainHwnd(HWND hwnd)
+{
+    publish_helper_.InitMainHwnd(hwnd);
+}

@@ -75,6 +75,8 @@ public:
     int GetAudioStreamCount();
     void SetAudioStream(long stream_index);
 
+    void InitMainHwnd(HWND hwnd);
+
 protected:
 
     virtual void OnPlayPause() override;

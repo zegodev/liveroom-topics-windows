@@ -145,7 +145,6 @@ void ZGExternalVideoRenderDemoHelper::OnPublishStateUpdate(int stateCode, const 
 {
     if (stateCode == 0)
     {
-        assert(cur_status_ == kZGExternalVideoRender_PublishStatus_Starting_Publishing);
         SetCurStatus(kZGExternalVideoRender_PublishStatus_Publishing);
     }
 }

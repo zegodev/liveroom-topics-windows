@@ -16,15 +16,70 @@ namespace ZEGO
 {
 	namespace LIVEROOM
 	{
+        
+        /**
+         获取SDK版本号
+
+         @return 版本号
+         */
         ZEGO_API const char* GetSDKVersion();
+        
+        
+        /**
+         获取SDK版本号2
+
+         @return 版本号2
+         */
         ZEGO_API const char* GetSDKVersion2();
-        ZEGO_API bool SetNetType(int nNetType);
+
+        
+        /**
+         设置日志路径
+
+         @param pszLogDir 日志路径
+         @return true 成功；flase 失败；
+         @discussion 默认日志大小 5 * 1024 * 1024 字节
+         */
         ZEGO_API bool SetLogDir(const char* pszLogDir);
+        
+        /**
+         设置日志路径和大小
+
+         @param pszLogDir 日志路径
+         @param lLogFileSize 单个日志文件大小
+         @return true 成功；flase 失败；
+         @discussion 日志大小取值范围[5M, 100M]
+         */
         ZEGO_API bool SetLogDirAndSize(const char* pszLogDir, unsigned long long lLogFileSize = 5 * 1024 * 1024);
+        
+        
+        /**
+         上传日志
+         */
         ZEGO_API void UploadLog();
+        
+        
+        /**
+         设置是否打印控制台信息
+
+         @param bVerbose 控制台信息
+         */
         ZEGO_API void SetVerbose(bool bVerbose);
+        
+        
+        /**
+         设置是否使用测试环境
+
+         @param bTestEnv 测试环境
+         */
         ZEGO_API void SetUseTestEnv(bool bTestEnv);
-        ZEGO_API void SetUseAlphaEnv(bool bAlpha);
+        
+        
+        /**
+         设置平台信息
+
+         @param pszInfo 平台信息
+         */
         ZEGO_API void SetPlatformInfo(const char* pszInfo);
 
         /**
@@ -101,6 +156,7 @@ namespace ZEGO
 
          @param audienceCreateRoom 观众是否可以创建房间。true 可以，false 不可以。默认 true
          @param userStateUpdate 用户状态（用户进入、退出房间）是否广播。true 广播，false 不广播。默认 false
+         @discussion 在登录房间前调用有效，退出房间后失效
          */
         ZEGO_API void SetRoomConfig(bool audienceCreateRoom, bool userStateUpdate);
         
@@ -109,8 +165,18 @@ namespace ZEGO
          
          @param thirdPartyToken 第三方传入的token
          @discussion 使用此函数验证登录时用户的合法性，登录房间前调用，token的生成规则请联系即构。若不需要验证用户合法性，不需要调用此函数
+         @discussion 在登录房间前调用有效，退出房间后失效
          */
         ZEGO_API void SetCustomToken(const char *thirdPartyToken);
+        
+        
+        /**
+         设置房间最大在线人数
+
+         @param maxCount 最大人数
+         @discussion 在登录房间前调用有效，退出房间后失效
+         */
+        ZEGO_API void SetRoomMaxUserCount(unsigned int maxCount);
         
         /**
          登录房间
@@ -369,6 +435,7 @@ namespace ZEGO
          @attention "lower_audio_cap_sample_rate", bool value, default: false. enforce to use lower audio capture sample. for Android
          @attention "alsa_capture_device_name" string value: plughw:[card_id],[device_id], eg: plughw:1,0, default is plug:default. view the device list with arecord. for Linux
          @attention "alsa_playback_device_name" string value: plughw:[card_id],[device_id], eg: plughw:1,0, default is plug:default. view the device list with aplay. for Linux
+         @attention "play_nodata_abort", bool value, default: false，设置拉流时没拉到数据是否终止拉流，设置为false表示不终止，设置为true表示终止，拉流之前调用有效
          */
         ZEGO_API void SetConfig(const char *config);
         

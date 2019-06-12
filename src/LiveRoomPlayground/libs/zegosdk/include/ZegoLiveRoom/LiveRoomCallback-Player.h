@@ -94,6 +94,11 @@ namespace ZEGO
             virtual ~ILivePlayerCallback() {}
         };
         
+        /**
+         * 视频帧数据回调
+         * 
+         * @warning Deprecated，请使用 zego-api-external-video-render.h 中的 IZegoExternalRenderCallback2
+         */
         class IZegoVideoRenderCallback
         {
         public:
