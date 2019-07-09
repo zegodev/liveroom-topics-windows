@@ -32,7 +32,8 @@ namespace MEDIAPLAYER
     {
         ZegoMediaPlayerIndexFirst   = 0,
         ZegoMediaPlayerIndexSecond  = 1,
-        ZegoMediaPlayerIndexThird   = 2
+        ZegoMediaPlayerIndexThird   = 2,
+        ZegoMediaPlayerIndexFourth  = 3
     };
     
     struct ZegoMediaPlayerVideoDataFormat
@@ -129,6 +130,13 @@ namespace MEDIAPLAYER
          调用 Load 接口的回调
          */
         virtual void OnLoadComplete() {}
+        
+        /**
+         播放进度回调
+         
+         @param timestamp 当前播放进度，单位毫秒
+         */
+        virtual void OnProcessInterval(long timestamp) {}
     };
     
     class IZegoMediaPlayerVideoDataCallback
@@ -211,6 +219,14 @@ namespace MEDIAPLAYER
          调用 Load 接口的回调
          */
         virtual void OnLoadComplete(ZegoMediaPlayerIndex index) {}
+        
+        /**
+         播放进度回调
+         
+         @param timestamp 当前播放进度，单位毫秒
+         @param index   播放器序号
+         */
+        virtual void OnProcessInterval(long timestamp, ZegoMediaPlayerIndex index) {}
     };
     
     class IZegoMediaPlayerVideoDataWithIndexCallback

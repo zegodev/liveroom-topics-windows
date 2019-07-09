@@ -38,7 +38,18 @@ namespace MIXSTREAM
          @param pszMixStreamID 混流任务ID
          @param seq 请求 seq
          */
-        virtual void OnMixStreamEx(const AV::ZegoMixStreamResultEx& result, const char* pszMixStreamID, int seq) = 0;
+        virtual void OnMixStreamEx(const AV::ZegoMixStreamResultEx& result, const char* mixStreamID, int seq) = 0;
+        
+        
+        /**
+         混流转推CDN状态回调
+
+         @param mixStreamID 混流任务ID
+         @param statesInfo 混流转推CDN信息
+         @param statesInfoCount 混流转推CDN信息个数
+         @discussion 混流直推即构服务器时，ZegoStreamRelayCDNInfo 中的 rtmpUrl 字段以 avertp:// 开头
+         */
+        virtual void OnMixStreamRelayCDNStateUpdate(const char *mixStreamID, AV::ZegoStreamRelayCDNInfo *statesInfo, unsigned int statesInfoCount) {}
         
         virtual ~IZegoMixStreamExCallback() {}
     };

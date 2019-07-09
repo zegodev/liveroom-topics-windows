@@ -38,17 +38,12 @@ namespace ZEGO
         
         const unsigned int kNetworkNotConnectError        = 11000101;
         const unsigned int kNetworkDnsResolveError        = 11000404;
-        const unsigned int kNetworkDetectTcpError         = 11001001;
-        const unsigned int kNetworkDetectTcpConcectError  = 11001002;
         
         const unsigned int kEngineCreateError             = 12101001;
         const unsigned int kEngineStatusError             = 12101002;
         const unsigned int kEngineStartError              = 12101003;
         const unsigned int kDeniedMaxRetryError           = 12101004;
         const unsigned int kDeniedDisableSwitchLineError  = 12101005;
-        
-        const unsigned int kExternalAudioDeviceWasNotEnabledError  = 12101101;
-        const unsigned int kExternalAudioDeviceEngineError         = 12101102;
         
         const unsigned int kEngineNoPlayDataError         = 12102001;
         const unsigned int kEngineNoPublishDataError      = 12102002;
@@ -109,6 +104,7 @@ namespace ZEGO
         const unsigned int kLiveRoomCouldntConnectError   = 51200007;
         const unsigned int kLiveRoomTimeoutError          = 51200028;
         const unsigned int kLiveRoomSslCaCertError        = 51200060;
+		const unsigned int kLiveRoomInvalidRspError       = 51400003;
         const unsigned int kLiveRoomInputParamsError      = 52000002;
         const unsigned int kLiveRoomRoomAuthError         = 52000101;
         const unsigned int kLiveRoomRoomNotExistError     = 52000104;
@@ -145,6 +141,8 @@ namespace ZEGO
         const unsigned int kRoomMultipleLoginKickoutError = 63000001;
         const unsigned int kRoomManualKickoutError        = 63000002;
         const unsigned int kRoomSessionErrorKickoutError  = 63000003;
+        const unsigned int kRoomDispatchError             = 64000001;
+        const unsigned int kRoomDispatchResultNotMatch    = 64000002;
         
         //混流错误码定义
         const unsigned int kMixStreamNoneMixConfigError   = 80000001; //没有混流配置信息
@@ -265,8 +263,9 @@ namespace ZEGO
         
         /**
          获取error msg
+         @attention 建议传入的msg的长度msglen不小于128字节
          */
-        ZEGOAVKIT_API std::string getErrorMsg(unsigned int error);
+        ZEGOAVKIT_API void getErrorMsg(unsigned int error, char *msg, unsigned int msglen);
     }
 }
 

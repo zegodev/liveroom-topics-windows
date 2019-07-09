@@ -112,6 +112,12 @@ namespace ZEGO
             Device_Deleted,             /**< 删除设备 */
         };
         
+        enum DeviceStatus
+        {
+            Device_Opened = 0,          /**< 设备已打开 */
+            Device_Closed,              /**< 设备已关闭 */
+        };
+        
         /** 音量类型 */
         enum VolumeType
         {
@@ -344,7 +350,14 @@ namespace ZEGO
             Play_TempDisconnected = 5,     /**< 拉流临时中断 */
             Publish_TempDisconnected = 6,  /**< 推流临时中断 */
             
-            Play_VideoBreak = 7,           /**< 拉流卡顿(视频) */
+            Play_VideoBreak = 7,           /**< 视频卡顿开始 */
+            Play_VideoBreakEnd = 8,        /**< 视频卡顿结束 */
+            
+            Play_AudioBreak = 9,           /**< 音频卡顿开始 */
+            Play_AudioBreakEnd = 10,       /**< 音频卡顿结束 */
+
+            PublishInfo_RegisterFailed = 11,   /**< 注册推流信息失败 */
+            PublishInfo_RegisterSuccess = 12, /**< 注册推流信息成功 */
         };
         
         struct EventInfo
@@ -484,6 +497,8 @@ namespace ZEGO
             double videoBreakRate;          ///< 视频卡顿次数
             int rtt;                        ///< 延时(ms)
             int pktLostRate;                ///< 丢包率(0~255)
+            int peerToPeerDelay;            ///< 端到端延迟
+            int peerToPeerPktLostRate;      ///< 端到端丢包率(0~255)
             int quality;                    ///< 质量(0~3)
             int delay;                      ///< 语音延迟(ms)
             

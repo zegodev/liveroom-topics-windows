@@ -97,6 +97,14 @@ namespace ZEGO
         ZEGO_API int DeletePublishTarget(const char *strTarget, const char* pszStreamID);
         
         /**
+         单主播模式下，自定义直推CDN的地址
+         
+         @param pszCDNPublishTarget 目的 rtmp 推流地址
+         @param idx 推流 channel Index. 默认为主Channel
+         */
+        ZEGO_API void SetCDNPublishTarget(const char *pszCDNPublishTarget, AV::PublishChannelIndex idx = AV::PUBLISH_CHN_MAIN);
+        
+        /**
          开始直播
 
          @param pszTitle 直播名称
@@ -452,6 +460,7 @@ namespace ZEGO
 
          @param bEnable true 启用混音输入，false 关闭混音输入。默认 false
          @return true 成功，false 失败
+         @warning Deprecated 请使用 zego-api-audio-aux.h 中的 EnableAux 方法
          */
         ZEGO_API bool EnableAux(bool bEnable);
         
@@ -460,6 +469,7 @@ namespace ZEGO
 
          @param bMute true: aux 输入播放静音，false: 不静音。默认 false
          @return true 成功，false 失败
+         @warning Deprecated 请使用 zego-api-audio-aux.h 中的 MuteAux 方法
          */
         ZEGO_API bool MuteAux(bool bMute);
         
@@ -614,6 +624,7 @@ namespace ZEGO
          设置混音音量
 
          @param volume 0~100，默认为 50
+         @warning Deprecated 请使用 zego-api-audio-aux.h 中的 SetAuxVolume 方法
          */
         ZEGO_API void SetAuxVolume(int volume);
         

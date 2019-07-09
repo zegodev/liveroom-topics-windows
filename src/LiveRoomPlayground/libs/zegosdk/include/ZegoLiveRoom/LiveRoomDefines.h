@@ -73,6 +73,8 @@ namespace ZEGO
             double videoBreakRate;   ///< 视频卡顿次数
             int rtt;                 ///< 延时(ms)
             int pktLostRate;         ///< 丢包率(0~255)
+            int peerToPeerDelay;     ///< 端到端延迟
+            int peerToPeerPktLostRate; ///< 端到端丢包率(0~255)
             int quality;             ///< 质量(0~3)
             int delay;               ///< 语音延时(ms)
             

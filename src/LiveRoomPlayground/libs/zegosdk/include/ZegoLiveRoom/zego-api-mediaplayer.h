@@ -174,6 +174,17 @@ namespace MEDIAPLAYER
     ZEGOAVKIT_API void TakeSnapshot(ZegoMediaPlayerIndex index = ZegoMediaPlayerIndexFirst);
     
     /**
+     设置播放进度回调间隔。
+     
+     @param interval 回调间隔，单位毫秒。有效值为大于等于 0。默认值为 0。
+     @param index 播放器序号, 默认为 ZegoMediaPlayerIndexFirst。
+     
+     @note 设置 interval 大于 0 时，就会收到 OnPlaybackProgress 回调。interval = 0 时，停止回调。
+     @note 回调不会严格按照设定的回调间隔值返回，而是以处理音频帧或者视频帧的频率来判断是否需要回调。
+     */
+    ZEGOAVKIT_API bool SetProcessInterval(long interval, ZegoMediaPlayerIndex index = ZegoMediaPlayerIndexFirst);
+    
+    /**
      设置播放器事件回调
      
      @param callback 回调 IZegoMediaPlayerEventCallback
