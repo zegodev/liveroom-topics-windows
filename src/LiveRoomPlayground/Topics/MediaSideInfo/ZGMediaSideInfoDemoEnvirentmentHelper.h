@@ -66,11 +66,11 @@ public:
 
     void InitSetLoginAndPlayConfig(HelperConfig config);
 
-    void LoginByConfig();
+    void LoginByConfig(bool is_test_env = true);
 
     void StopPlay();
 
-    void PlayStreamByConfig();
+    void PlayStreamByConfig(bool is_stream_id = true);
 
     void LoginRoom();
 

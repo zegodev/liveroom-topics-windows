@@ -62,6 +62,7 @@ namespace ZEGO
          @param callback 流控回调接口，当需要调整采集参数时，通过此回调通知
          @param idx 通道 ID，目前只支持对主通道进行流控
          @return true: 设置成功; false: 设置失败
+         @attention 必须在 InitSDK 前调用，置空必须在 UninitSDK 之后
          */
         ZEGOAVKIT_API bool SetTrafficControlCallback(IZegoTrafficControlCallback* callback, AV::PublishChannelIndex idx = AV::PUBLISH_CHN_MAIN);
     }

@@ -117,6 +117,8 @@ namespace ZEGO
             
             /**
              混流请求结果回调
+             
+             @warning Deprecated，请使用 zego-api-mix-stream.h 中的 OnMixStreamEx 代替
 
              @param result 结果
              @param pszMixStreamID 混流 ID
@@ -158,8 +160,8 @@ namespace ZEGO
             
             /**
              更新混流配置回调
- 
-             @note 不建议使用，请用 OnMixStream
+             
+             @warning Deprecated，请使用 zego-api-mix-stream.h 中的 OnMixStreamEx 代替
              */
             virtual void OnUpdateMixStreamConfig(unsigned int uiErrorCode, const char* pszMixStreamID, const ZegoPublishingStreamInfo& oStreamInfo) {}
         };

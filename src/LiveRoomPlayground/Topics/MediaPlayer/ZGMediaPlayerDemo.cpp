@@ -34,7 +34,8 @@ ZGMediaPlayerDemo::~ZGMediaPlayerDemo()
 bool ZGMediaPlayerDemo::InitMediaPlayer()
 {
     //LIVEROOM::SetVerbose(true);
-
+    // 使用测试环境，生产上线时，需要联系zego技术支持切换为正式环境，并修改为 SetUseTestEnv(FALSE); 表示启用正式环境
+    LIVEROOM::SetUseTestEnv(TRUE);
     ZGManagerInstance()->EnableExternalVideoCapture(&video_capture_, nullptr);
 
     MEDIAPLAYER::InitWithType(MEDIAPLAYER::ZegoMediaPlayerType::ZegoMediaPlayerTypeAux);

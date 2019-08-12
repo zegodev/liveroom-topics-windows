@@ -7,20 +7,54 @@
 #include "ZegoLiveRoomTopicsDlg.h"
 #include "afxdialogex.h"
 
+#include "ZegoLiveRoom/LiveRoom.h"
+
+#include <windows.h>
+#include <DbgHelp.h>
+#pragma comment(lib,"DbgHelp.lib")
+
+
+#define DUMP_FILE_NAME _T("ZegoLiveRoomTopicsDemo.dmp")
+
+void CreateDumpFile(LPCTSTR lpstrDumpFilePathName, EXCEPTION_POINTERS *pException)
+{
+    HANDLE hDumpFile = CreateFile(lpstrDumpFilePathName, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+    MINIDUMP_EXCEPTION_INFORMATION dumpInfo;
+    dumpInfo.ExceptionPointers = pException;
+    dumpInfo.ThreadId = GetCurrentThreadId();
+    dumpInfo.ClientPointers = TRUE;
+    MiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), hDumpFile, MiniDumpNormal, &dumpInfo, NULL, NULL);
+    CloseHandle(hDumpFile);
+}
+
+LONG ApplicationCrashHandler(EXCEPTION_POINTERS *pException)
+{
+    CreateDumpFile(DUMP_FILE_NAME, pException);
+    return EXCEPTION_EXECUTE_HANDLER;
+}
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
-#define TOPIC_PUBLISH _T("推流")
-#define TOPIC_PLAY _T("拉流")
+#define TOPIC_PUBLISH                   _T("推流")
+#define TOPIC_PLAY                      _T("拉流")
+#define TOPIC_VIDEO_COMMUNICATION       _T("视频通话")
+#define TOPIC_JOIN_LIVE                 _T("直播连麦")
+#define TOPIC_MIXSTREAM                 _T("混流")
 
-#define TOPIC_MIDIA_PLAYER      _T("MediaPlayer")
-#define TOPIC_MEDIA_SIDE_INFO   _T("Media Side Info")
-#define TOPIC_MEDIA_RECORDER   _T("Media Recorder")
-#define TOPIC_EXTERNAL_VIDEO_CAPTURE _T("External Video Capture")
-#define TOPIC_EXTERNAL_VIDEO_RENDER _T("External Video Render")
 
-#define TOPIC_EXTERNAL_VIDEO_FILTER _T("External Video Filter")
+#define TOPIC_MIDIA_PLAYER              _T("MediaPlayer")
+#define TOPIC_MEDIA_SIDE_INFO           _T("Media Side Info")
+#define TOPIC_MEDIA_RECORDER            _T("Media Recorder")
+#define TOPIC_EXTERNAL_VIDEO_CAPTURE    _T("External Video Capture")
+#define TOPIC_EXTERNAL_VIDEO_RENDER     _T("External Video Render")
+
+#define TOPIC_EXTERNAL_VIDEO_FILTER     _T("External Video Filter")
+
+
+// TODO:
+#define DEMO_VERSION "0.0.2"
 
 
 // 用于应用程序“关于”菜单项的 CAboutDlg 对话框
@@ -128,7 +162,40 @@ BOOL CZegoLiveRoomTopicsDlg::OnInitDialog()
 
 	// TODO: 在此添加额外的初始化代码
 
+    SetUnhandledExceptionFilter((LPTOP_LEVEL_EXCEPTION_FILTER)ApplicationCrashHandler);
+
     InitTopicList();
+
+
+    CStringA stra_version;
+    stra_version.Format("%s", ZEGO::LIVEROOM::GetSDKVersion());
+
+    GetDlgItem(IDC_STATIC_SDK_VERSION)->SetWindowText(CString(stra_version.GetBuffer()));
+
+    stra_version.Format("%s", ZEGO::LIVEROOM::GetSDKVersion2());
+    GetDlgItem(IDC_STATIC_VE_VERSION)->SetWindowText(CString(stra_version.GetBuffer()));
+
+
+//     char buffer[512];
+//     GetEnvironmentVariableA("BUILD_NUMBER", buffer, 512);
+// 
+//     string build_number(buffer);
+// 
+//     if (build_number != "" && build_number.length() < 5)
+//     {
+//         for (int i = 0; i < 5 - build_number.length(); ++i)
+//         {
+// 
+//         }
+//     }
+// 
+//     for (int i = 0;i < build_number.length(); ++i)
+//     {
+// 
+//     }
+
+    stra_version.Format("%s", DEMO_VERSION);
+    GetDlgItem(IDC_STATIC_DEMO_VERSION)->SetWindowText(CString(stra_version.GetBuffer()));
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -186,6 +253,10 @@ void CZegoLiveRoomTopicsDlg::InitTopicList()
 {
     basic_topic_list_contronl_.AddString(TOPIC_PUBLISH);
     basic_topic_list_contronl_.AddString(TOPIC_PLAY);
+
+    advanced_topic_list_contronl_.AddString(TOPIC_VIDEO_COMMUNICATION);
+    advanced_topic_list_contronl_.AddString(TOPIC_JOIN_LIVE);
+    advanced_topic_list_contronl_.AddString(TOPIC_MIXSTREAM);
 
     advanced_topic_list_contronl_.AddString(TOPIC_MIDIA_PLAYER);
     advanced_topic_list_contronl_.AddString(TOPIC_MEDIA_SIDE_INFO);
@@ -266,6 +337,15 @@ void CZegoLiveRoomTopicsDlg::OnLbnSelchangeListTopicBasic()
     if (have_processed)
     {
         advanced_topic_list_contronl_.SetCurSel(-1);
+
+        GetDlgItem(IDC_STATIC_MAIN_INFO0)->ShowWindow(SW_HIDE);
+        GetDlgItem(IDC_STATIC_MAIN_INFO1)->ShowWindow(SW_HIDE);
+        GetDlgItem(IDC_STATIC_MAIN_INFO2)->ShowWindow(SW_HIDE);
+        GetDlgItem(IDC_STATIC_MAIN_INFO3)->ShowWindow(SW_HIDE);
+
+        GetDlgItem(IDC_STATIC_SDK_VERSION)->ShowWindow(SW_HIDE);
+        GetDlgItem(IDC_STATIC_VE_VERSION)->ShowWindow(SW_HIDE);
+        GetDlgItem(IDC_STATIC_DEMO_VERSION)->ShowWindow(SW_HIDE);
     }
 }
 
@@ -367,12 +447,69 @@ void CZegoLiveRoomTopicsDlg::OnLbnSelchangeListTopicAdvanced()
             ShowDlg(external_video_filter_);
             have_processed = true;
         }
+        else if (str == TOPIC_VIDEO_COMMUNICATION)
+        {
+            if (video_communication_ == nullptr)
+            {
+                video_communication_ = CVideoCommunicationDlg::CreateDlgInstance(this);
+                dlg_list_.push_back(video_communication_);
+            }
+            CRect rect;
+            GetDlgItem(IDC_PANEL)->GetWindowRect(rect);
+            ScreenToClient(&rect);
+            video_communication_->MoveWindow(rect.left, rect.top, rect.Width(), rect.Height());
+            ShowDlg(video_communication_);
+            have_processed = true;
+        }
+        else if (str == TOPIC_JOIN_LIVE)
+        {
+            if (join_live_dlg_ == nullptr)
+            {
+                join_live_dlg_ = CJoinLiveDlg::CreateDlgInstance(this);
+                dlg_list_.push_back(join_live_dlg_);
+            }
+            CRect rect;
+            GetDlgItem(IDC_PANEL)->GetWindowRect(rect);
+            ScreenToClient(&rect);
+            join_live_dlg_->MoveWindow(rect.left, rect.top, rect.Width(), rect.Height());
+            ShowDlg(join_live_dlg_);
+
+            join_live_dlg_->InitDlg();
+
+            have_processed = true;
+        }
+        else if (str == TOPIC_MIXSTREAM)
+        {
+            if (mixstream_dlg_ == nullptr)
+            {
+                mixstream_dlg_ = CMixStreamDlg::CreateDlgInstance(this);
+                dlg_list_.push_back(mixstream_dlg_);
+            }
+            CRect rect;
+            GetDlgItem(IDC_PANEL)->GetWindowRect(rect);
+            ScreenToClient(&rect);
+            mixstream_dlg_->MoveWindow(rect.left, rect.top, rect.Width(), rect.Height());
+            ShowDlg(mixstream_dlg_);
+
+            mixstream_dlg_->InitDlg();
+
+            have_processed = true;
+        }
     }
 
 
     if (have_processed)
     {
         basic_topic_list_contronl_.SetCurSel(-1);
+
+        GetDlgItem(IDC_STATIC_MAIN_INFO0)->ShowWindow(SW_HIDE);
+        GetDlgItem(IDC_STATIC_MAIN_INFO1)->ShowWindow(SW_HIDE);
+        GetDlgItem(IDC_STATIC_MAIN_INFO2)->ShowWindow(SW_HIDE);
+        GetDlgItem(IDC_STATIC_MAIN_INFO3)->ShowWindow(SW_HIDE);
+
+        GetDlgItem(IDC_STATIC_SDK_VERSION)->ShowWindow(SW_HIDE);
+        GetDlgItem(IDC_STATIC_VE_VERSION)->ShowWindow(SW_HIDE);
+        GetDlgItem(IDC_STATIC_DEMO_VERSION)->ShowWindow(SW_HIDE);
     }
 }
 
@@ -397,6 +534,6 @@ void CZegoLiveRoomTopicsDlg::OnBnClickedButtonFaq()
 
 void CAboutDlg::OnBnClickedOk()
 {
-    ShellExecute(NULL, L"open", L"https://doc.zego.im/CN/621.html", NULL, NULL, SW_SHOWNORMAL);
+    ShellExecute(NULL, L"open", L"https://console.zego.im/acount", NULL, NULL, SW_SHOWNORMAL);
 
 }

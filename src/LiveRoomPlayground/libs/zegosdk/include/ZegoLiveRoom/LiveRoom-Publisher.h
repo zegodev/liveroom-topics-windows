@@ -171,7 +171,7 @@ namespace ZEGO
         /**
          设置混流数据配置
 
-         @warning Deprecated，请使用 ZEGO::MIXSTREAM::ZegoStreamMixer::mixStream
+         @warning Deprecated，请使用 zego-api-mix-stream.h 中的 MixStreamEx 代替
          
          @param pszMixStreamID 混流 ID
          @param nMixVideoWidth 混流后视频的宽
@@ -183,7 +183,7 @@ namespace ZEGO
         /**
          更新混流配置
 
-         @warning Deprecated，请使用 ZEGO::MIXSTREAM::ZegoStreamMixer::mixStream
+         @warning Deprecated，请使用 zego-api-mix-stream.h 中的 MixStreamEx 代替
          
          @param pConfigList 输入流配置数组首元素指针
          @param size 输入流个数
@@ -194,7 +194,7 @@ namespace ZEGO
         /**
          开始混流
          
-         @warning Deprecated，请使用 ZEGO::MIXSTREAM::ZegoStreamMixer::mixStream
+         @warning Deprecated，请使用 zego-api-mix-stream.h 中的 MixStreamEx 代替
          
          @param config 混流配置
          @param seq 请求序号，回调会带回此 seq
@@ -466,9 +466,13 @@ namespace ZEGO
         
         /**
          混音静音开关
-
-         @param bMute true: aux 输入播放静音，false: 不静音。默认 false
-         @return true 成功，false 失败
+         
+         @note 1. 当开启静音后，主播端将听不到混音内容，观众端依然能听到混音声音。
+         
+         * 2.此 API 可以在混音中的任意时间调用，取决于用户需求。
+         @param bMute  true 表示静音，false 表示恢复音量。
+         @return  true 表示调用成功，false 表示调用失败。
+         @see 相关接口请查看 SetAuxVolume
          @warning Deprecated 请使用 zego-api-audio-aux.h 中的 MuteAux 方法
          */
         ZEGO_API bool MuteAux(bool bMute);
@@ -623,7 +627,11 @@ namespace ZEGO
         /**
          设置混音音量
 
-         @param volume 0~100，默认为 50
+         @note 1. 此 API 可以在混音之前或者混完音之后调用，取决于用户需求。
+         
+         * 2.SetAuxVolume 的工作逻辑都是基于对引擎的输入输出数据进行处理，即对输入 SDK 的音频数据的音量大小进行设置，与进行混音的推流设备的系统音量没有关系。
+         @param volume 音量值范围 0 ~ 100，默认为 50。
+         @see 相关接口请查看 MuteAux，EnableAux
          @warning Deprecated 请使用 zego-api-audio-aux.h 中的 SetAuxVolume 方法
          */
         ZEGO_API void SetAuxVolume(int volume);

@@ -32,6 +32,7 @@ void ZGExternalVideoCaptureManager::SetExternalSourceParams(ZGExternalVideoSourc
 
 void ZGExternalVideoCaptureManager::CreateExternalSource(ZGExternalVideoSourceType source_type)
 {
+    std::lock_guard<std::mutex> lock(external_source_mutex_);
     switch (source_type)
     {
         // 图片源
@@ -104,24 +105,29 @@ void ZGExternalVideoCaptureManager::CaptureVideoDataThread()
             break;
         }
 
-        if (external_source_)
         {
-            std::shared_ptr<ZGExternalVideoData> video_data;
-            // 获取外部采集的数据
-            external_source_->OnGetVideoData(video_data);
-            if (video_data != nullptr)
+            std::lock_guard<std::mutex> lock(external_source_mutex_);
+            if (external_source_)
             {
-                unsigned long long reference_time = video_data->reference_time == 0 ? GetTimeStamp(): video_data->reference_time;
-                // 推给sdk
-                demo_.PushExternalVideoData((const char *)video_data->data.get(), video_data->len, video_data->fomat, reference_time);
-                // 回调渲染
-                if (video_data_cb_)
+                std::shared_ptr<ZGExternalVideoData> video_data;
+                // 获取外部采集的数据
+                external_source_->OnGetVideoData(video_data);
+                if (video_data != nullptr)
                 {
-                    // for render
-                    video_data_cb_(video_data);
+                    unsigned long long reference_time = video_data->reference_time == 0 ? GetTimeStamp() : video_data->reference_time;
+                    // 推给sdk
+                    demo_.PushExternalVideoData((const char *)video_data->data.get(), video_data->len, video_data->fomat, reference_time);
+                    // 回调渲染
+                    if (video_data_cb_)
+                    {
+                        // for render
+                        video_data_cb_(video_data);
+                    }
                 }
             }
+
         }
+
         // sleep 控制帧率
         int need_sleep_ms = 1000.0f / capture_fps_ - timer.ElapsedMs();
         std::this_thread::sleep_for(std::chrono::milliseconds(need_sleep_ms));

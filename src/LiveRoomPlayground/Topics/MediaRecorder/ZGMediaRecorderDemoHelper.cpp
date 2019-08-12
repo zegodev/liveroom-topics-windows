@@ -27,6 +27,8 @@ void ZGMediaRecorderDemoHelper::LoginAndPreview(void * local_video_view)
 
 void ZGMediaRecorderDemoHelper::LoginRoom()
 {
+    // 使用测试环境，生产上线时，需要联系zego技术支持切换为正式环境，并修改为 SetUseTestEnv(FALSE); 表示启用正式环境
+    LIVEROOM::SetUseTestEnv(TRUE);
     ZGManagerInstance()->EnableExternalVideoCapture(nullptr, nullptr);
     LIVEROOM::SetUser(stream_id_.c_str(), stream_id_.c_str());
     LIVEROOM::SetLivePublisherCallback(this);

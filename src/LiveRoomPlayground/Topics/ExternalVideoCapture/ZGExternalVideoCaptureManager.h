@@ -11,6 +11,8 @@
 #include <string>
 #include <thread>
 #include <atomic>
+#include <mutex>
+
 
 #include "ZGExternalVideoSource.h"
 #include "ZGExternalVideoCaptureDemo.h"
@@ -72,6 +74,8 @@ private:
 
     // 获取外部采集源数据的接口
     std::shared_ptr<ZGExternalVideoSource> external_source_;
+
+    std::mutex external_source_mutex_;
 
     // 外部采集源参数
     ZGExternalVideoSourceParams source_params_;

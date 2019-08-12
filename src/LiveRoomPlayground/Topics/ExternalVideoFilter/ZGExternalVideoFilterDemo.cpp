@@ -39,7 +39,8 @@ void ZGExternalVideoFilterDemo::EnableVideoFilter(bool enable)
         LIVEROOM::SetVideoFilterFactory(this);
     }
 
-   
+    // 使用测试环境，生产上线时，需要联系zego技术支持切换为正式环境，并修改为 SetUseTestEnv(FALSE); 表示启用正式环境
+    LIVEROOM::SetUseTestEnv(TRUE);
     ZGManagerInstance()->InitSdk();
 }
 
@@ -224,7 +225,6 @@ void ZGExternalVideoFilterDemo::BeautifyProcess()
                 pool->QueueInputBuffer(index, filter_data_list_[read_index_]->width_, filter_data_list_[read_index_]->height_, filter_data_list_[read_index_]->stride_, filter_data_list_[read_index_]->timestamp_100n_);
             
             }
-
 
             read_index_ = (read_index_ + 1) % MAX_FILTER_FRAME_COUNT;
             pending_count_--;

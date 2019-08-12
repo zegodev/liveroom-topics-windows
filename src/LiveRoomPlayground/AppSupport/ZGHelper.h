@@ -8,6 +8,7 @@
 #define ZGHelper_h__
 
 #include <string>
+#include <stdint.h>
 
 #include "ZegoLiveRoom/video_format.h"
 
@@ -28,6 +29,9 @@ public:
 
     string GetPixelFormatDesc(AVE::VideoPixelFormat format);
 
+    int64_t GetCurTimeStampMs();
+
+    string GetRandomUUID();
 private:
     ZGHelper();
     ~ZGHelper();

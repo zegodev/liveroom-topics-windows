@@ -37,20 +37,22 @@ namespace ZEGO
          设置日志路径
 
          @param pszLogDir 日志路径
+         @param pszSubFolder 日志子目录，如果指定了子目录，则日志文件会存放在此子目录下
          @return true 成功；flase 失败；
          @discussion 默认日志大小 5 * 1024 * 1024 字节
          */
-        ZEGO_API bool SetLogDir(const char* pszLogDir);
+        ZEGO_API bool SetLogDir(const char* pszLogDir, const char* pszSubFolder = nullptr);
         
         /**
          设置日志路径和大小
 
          @param pszLogDir 日志路径
-         @param lLogFileSize 单个日志文件大小
+         @param lLogFileSize 单个日志文件大小, 默认 5M。当设置为 0 时，不写日志（不推荐，当 SDK 出问题时无法定位原因）
+         @param pszSubFolder 日志子目录，如果指定了子目录，则日志文件会存放在此子目录下
          @return true 成功；flase 失败；
-         @discussion 日志大小取值范围[5M, 100M]
+         @discussion 日志大小取值范围[0M, 100M]; 当设置为 0 时，不写日志（不推荐，当 SDK 出问题时无法定位原因）
          */
-        ZEGO_API bool SetLogDirAndSize(const char* pszLogDir, unsigned long long lLogFileSize = 5 * 1024 * 1024);
+        ZEGO_API bool SetLogDirAndSize(const char* pszLogDir, unsigned long long lLogFileSize = ZEGO_DEFAULT_LOG_SIZE, const char* pszSubFolder = nullptr);
         
         
         /**

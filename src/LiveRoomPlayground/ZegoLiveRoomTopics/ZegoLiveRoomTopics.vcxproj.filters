@@ -70,6 +70,24 @@
     <Filter Include="Topics\Play\PlayUI">
       <UniqueIdentifier>{5c011c02-c151-4caf-8d4e-8b0f1bb6ed0b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Topics\VideoCommunication">
+      <UniqueIdentifier>{0755d37e-86ad-4b22-876c-704e959f2089}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Topics\VideoCommunication\VideoCommunicationUI">
+      <UniqueIdentifier>{12047ed5-dd67-4e57-9cc4-862013358967}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Topics\JoinLive">
+      <UniqueIdentifier>{756916d4-2b18-42c6-81ec-cb727ff96d33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Topics\JoinLive\JoinLiveUI">
+      <UniqueIdentifier>{b7af5c98-ca5d-4a14-9704-c3729348db04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Topics\MixStream">
+      <UniqueIdentifier>{1557f4e0-7317-40d6-988b-d68fec04266e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Topics\MixStream\MixStreamUI">
+      <UniqueIdentifier>{f29d8072-0037-4135-9e67-44a59c76e213}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -357,6 +375,60 @@
     <ClInclude Include="..\Topics\Play\PlayUI\resource.h">
       <Filter>Topics\Play\PlayUI</Filter>
     </ClInclude>
+    <ClInclude Include="..\Topics\VideoCommunication\VideoCommunicationUI\resource.h">
+      <Filter>Topics\VideoCommunication\VideoCommunicationUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\VideoCommunication\VideoCommunicationUI\VideoCommunicationDlg.h">
+      <Filter>Topics\VideoCommunication\VideoCommunicationUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\VideoCommunication\VideoCommunicationDemo.h">
+      <Filter>Topics\VideoCommunication</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\JoinLive\JoinLiveUI\JoinLiveDlg.h">
+      <Filter>Topics\JoinLive\JoinLiveUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\JoinLive\JoinLiveUI\JoinLiveLiving.h">
+      <Filter>Topics\JoinLive\JoinLiveUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\JoinLive\JoinLiveUI\JoinLiveRoomList.h">
+      <Filter>Topics\JoinLive\JoinLiveUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\JoinLive\JoinLiveUI\resource.h">
+      <Filter>Topics\JoinLive\JoinLiveUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\JoinLive\JoinLiveDemo.h">
+      <Filter>Topics\JoinLive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\AppSupport\ZGHttpClient.h">
+      <Filter>AppSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="..\AppSupport\ZGTaskQueue.h">
+      <Filter>AppSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\MixStream\MixStreamUI\MixStreamAdvanceConfigDlg.h">
+      <Filter>Topics\MixStream\MixStreamUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\MixStream\MixStreamUI\MixStreamBasicConfigDlg.h">
+      <Filter>Topics\MixStream\MixStreamUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\MixStream\MixStreamUI\MixStreamDlg.h">
+      <Filter>Topics\MixStream\MixStreamUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\MixStream\MixStreamUI\MixStreamPublishDlg.h">
+      <Filter>Topics\MixStream\MixStreamUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\MixStream\MixStreamUI\resource.h">
+      <Filter>Topics\MixStream\MixStreamUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\MixStream\MixStreamDemo.h">
+      <Filter>Topics\MixStream</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\MixStream\MixStreamHelper.h">
+      <Filter>Topics\MixStream</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\MixStream\MixStreamUI\MixStreamRoomListDlg.h">
+      <Filter>Topics\MixStream\MixStreamUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -530,6 +602,51 @@
     <ClCompile Include="..\Topics\Play\PlayUI\PlayRealDataDlg.cpp">
       <Filter>Topics\Play\PlayUI</Filter>
     </ClCompile>
+    <ClCompile Include="..\Topics\VideoCommunication\VideoCommunicationUI\VideoCommunicationDlg.cpp">
+      <Filter>Topics\VideoCommunication\VideoCommunicationUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\VideoCommunication\VideoCommunicationDemo.cpp">
+      <Filter>Topics\VideoCommunication</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\JoinLive\JoinLiveUI\JoinLiveDlg.cpp">
+      <Filter>Topics\JoinLive\JoinLiveUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\JoinLive\JoinLiveUI\JoinLiveLiving.cpp">
+      <Filter>Topics\JoinLive\JoinLiveUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\JoinLive\JoinLiveUI\JoinLiveRoomList.cpp">
+      <Filter>Topics\JoinLive\JoinLiveUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\JoinLive\JoinLiveDemo.cpp">
+      <Filter>Topics\JoinLive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\AppSupport\ZGHttpClient.cpp">
+      <Filter>AppSupport</Filter>
+    </ClCompile>
+    <ClCompile Include="..\AppSupport\ZGTaskQueue.cpp">
+      <Filter>AppSupport</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\MixStream\MixStreamUI\MixStreamAdvanceConfigDlg.cpp">
+      <Filter>Topics\MixStream\MixStreamUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\MixStream\MixStreamUI\MixStreamBasicConfigDlg.cpp">
+      <Filter>Topics\MixStream\MixStreamUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\MixStream\MixStreamUI\MixStreamDlg.cpp">
+      <Filter>Topics\MixStream\MixStreamUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\MixStream\MixStreamUI\MixStreamPublishDlg.cpp">
+      <Filter>Topics\MixStream\MixStreamUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\MixStream\MixStreamDemo.cpp">
+      <Filter>Topics\MixStream</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\MixStream\MixStreamHelper.cpp">
+      <Filter>Topics\MixStream</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\MixStream\MixStreamUI\MixStreamRoomListDlg.cpp">
+      <Filter>Topics\MixStream\MixStreamUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ZegoLiveRoomTopics.rc">
@@ -558,6 +675,15 @@
     </ResourceCompile>
     <ResourceCompile Include="..\Topics\Play\PlayUI\Play.rc">
       <Filter>Topics\Play\PlayUI</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="..\Topics\VideoCommunication\VideoCommunicationUI\VideoCommunication.rc">
+      <Filter>Topics\VideoCommunication\VideoCommunicationUI</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="..\Topics\JoinLive\JoinLiveUI\JoinLive.rc">
+      <Filter>Topics\JoinLive\JoinLiveUI</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="..\Topics\MixStream\MixStreamUI\MixStream.rc">
+      <Filter>Topics\MixStream\MixStreamUI</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>

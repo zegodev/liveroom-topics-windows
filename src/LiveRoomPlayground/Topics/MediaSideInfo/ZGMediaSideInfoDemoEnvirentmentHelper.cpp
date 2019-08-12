@@ -24,15 +24,18 @@ void ZGMediaSideInfoDemoEnvirentmentHelper::InitSetLoginAndPlayConfig(HelperConf
     login_and_play_config_ = config;
 }
 
-void ZGMediaSideInfoDemoEnvirentmentHelper::LoginByConfig()
+void ZGMediaSideInfoDemoEnvirentmentHelper::LoginByConfig(bool is_test_env)
 {
     string user_id = device_uuid_ + "_user_id";
     string user_name = device_uuid_ + "_user_name";
     LIVEROOM::SetUser(user_id.c_str(), user_name.c_str());
     LIVEROOM::SetLivePlayerCallback(this);
     LIVEROOM::SetRoomCallback(this);
+    
+    LIVEROOM::SetUseTestEnv(is_test_env);
+
     ZGManagerInstance()->InitSdk(login_and_play_config_.app_id, login_and_play_config_.sign.data(), login_and_play_config_.sign.size());
-    LIVEROOM::LoginRoom(login_and_play_config_.room_id.c_str(), ZEGO::LIVEROOM::Audience, login_and_play_config_.stream_id.c_str());
+    LIVEROOM::LoginRoom(login_and_play_config_.room_id.c_str(), ZEGO::LIVEROOM::Audience, login_and_play_config_.room_name.c_str());
     SetCurStatus(kZGMediaSideTopicStatus_Starting_Login_Room);
 }
 
@@ -41,10 +44,42 @@ void ZGMediaSideInfoDemoEnvirentmentHelper::StopPlay()
     LIVEROOM::StopPlayingStream(login_and_play_config_.stream_id.c_str());
 }
 
-void ZGMediaSideInfoDemoEnvirentmentHelper::PlayStreamByConfig()
+void ZGMediaSideInfoDemoEnvirentmentHelper::PlayStreamByConfig(bool is_stream_id)
 {
     const char* play_params = login_and_play_config_.play_params == "" ? 0 : login_and_play_config_.play_params.c_str();
-    bool play_result = LIVEROOM::StartPlayingStream(login_and_play_config_.stream_id.c_str(), login_and_play_config_.video_view, play_params);
+
+    bool play_result = false;
+
+    if (is_stream_id)
+    {
+        play_result = LIVEROOM::StartPlayingStream(login_and_play_config_.stream_id.c_str(), login_and_play_config_.video_view, play_params);
+    }
+    else {
+
+        string sid = login_and_play_config_.stream_id;
+        ZegoStreamExtraPlayInfo*  info = nullptr;
+        if (sid.size() > 4)
+        {
+            string prefix = sid.substr(0, 4);
+            if (prefix == "rtmp")
+            {
+                info = zego_stream_extra_info_create();
+                zego_stream_extra_info_add_rtmp_url(info, login_and_play_config_.stream_id.c_str());
+            }
+            else {
+                info = zego_stream_extra_info_create();
+                zego_stream_extra_info_add_flv_url(info, login_and_play_config_.stream_id.c_str());
+            }
+        }
+
+        if (info != nullptr)
+        {
+            play_result = LIVEROOM::StartPlayingStream2("test", login_and_play_config_.video_view, info);
+            zego_stream_extra_info_destroy(info);
+        }
+
+    }
+
     if (play_result)
     {
         SetCurStatus(kZGMediaSideTopicStatus_Starting_Playing);
@@ -242,7 +277,7 @@ void ZGMediaSideInfoDemoEnvirentmentHelper::SetCurStatus(MediaSideInfoStatus s)
     cur_status_ = s;
     if (cur_status_ == kZGMediaSideTopicStatus_None)
     {
-        LIVEROOM::LogoutRoom();
+        //LIVEROOM::LogoutRoom();
     }
 
     if (status_cb_)

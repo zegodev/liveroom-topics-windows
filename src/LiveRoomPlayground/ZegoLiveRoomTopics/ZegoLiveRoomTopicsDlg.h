@@ -16,6 +16,9 @@
 #include "Publish/PublishUI/PublishDlg.h"
 #include "ExternalVideoFilter/ExternalVideoFilterUI/ExternalVideoFilterDlg.h"
 #include "Play/PlayUI/PlayDlg.h"
+#include "VideoCommunication/VideoCommunicationUI/VideoCommunicationDlg.h"
+#include "JoinLive/JoinLiveUI/JoinLiveDlg.h"
+#include "MixStream/MixStreamUI/MixStreamDlg.h"
 
 using std::vector;
 
@@ -57,6 +60,9 @@ protected:
     CPublishDlg * publish_dlg_ptr_ = nullptr;
     CPlayDlg * play_dlg_ptr_ = nullptr;
     CExternalVideoFilterDlg * external_video_filter_ = nullptr;
+    CVideoCommunicationDlg * video_communication_ = nullptr;
+    CJoinLiveDlg * join_live_dlg_ = nullptr;
+    CMixStreamDlg * mixstream_dlg_ = nullptr;
 
     std::vector<void*> dlg_list_;
 
