@@ -5,6 +5,7 @@
 #include "AppSupport/ZGManager.h"
 
 #include "BeautifyFilter.h"
+#include "FuBeautifyFilter.h"
 
 ZGExternalVideoFilterDemo::ZGExternalVideoFilterDemo()
 {
@@ -75,8 +76,7 @@ void ZGExternalVideoFilterDemo::AllocateAndStart(Client* client)
     pending_count_ = 0;
     
     // 美颜滤镜初始化
-    filter_process_ = std::shared_ptr<VideoFilterProcessBase>(new BeautifyFilter());
-    filter_process_->InitFilter();
+    filter_process_ = std::shared_ptr<VideoFilterProcessBase>(new FuBeautifyFilter());
     
     // 美颜处理线程
     process_thread_ = std::thread(&ZGExternalVideoFilterDemo::BeautifyProcess, this);
@@ -104,13 +104,13 @@ AVE::VideoBufferType ZGExternalVideoFilterDemo::SupportBufferType()
 
     // rgb 帧大小
     // rgb frame_len = w * h * 4
-//     cal_frame_factor_ = 4;
-//     return  AVE::BUFFER_TYPE_MEM;
+     cal_frame_factor_ = 4;
+     return  AVE::BUFFER_TYPE_MEM;
 
     // yuv帧大小
     // yuv i420 frame_len = w * h * 1.5
-    cal_frame_factor_ = 1.5f;
-    return AVE::BUFFER_TYPE_ASYNC_I420_MEM;
+    //cal_frame_factor_ = 1.5f;
+    //return AVE::BUFFER_TYPE_ASYNC_I420_MEM;
 }
 
 // sdk 回调第2步，请求获取操作接口
@@ -201,6 +201,8 @@ void ZGExternalVideoFilterDemo::BeautifyProcess()
 {
     //ZGENTER_FUN_LOG;
 
+    filter_process_->InitFilter();
+
     while (!is_exit_)
     {
         while (pending_count_ > 0)
@@ -210,7 +212,7 @@ void ZGExternalVideoFilterDemo::BeautifyProcess()
             // 滤镜处理图像数据
             if (enable_beautify_ && filter_process_ != nullptr)
             {
-                filter_process_->FilterProcessI420Data(filter_data_list_[read_index_]->data_, filter_data_list_[read_index_]->len_, filter_data_list_[read_index_]->width_, filter_data_list_[read_index_]->height_);
+                filter_process_->FilterProcessRGBAData(filter_data_list_[read_index_]->data_, filter_data_list_[read_index_]->len_, filter_data_list_[read_index_]->width_, filter_data_list_[read_index_]->height_);
             }
 
 
@@ -218,12 +220,16 @@ void ZGExternalVideoFilterDemo::BeautifyProcess()
             {
                 VideoBufferPool* pool = (VideoBufferPool*)client_->GetInterface();
                 int index = pool->DequeueInputBuffer(filter_data_list_[read_index_]->width_, filter_data_list_[read_index_]->height_, filter_data_list_[read_index_]->stride_);
-                unsigned char* dst = (unsigned char*)pool->GetInputBuffer(index);
 
-                memcpy(dst, src_data, filter_data_list_[read_index_]->width_*filter_data_list_[read_index_]->height_ * cal_frame_factor_);
+                if (index >= 0)
+                {
+                    unsigned char* dst = (unsigned char*)pool->GetInputBuffer(index);
 
-                pool->QueueInputBuffer(index, filter_data_list_[read_index_]->width_, filter_data_list_[read_index_]->height_, filter_data_list_[read_index_]->stride_, filter_data_list_[read_index_]->timestamp_100n_);
-            
+                    memcpy(dst, src_data, filter_data_list_[read_index_]->width_*filter_data_list_[read_index_]->height_ * cal_frame_factor_);
+
+                    pool->QueueInputBuffer(index, filter_data_list_[read_index_]->width_, filter_data_list_[read_index_]->height_, filter_data_list_[read_index_]->stride_, filter_data_list_[read_index_]->timestamp_100n_);
+                }
+
             }
 
             read_index_ = (read_index_ + 1) % MAX_FILTER_FRAME_COUNT;

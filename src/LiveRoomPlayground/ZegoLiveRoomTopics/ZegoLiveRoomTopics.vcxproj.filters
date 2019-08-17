@@ -429,6 +429,9 @@
     <ClInclude Include="..\Topics\MixStream\MixStreamUI\MixStreamRoomListDlg.h">
       <Filter>Topics\MixStream\MixStreamUI</Filter>
     </ClInclude>
+    <ClInclude Include="..\Topics\ExternalVideoFilter\FuBeautifyFilter.h">
+      <Filter>Topics\ExternalVideoFilter</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -646,6 +649,9 @@
     </ClCompile>
     <ClCompile Include="..\Topics\MixStream\MixStreamUI\MixStreamRoomListDlg.cpp">
       <Filter>Topics\MixStream\MixStreamUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\ExternalVideoFilter\FuBeautifyFilter.cpp">
+      <Filter>Topics\ExternalVideoFilter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

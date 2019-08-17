@@ -42,7 +42,7 @@ LONG ApplicationCrashHandler(EXCEPTION_POINTERS *pException)
 #define TOPIC_VIDEO_COMMUNICATION       _T("视频通话")
 #define TOPIC_JOIN_LIVE                 _T("直播连麦")
 #define TOPIC_MIXSTREAM                 _T("混流")
-
+#define TOPIC_EXTERNAL_VIDEO_FILTER     _T("外部视频滤镜")
 
 #define TOPIC_MIDIA_PLAYER              _T("MediaPlayer")
 #define TOPIC_MEDIA_SIDE_INFO           _T("Media Side Info")
@@ -50,11 +50,16 @@ LONG ApplicationCrashHandler(EXCEPTION_POINTERS *pException)
 #define TOPIC_EXTERNAL_VIDEO_CAPTURE    _T("External Video Capture")
 #define TOPIC_EXTERNAL_VIDEO_RENDER     _T("External Video Render")
 
-#define TOPIC_EXTERNAL_VIDEO_FILTER     _T("External Video Filter")
+
 
 
 // TODO:
-#define DEMO_VERSION "0.0.2"
+
+#ifndef BUILD_NUMBER
+
+#define DEMO_VERSION "1.0.0"
+
+#endif
 
 
 // 用于应用程序“关于”菜单项的 CAboutDlg 对话框
@@ -175,27 +180,39 @@ BOOL CZegoLiveRoomTopicsDlg::OnInitDialog()
     stra_version.Format("%s", ZEGO::LIVEROOM::GetSDKVersion2());
     GetDlgItem(IDC_STATIC_VE_VERSION)->SetWindowText(CString(stra_version.GetBuffer()));
 
+    string build_number;
+#ifdef BUILD_NUMBER
 
-//     char buffer[512];
-//     GetEnvironmentVariableA("BUILD_NUMBER", buffer, 512);
-// 
-//     string build_number(buffer);
-// 
-//     if (build_number != "" && build_number.length() < 5)
-//     {
-//         for (int i = 0; i < 5 - build_number.length(); ++i)
-//         {
-// 
-//         }
-//     }
-// 
-//     for (int i = 0;i < build_number.length(); ++i)
-//     {
-// 
-//     }
+    build_number = string(BUILD_NUMBER);
 
+    if (build_number != "")
+    {
+        int len = build_number.length();
+        if (len < 5)
+        {
+            for (int i = 0; i < 5 - len; ++i)
+            {
+                build_number = "0" + build_number;
+            }
+        }
+
+        build_number = build_number.insert(1, ".");
+        build_number = build_number.insert(3, ".");
+        build_number = build_number.insert(5, ".");
+
+        GetDlgItem(IDC_STATIC_DEMO_VERSION)->SetWindowText(CString(CStringA(build_number.c_str()).GetBuffer()));
+
+    }
+    else {
+        stra_version.Format("%s", DEMO_VERSION);
+        GetDlgItem(IDC_STATIC_DEMO_VERSION)->SetWindowText(CString(stra_version.GetBuffer()));
+    }
+
+#else
     stra_version.Format("%s", DEMO_VERSION);
     GetDlgItem(IDC_STATIC_DEMO_VERSION)->SetWindowText(CString(stra_version.GetBuffer()));
+#endif
+    
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -257,13 +274,14 @@ void CZegoLiveRoomTopicsDlg::InitTopicList()
     advanced_topic_list_contronl_.AddString(TOPIC_VIDEO_COMMUNICATION);
     advanced_topic_list_contronl_.AddString(TOPIC_JOIN_LIVE);
     advanced_topic_list_contronl_.AddString(TOPIC_MIXSTREAM);
+    advanced_topic_list_contronl_.AddString(TOPIC_EXTERNAL_VIDEO_FILTER);
 
     advanced_topic_list_contronl_.AddString(TOPIC_MIDIA_PLAYER);
     advanced_topic_list_contronl_.AddString(TOPIC_MEDIA_SIDE_INFO);
     advanced_topic_list_contronl_.AddString(TOPIC_MEDIA_RECORDER);
     advanced_topic_list_contronl_.AddString(TOPIC_EXTERNAL_VIDEO_CAPTURE);
     advanced_topic_list_contronl_.AddString(TOPIC_EXTERNAL_VIDEO_RENDER);
-    //advanced_topic_list_contronl_.AddString(TOPIC_EXTERNAL_VIDEO_FILTER);
+    
 }
 
 void CZegoLiveRoomTopicsDlg::OnLButtonDown(UINT nFlags, CPoint point)

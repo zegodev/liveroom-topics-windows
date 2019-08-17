@@ -23,6 +23,21 @@ namespace ZEGO
     }
 }
 
+//#ifdef __cplusplus
+//
+//extern "C"{
+//
+//#endif 
+//
+//    AVE::Camera* zego_liveroom_create_camera();
+//
+//    void zego_liveroom_destroy_camera(AVE::Camera * pCamera);
+//
+//#ifdef __cplusplus
+//}
+//
+//#endif 
+
 using OnCaptureDeviceErrorCallBackType = std::function<void(const char *deviceId, const char *reason)>;
 using OnVideoFrameDataCallBackType = std::function< void (const char* ,int ,const AVE::VideoCaptureFormat& ,unsigned long long , unsigned int)>;
 
