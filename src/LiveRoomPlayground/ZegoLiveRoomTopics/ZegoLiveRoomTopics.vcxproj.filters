@@ -88,6 +88,12 @@
     <Filter Include="Topics\MixStream\MixStreamUI">
       <UniqueIdentifier>{f29d8072-0037-4135-9e67-44a59c76e213}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Topics\ScreenRecorder">
+      <UniqueIdentifier>{c7677d66-4102-4c98-8519-07bad9d1b721}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Topics\ScreenRecorder\ScreenRecorderUI">
+      <UniqueIdentifier>{77240252-95ed-403b-baef-45aded29045d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -432,6 +438,27 @@
     <ClInclude Include="..\Topics\ExternalVideoFilter\FuBeautifyFilter.h">
       <Filter>Topics\ExternalVideoFilter</Filter>
     </ClInclude>
+    <ClInclude Include="..\Topics\ScreenRecorder\ScreenRecorderUI\resource.h">
+      <Filter>Topics\ScreenRecorder\ScreenRecorderUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\ScreenRecorder\ScreenRecorderUI\ScreenRecorderDlg.h">
+      <Filter>Topics\ScreenRecorder\ScreenRecorderUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\ScreenRecorder\ZGScreenCaptureDevice.h">
+      <Filter>Topics\ScreenRecorder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\ScreenRecorder\ZGScreenCaptureManager.h">
+      <Filter>Topics\ScreenRecorder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\ScreenRecorder\ZGScreenCaptureSource.h">
+      <Filter>Topics\ScreenRecorder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\ScreenRecorder\ZGScreenRecorderDemo.h">
+      <Filter>Topics\ScreenRecorder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\ScreenRecorder\ZGScreenRecorderDemoHelper.h">
+      <Filter>Topics\ScreenRecorder</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -653,6 +680,24 @@
     <ClCompile Include="..\Topics\ExternalVideoFilter\FuBeautifyFilter.cpp">
       <Filter>Topics\ExternalVideoFilter</Filter>
     </ClCompile>
+    <ClCompile Include="..\Topics\ScreenRecorder\ScreenRecorderUI\ScreenRecorderDlg.cpp">
+      <Filter>Topics\ScreenRecorder\ScreenRecorderUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\ScreenRecorder\ZGScreenCaptureDevice.cpp">
+      <Filter>Topics\ScreenRecorder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\ScreenRecorder\ZGScreenCaptureManager.cpp">
+      <Filter>Topics\ScreenRecorder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\ScreenRecorder\ZGScreenCaptureSource.cpp">
+      <Filter>Topics\ScreenRecorder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\ScreenRecorder\ZGScreenRecorderDemo.cpp">
+      <Filter>Topics\ScreenRecorder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\ScreenRecorder\ZGScreenRecorderDemoHelper.cpp">
+      <Filter>Topics\ScreenRecorder</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ZegoLiveRoomTopics.rc">
@@ -690,6 +735,9 @@
     </ResourceCompile>
     <ResourceCompile Include="..\Topics\MixStream\MixStreamUI\MixStream.rc">
       <Filter>Topics\MixStream\MixStreamUI</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="..\Topics\ScreenRecorder\ScreenRecorderUI\ScreenRecorder.rc">
+      <Filter>Topics\ScreenRecorder\ScreenRecorderUI</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>

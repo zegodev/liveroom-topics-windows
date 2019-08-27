@@ -393,6 +393,13 @@ echo F |xcopy /y "$(OutDir)$(TargetName).pdb" "$(SolutionDir)\compile_product_ou
     <ClInclude Include="..\Topics\Publish\PublishUI\PublishDlg.h" />
     <ClInclude Include="..\Topics\Publish\PublishUI\RealDataDlg.h" />
     <ClInclude Include="..\Topics\Publish\PublishUI\Resource.h" />
+    <ClInclude Include="..\Topics\ScreenRecorder\ScreenRecorderUI\resource.h" />
+    <ClInclude Include="..\Topics\ScreenRecorder\ScreenRecorderUI\ScreenRecorderDlg.h" />
+    <ClInclude Include="..\Topics\ScreenRecorder\ZGScreenCaptureDevice.h" />
+    <ClInclude Include="..\Topics\ScreenRecorder\ZGScreenCaptureManager.h" />
+    <ClInclude Include="..\Topics\ScreenRecorder\ZGScreenCaptureSource.h" />
+    <ClInclude Include="..\Topics\ScreenRecorder\ZGScreenRecorderDemo.h" />
+    <ClInclude Include="..\Topics\ScreenRecorder\ZGScreenRecorderDemoHelper.h" />
     <ClInclude Include="..\Topics\VideoCommunication\VideoCommunicationDemo.h" />
     <ClInclude Include="..\Topics\VideoCommunication\VideoCommunicationUI\resource.h" />
     <ClInclude Include="..\Topics\VideoCommunication\VideoCommunicationUI\VideoCommunicationDlg.h" />
@@ -472,6 +479,12 @@ echo F |xcopy /y "$(OutDir)$(TargetName).pdb" "$(SolutionDir)\compile_product_ou
     <ClCompile Include="..\Topics\Publish\PublishUI\PublishConfigDlg.cpp" />
     <ClCompile Include="..\Topics\Publish\PublishUI\PublishDlg.cpp" />
     <ClCompile Include="..\Topics\Publish\PublishUI\RealDataDlg.cpp" />
+    <ClCompile Include="..\Topics\ScreenRecorder\ScreenRecorderUI\ScreenRecorderDlg.cpp" />
+    <ClCompile Include="..\Topics\ScreenRecorder\ZGScreenCaptureDevice.cpp" />
+    <ClCompile Include="..\Topics\ScreenRecorder\ZGScreenCaptureManager.cpp" />
+    <ClCompile Include="..\Topics\ScreenRecorder\ZGScreenCaptureSource.cpp" />
+    <ClCompile Include="..\Topics\ScreenRecorder\ZGScreenRecorderDemo.cpp" />
+    <ClCompile Include="..\Topics\ScreenRecorder\ZGScreenRecorderDemoHelper.cpp" />
     <ClCompile Include="..\Topics\VideoCommunication\VideoCommunicationDemo.cpp" />
     <ClCompile Include="..\Topics\VideoCommunication\VideoCommunicationUI\VideoCommunicationDlg.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -494,6 +507,7 @@ echo F |xcopy /y "$(OutDir)$(TargetName).pdb" "$(SolutionDir)\compile_product_ou
     <ResourceCompile Include="..\Topics\MixStream\MixStreamUI\MixStream.rc" />
     <ResourceCompile Include="..\Topics\Play\PlayUI\Play.rc" />
     <ResourceCompile Include="..\Topics\Publish\PublishUI\Publish.rc" />
+    <ResourceCompile Include="..\Topics\ScreenRecorder\ScreenRecorderUI\ScreenRecorder.rc" />
     <ResourceCompile Include="..\Topics\VideoCommunication\VideoCommunicationUI\VideoCommunication.rc" />
     <ResourceCompile Include="ZegoLiveRoomTopics.rc" />
   </ItemGroup>

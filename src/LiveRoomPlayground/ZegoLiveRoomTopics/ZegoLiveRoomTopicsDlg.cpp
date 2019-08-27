@@ -49,6 +49,8 @@ LONG ApplicationCrashHandler(EXCEPTION_POINTERS *pException)
 #define TOPIC_MEDIA_RECORDER            _T("Media Recorder")
 #define TOPIC_EXTERNAL_VIDEO_CAPTURE    _T("External Video Capture")
 #define TOPIC_EXTERNAL_VIDEO_RENDER     _T("External Video Render")
+#define TOPIC_SCREEN_RECORDER			_T("Screen Recorder")
+
 
 
 
@@ -281,6 +283,8 @@ void CZegoLiveRoomTopicsDlg::InitTopicList()
     advanced_topic_list_contronl_.AddString(TOPIC_MEDIA_RECORDER);
     advanced_topic_list_contronl_.AddString(TOPIC_EXTERNAL_VIDEO_CAPTURE);
     advanced_topic_list_contronl_.AddString(TOPIC_EXTERNAL_VIDEO_RENDER);
+
+	advanced_topic_list_contronl_.AddString(TOPIC_SCREEN_RECORDER);
     
 }
 
@@ -513,6 +517,25 @@ void CZegoLiveRoomTopicsDlg::OnLbnSelchangeListTopicAdvanced()
 
             have_processed = true;
         }
+		else if (str == TOPIC_SCREEN_RECORDER)
+		{
+			if (screen_recorder_dlg_ == nullptr)
+			{
+				screen_recorder_dlg_ = CScreenRecorderDlg::CreateDlgInstance(this);
+				dlg_list_.push_back(screen_recorder_dlg_);
+			}
+			CRect rect;
+			GetDlgItem(IDC_PANEL)->GetWindowRect(rect);
+			ScreenToClient(&rect);
+			screen_recorder_dlg_->MoveWindow(rect.left, rect.top, rect.Width(), rect.Height());
+
+			ShowDlg(screen_recorder_dlg_);
+
+			screen_recorder_dlg_->InitDlg();
+			screen_recorder_dlg_->LoginAndPreview();
+
+			have_processed = true;
+		}
     }
 
 
