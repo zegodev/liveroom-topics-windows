@@ -548,6 +548,8 @@ namespace ZEGO
          设置音频前处理函数
 
          @param prep 前处理函数指针
+         @note 必须在 InitSDK 前调用
+         @waring Deprecated，请使用 SetAudioPrep2
          */
         ZEGO_API void SetAudioPrep(void(*prep)(const short* inData, int inSamples, int sampleRate, short *outData));
         
@@ -556,6 +558,7 @@ namespace ZEGO
 
          @param prep 前处理函数指针
          @param set 预处理的采样率等参数设置
+         @note 必须在 InitSDK 前调用
          */
         ZEGO_API void SetAudioPrep2(AVE::OnPrepCallback prep, const AVE::ExtPrepSet& set);
         
@@ -688,6 +691,16 @@ namespace ZEGO
          @attention 必须在推流前调用才能生效。该设置会影响 ILivePublisherCallback::OnPublishQualityUpdate 的回调频率
          */
         ZEGO_API bool SetPublishQualityMonitorCycle(unsigned int timeInMS);
+        
+        /**
+         音效均衡器
+
+         @param bandIndex 取值范围[0, 9]。分别对应10个频带，其中心频率分别是[31, 62, 125, 250, 500, 1K, 2K, 4K, 8K, 16K]Hz
+         @param bandGain 取值范围[-15, 15]。默认值是0，如果所有频带的增益值全部为0，则会关闭EQ功能
+         @return true 调用成功，false 调用失败
+         @attention 在InitSDK之后调用有效。使用此接口前请与即构技术支持联系确认是否支持此功能
+         */
+        ZEGO_API bool SetAudioEqualizerGain(int bandIndex, float bandGain);
     }
 }
 #endif /* LiveRoom_Publisher_h */

@@ -339,6 +339,7 @@ echo F |xcopy /y "$(OutDir)$(TargetName).pdb" "$(SolutionDir)\compile_product_ou
     <ClInclude Include="..\Topics\ExternalVideoFilter\ExternalVideoFilterUI\ExternalVideoFilterDlg.h" />
     <ClInclude Include="..\Topics\ExternalVideoFilter\ExternalVideoFilterUI\resource.h" />
     <ClInclude Include="..\Topics\ExternalVideoFilter\FuBeautifyFilter.h" />
+    <ClInclude Include="..\Topics\ExternalVideoFilter\GreyVideoFilter.h" />
     <ClInclude Include="..\Topics\ExternalVideoFilter\VideoFilterProcessBase.h" />
     <ClInclude Include="..\Topics\ExternalVideoFilter\ZGExternalVideoFilterDemo.h" />
     <ClInclude Include="..\Topics\ExternalVideoFilter\ZGExternalVideoFilterDemoHelper.h" />
@@ -393,6 +394,9 @@ echo F |xcopy /y "$(OutDir)$(TargetName).pdb" "$(SolutionDir)\compile_product_ou
     <ClInclude Include="..\Topics\Publish\PublishUI\PublishDlg.h" />
     <ClInclude Include="..\Topics\Publish\PublishUI\RealDataDlg.h" />
     <ClInclude Include="..\Topics\Publish\PublishUI\Resource.h" />
+    <ClInclude Include="..\Topics\RoomMessage\RoomMessageUI\resource.h" />
+    <ClInclude Include="..\Topics\RoomMessage\RoomMessageUI\RoomMessageDlg.h" />
+    <ClInclude Include="..\Topics\RoomMessage\ZegoRoomMessageDemo.h" />
     <ClInclude Include="..\Topics\ScreenRecorder\ScreenRecorderUI\resource.h" />
     <ClInclude Include="..\Topics\ScreenRecorder\ScreenRecorderUI\ScreenRecorderDlg.h" />
     <ClInclude Include="..\Topics\ScreenRecorder\ZGScreenCaptureDevice.h" />
@@ -433,6 +437,7 @@ echo F |xcopy /y "$(OutDir)$(TargetName).pdb" "$(SolutionDir)\compile_product_ou
     <ClCompile Include="..\Topics\ExternalVideoFilter\BeautifyFilter.cpp" />
     <ClCompile Include="..\Topics\ExternalVideoFilter\ExternalVideoFilterUI\ExternalVideoFilterDlg.cpp" />
     <ClCompile Include="..\Topics\ExternalVideoFilter\FuBeautifyFilter.cpp" />
+    <ClCompile Include="..\Topics\ExternalVideoFilter\GreyVideoFilter.cpp" />
     <ClCompile Include="..\Topics\ExternalVideoFilter\VideoFilterProcessBase.cpp" />
     <ClCompile Include="..\Topics\ExternalVideoFilter\ZGExternalVideoFilterDemo.cpp" />
     <ClCompile Include="..\Topics\ExternalVideoFilter\ZGExternalVideoFilterDemoHelper.cpp" />
@@ -479,6 +484,8 @@ echo F |xcopy /y "$(OutDir)$(TargetName).pdb" "$(SolutionDir)\compile_product_ou
     <ClCompile Include="..\Topics\Publish\PublishUI\PublishConfigDlg.cpp" />
     <ClCompile Include="..\Topics\Publish\PublishUI\PublishDlg.cpp" />
     <ClCompile Include="..\Topics\Publish\PublishUI\RealDataDlg.cpp" />
+    <ClCompile Include="..\Topics\RoomMessage\RoomMessageUI\RoomMessageDlg.cpp" />
+    <ClCompile Include="..\Topics\RoomMessage\ZegoRoomMessageDemo.cpp" />
     <ClCompile Include="..\Topics\ScreenRecorder\ScreenRecorderUI\ScreenRecorderDlg.cpp" />
     <ClCompile Include="..\Topics\ScreenRecorder\ZGScreenCaptureDevice.cpp" />
     <ClCompile Include="..\Topics\ScreenRecorder\ZGScreenCaptureManager.cpp" />
@@ -507,6 +514,7 @@ echo F |xcopy /y "$(OutDir)$(TargetName).pdb" "$(SolutionDir)\compile_product_ou
     <ResourceCompile Include="..\Topics\MixStream\MixStreamUI\MixStream.rc" />
     <ResourceCompile Include="..\Topics\Play\PlayUI\Play.rc" />
     <ResourceCompile Include="..\Topics\Publish\PublishUI\Publish.rc" />
+    <ResourceCompile Include="..\Topics\RoomMessage\RoomMessageUI\RoomMessage.rc" />
     <ResourceCompile Include="..\Topics\ScreenRecorder\ScreenRecorderUI\ScreenRecorder.rc" />
     <ResourceCompile Include="..\Topics\VideoCommunication\VideoCommunicationUI\VideoCommunication.rc" />
     <ResourceCompile Include="ZegoLiveRoomTopics.rc" />

@@ -24,6 +24,20 @@ namespace ZEGO
 			*/
 			virtual void OnInitSDK(int nError) {}
 
+            
+            /**
+             日志将要写满
+             */
+            virtual void OnLogWillOverwrite() {}
+            
+            
+            /**
+             上传日志结果回调
+             
+             @param errorCode 错误码
+             */
+            virtual void OnLogUploadResult(int errorCode) {}
+            
             /**
              登录房间成功回调
 

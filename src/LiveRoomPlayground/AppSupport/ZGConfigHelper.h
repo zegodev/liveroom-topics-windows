@@ -56,6 +56,8 @@ public:
     void SetPreviewViewMode(ZEGO::LIVEROOM::ZegoVideoViewMode view_mode);
     void SetPlayViewMode(ZEGO::LIVEROOM::ZegoVideoViewMode view_mode, std::string stream_id);
     void EnableCaptureMirror(bool enable);
+	void ActivateVideoPublishStream(bool enable);
+	void ActivateAudioPublishStream(bool enable);
     void SetPlayVolume(int play_volume);
     void SetPublishResolution(int w, int h);
     void SetVideoBitrate(int video_bitrate);
@@ -81,5 +83,6 @@ private:
 #define ZGConfigHelperInstance ZGConfigHelper::Instance
 
 #endif // ZGConfigHelper_h__
+
 
 

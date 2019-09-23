@@ -3,6 +3,7 @@
 
 #include "AppSupport/ZGLog.h"
 #include "AppSupport/ZGUtilTools.h"
+#include "ZegoLiveRoom/LiveRoom-Publisher.h"
 
 ZGScreenRecorderDemo::ZGScreenRecorderDemo()
 {
@@ -30,6 +31,9 @@ void ZGScreenRecorderDemo::StartRecord(ZGScreenRecorderDemoConfig config)
 	}
 
 
+	LIVEROOM::SetPreviewView(nullptr, AV::PUBLISH_CHN_AUX);
+	bool preview_result_aux = LIVEROOM::StartPreview(AV::PUBLISH_CHN_AUX);
+
 	screen_capture_manager_->StartCapture();
 
 	config_ = config;
@@ -47,6 +51,8 @@ void ZGScreenRecorderDemo::StartRecord(ZGScreenRecorderDemoConfig config)
 
 void ZGScreenRecorderDemo::StopRecord()
 {
+	LIVEROOM::StopPreview(AV::PUBLISH_CHN_AUX);
+
 	screen_capture_manager_->StopCapture();
 	MEDIA_RECORDER::StopRecord(MEDIA_RECORDER::ZEGO_MEDIA_RECORD_CHN_AUX);
 	if (demo_cb_ != nullptr)

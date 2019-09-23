@@ -137,6 +137,10 @@ protected:
 
     virtual void OnVideoSizeChanged(const char* pStreamID, int nWidth, int nHeight) override;
 
+	virtual void OnRecvRemoteAudioFirstFrame(const char* pStreamID) override;
+
+	virtual void OnRemoteCameraStatusUpdate(const char* pStreamID, int nStatus) override;
+
 private:
     void UpdateStatus(ZGPlayStatus s);
 

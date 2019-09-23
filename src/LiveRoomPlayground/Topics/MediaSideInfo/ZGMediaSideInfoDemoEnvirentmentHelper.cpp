@@ -34,6 +34,7 @@ void ZGMediaSideInfoDemoEnvirentmentHelper::LoginByConfig(bool is_test_env)
     
     LIVEROOM::SetUseTestEnv(is_test_env);
 
+	LIVEROOM::SetConfig("unregister_sei_filter=TAL");
     ZGManagerInstance()->InitSdk(login_and_play_config_.app_id, login_and_play_config_.sign.data(), login_and_play_config_.sign.size());
     LIVEROOM::LoginRoom(login_and_play_config_.room_id.c_str(), ZEGO::LIVEROOM::Audience, login_and_play_config_.room_name.c_str());
     SetCurStatus(kZGMediaSideTopicStatus_Starting_Login_Room);

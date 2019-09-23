@@ -22,6 +22,9 @@ namespace MEDIAPLAYER
     enum ZegoMediaPlayerVideoPixelFormat
     {
         ZegoMediaPlayerVideoPixelFormatUnknown  = 0,
+        ZegoMediaPlayerVideoPixelFormatI420     = 1,
+        ZegoMediaPlayerVideoPixelFormatNV12     = 2,
+        ZegoMediaPlayerVideoPixelFormatNV21     = 3,
         ZegoMediaPlayerVideoPixelFormatBGRA32   = 4,
         ZegoMediaPlayerVideoPixelFormatRGBA32   = 5,
         ZegoMediaPlayerVideoPixelFormatARGB32   = 6,
@@ -139,17 +142,34 @@ namespace MEDIAPLAYER
         virtual void OnProcessInterval(long timestamp) {}
     };
     
+    /**
+     * 视频帧数据回调接口
+     * 当格式为ARGB32/ABGR32/RGBA32/BGRA32，数据通过OnPlayVideoData回调。
+     * 当格式为I420/NV12/NV21，数据通过OnPlayVideoData2回调。
+     * 其他非法格式都判定为I420
+     */
     class IZegoMediaPlayerVideoDataCallback
     {
     public:
         /**
-         视频帧数据回调，同步回调，不要在回调中处理数据或进行耗时操作
+         视频帧数据回调，格式为ARGB32/ABGR32/RGBA32/BGRA32
          
          @param data 视频帧数据
          @param len 视频帧数据长度
          @param format 视频帧格式信息
+         @note 同步回调，不要在回调中处理数据或进行耗时操作
          */
-        virtual void OnPlayVideoData(const char* data, int len, ZegoMediaPlayerVideoDataFormat& format) = 0;
+        virtual void OnPlayVideoData(const char* data, int len, ZegoMediaPlayerVideoDataFormat& format) {};
+        
+        /**
+         视频帧数据回调，格式为I420/NV12/NV21
+         
+         @param pData 视频帧数据
+         @param len 视频帧数据长度
+         @param format 视频帧格式信息
+         @note 同步回调，不要在回调中处理数据或进行耗时操作
+         */
+        virtual void OnPlayVideoData2(const char **pData, int* len, const ZegoMediaPlayerVideoDataFormat& format) {};
     };
     
     class IZegoMediaPlayerEventWithIndexCallback
@@ -229,17 +249,36 @@ namespace MEDIAPLAYER
         virtual void OnProcessInterval(long timestamp, ZegoMediaPlayerIndex index) {}
     };
     
+    /**
+     * 视频帧数据回调接口, 带有播放器序号, 用于设置多实例播放器的回调
+     * 当格式为ARGB32/ABGR32/RGBA32/BGRA32，数据通过OnPlayVideoData回调。
+     * 当格式为I420/NV12/NV21，数据通过OnPlayVideoData2回调。
+     * 其他非法格式都判定为I420
+     */
     class IZegoMediaPlayerVideoDataWithIndexCallback
     {
     public:
         /**
-         视频帧数据回调，同步回调，不要在回调中处理数据或进行耗时操作
+         视频帧数据回调，格式为ARGB32/ABGR32/RGBA32/BGRA32
          
          @param data 视频帧数据
          @param len 视频帧数据长度
          @param format 视频帧格式信息
+         @param index 播放器序号
+         @note 同步回调，不要在回调中处理数据或进行耗时操作
          */
-        virtual void OnPlayVideoData(const char* data, int len, ZegoMediaPlayerVideoDataFormat& format, ZegoMediaPlayerIndex index) = 0;
+        virtual void OnPlayVideoData(const char* data, int len, ZegoMediaPlayerVideoDataFormat& format, ZegoMediaPlayerIndex index) {}
+        
+        /**
+         视频帧数据回调，格式为I420/NV12/NV21
+         
+         @param pData 视频帧数据
+         @param len 视频帧数据长度
+         @param format 视频帧格式信息
+         @param index 播放器序号
+         @note 同步回调，不要在回调中处理数据或进行耗时操作
+         */
+        virtual void OnPlayVideoData2(const char **pData, int* len, ZegoMediaPlayerVideoDataFormat& format, ZegoMediaPlayerIndex index) {}
     };
     
 }   // MEDIAPLAYER

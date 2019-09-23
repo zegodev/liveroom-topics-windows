@@ -16,6 +16,7 @@
 #include "ZegoLiveRoom/LiveRoom-Player.h"
 #include "ZegoLiveRoom/LiveRoom-Publisher.h"
 #include "ZegoLiveRoom/zego-api-external-video-capture.h"
+#include "ZegoLiveRoom/zego-api-external-video-render.h"
 #include "ZegoLiveRoom/video_capture.h"
 
 #include "ZGTaskQueue.h"
@@ -39,7 +40,8 @@ public:
         static ZGManager z;
         return &z;
     }
-    void EnableExternalVideoCapture(AVE::VideoCaptureFactory* factory, LIVEROOM::IZegoVideoRenderCallback* randerer);
+
+    void EnableExternalVideoCapture(AVE::VideoCaptureFactory* factory, ZEGO::EXTERNAL_RENDER::IZegoVideoRenderCallback* randerer);
     void EnableMic(bool enableMic);
     bool InitSdk(unsigned int uiAppID, unsigned char* sign, int len);
     bool InitSdk();

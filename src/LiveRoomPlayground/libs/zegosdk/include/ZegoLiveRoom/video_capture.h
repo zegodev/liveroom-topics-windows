@@ -305,6 +305,7 @@ namespace AVE {
         BUFFER_TYPE_SYNC_GL_TEXTURE_2D = 1 << 5,
         BUFFER_TYPE_ASYNC_I420_MEM = 1 << 6,
         BUFFER_TYPE_ASYNC_I420_PIXEL_BUFFER = 1 << 7,
+        BUFFER_TYPE_ASYNC_NV12_PIXEL_BUFFER = 1 << 8,
     };
 
     class VideoBufferPool {

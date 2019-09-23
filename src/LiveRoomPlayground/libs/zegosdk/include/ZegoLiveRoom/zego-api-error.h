@@ -35,6 +35,9 @@ namespace ZEGO
         const unsigned int kStartThreadError              = 10004002;
         const unsigned int kStartRequestError             = 10005001;
         const unsigned int kStartUpdateStreamInfoError    = 10006001;
+		const unsigned int kNoMultiRoomLoginRole = 10007001; //没有多房间权限，而调用多房间接口
+		const unsigned int kMultiRoomIDMappingOther = 10007002;  //该roomid 已经在多房间另一套接口中使用
+		const unsigned int kSDKNoMoudleFunction = 10008001; //sdk 没有编译此模块的功能 而你调用了该接口，联系技术支持 提供支持此功能的SDK
         
         const unsigned int kNetworkNotConnectError        = 11000101;
         const unsigned int kNetworkDnsResolveError        = 11000404;
@@ -122,6 +125,8 @@ namespace ZEGO
         const unsigned int kLiveRoomRequiredReloginError  = 52002001;
         const unsigned int kLiveRoomThirdTokenAuthError   = 52002002;
         const unsigned int kLiveRoomNetBrokenTimeoutError = 52002003;
+		const unsigned int kLiveRoomMultiZPushSessionIDNotMatchError = 50005021;
+		const unsigned int kLiveRoomMultiLimitRoomCountError = 50005022;
         
         
         const unsigned int kRoomConnectError              = 60001001;
@@ -130,10 +135,13 @@ namespace ZEGO
         const unsigned int kRoomTimeoutError              = 60001004;
         const unsigned int kRoomHbTimeoutError            = 60001005;
         const unsigned int kRoomStartConnectError         = 60001006;
-        const unsigned int kRoomReconnectFailError        = 60001007;
+        const unsigned int kRoomReconnectFailError        = 60001008;
+		const unsigned int kRoomLoginZPushNoCryptoKey = 60001009; //登录zpush无校验key值
+		const unsigned int kRoomLoginCheckMD5Fail= 60001010; //登录ZPush 过程中checkMd5 检验Error
         const unsigned int kRoomInvalidSocketError        = 60002001;
         const unsigned int kRoomInvalidRspError           = 60003001;
         const unsigned int kRoomDecodeSignError           = 62001001;
+		const unsigned int kRoomDecodeLoginError         = 62001002; //登录解包失败
         const unsigned int kRoomReplayAttacksError        = 62002001;
         const unsigned int kRoomLoginCreateUserError      = 62010001;
         const unsigned int kRoomLoginSameCreateUserError  = 62010002;
@@ -144,7 +152,7 @@ namespace ZEGO
         const unsigned int kRoomSessionErrorKickoutError  = 63000003;
         const unsigned int kRoomDispatchError             = 64000001;
         const unsigned int kRoomDispatchResultNotMatch    = 64000002;
-        
+        const unsigned int kRoomNoDispatchToken = 64000003; 
         //混流错误码定义
         const unsigned int kMixStreamNoneMixConfigError   = 80000001; //没有混流配置信息
         const unsigned int kMixStreamCouldntConnectError  = 81200007; //混流服务连接失败

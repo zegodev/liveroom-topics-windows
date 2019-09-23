@@ -53,6 +53,11 @@ bool PlayDemo::InitSDK(PlayInitSDKConfig c)
     cur_real_data_.room_id = "";
     cur_real_data_.stream_id = "";
 
+	/*
+	PrintLogToView("强制从服务器拉流");
+	LIVEROOM::SetConfig("prefer_play_ultra_source=1");
+	*/
+
     PrintLogToView("执行初始化");
     return ZGManagerInstance()->InitSdk(c.app_id, c.app_sign.data(), c.app_sign.size());
 }
@@ -189,6 +194,16 @@ void PlayDemo::OnVideoSizeChanged(const char* pStreamID, int nWidth, int nHeight
     cur_real_data_.resolution_h = nHeight;
 
     PrintLogToView("视频帧大小变化: width = %d, height = %d", nWidth, nHeight);
+}
+
+void PlayDemo::OnRecvRemoteAudioFirstFrame(const char* pStreamID)
+{
+	PrintLogToView("收到音频首帧: streamId= %s", pStreamID);
+}
+
+void PlayDemo::OnRemoteCameraStatusUpdate(const char* pStreamID, int nStatus)
+{
+	PrintLogToView("OnRemoteCameraStatusUpdate: streamId= %s, status=%d", pStreamID, nStatus);
 }
 
 void PlayDemo::UpdateStatus(ZGPlayStatus s)

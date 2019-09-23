@@ -13,30 +13,30 @@
 #include "ZegoLiveRoom/zego-api-defines.h"
 #include "ZegoLiveRoom/video_capture.h"
 
-namespace ZEGO
-{
-    namespace CAMERA
-    {
-        ZEGOAVKIT_API AVE::Camera* CreateCamera();
+// namespace ZEGO
+// {
+//     namespace CAMERA
+//     {
+//         ZEGOAVKIT_API AVE::Camera* CreateCamera();
+// 
+//         ZEGOAVKIT_API void DestroyCamera(AVE::Camera *pCamera);
+//     }
+// }
 
-        ZEGOAVKIT_API void DestroyCamera(AVE::Camera *pCamera);
-    }
+#ifdef __cplusplus
+
+extern "C"{
+
+#endif 
+
+   AVE::Camera* zego_liveroom_create_camera();
+
+   void zego_liveroom_destroy_camera(AVE::Camera * pCamera);
+
+#ifdef __cplusplus
 }
 
-//#ifdef __cplusplus
-//
-//extern "C"{
-//
-//#endif 
-//
-//    AVE::Camera* zego_liveroom_create_camera();
-//
-//    void zego_liveroom_destroy_camera(AVE::Camera * pCamera);
-//
-//#ifdef __cplusplus
-//}
-//
-//#endif 
+#endif 
 
 using OnCaptureDeviceErrorCallBackType = std::function<void(const char *deviceId, const char *reason)>;
 using OnVideoFrameDataCallBackType = std::function< void (const char* ,int ,const AVE::VideoCaptureFormat& ,unsigned long long , unsigned int)>;

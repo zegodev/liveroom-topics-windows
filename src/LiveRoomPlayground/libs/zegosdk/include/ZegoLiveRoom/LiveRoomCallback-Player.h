@@ -162,7 +162,7 @@ namespace ZEGO
              @param strides 每个平面一行字节数（RGBA 只需考虑 strides[0]）
              @param pixel_format 视频帧数据格式
              */
-            virtual void OnVideoDataCallback2(const unsigned char **pData, int* dataLen, const char* pszStreamID, int width, int height, int strides[4], AVE::VideoPixelFormat pixel_format) {}
+            virtual void OnVideoDataCallback2(unsigned char **pData, int* dataLen, const char* pszStreamID, int width, int height, int strides[4], AVE::VideoPixelFormat pixel_format) {}
 
         };
     }

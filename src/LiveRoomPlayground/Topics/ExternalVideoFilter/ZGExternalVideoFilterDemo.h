@@ -45,6 +45,7 @@ public:
     int stride_ = 0;
     unsigned long long timestamp_100n_ = 0;
     unsigned char * data_ = nullptr;
+    //DWORD cur_time = 0;
 
 };
 
@@ -117,6 +118,8 @@ protected:
     std::shared_ptr<VideoFilterProcessBase> filter_process_ = nullptr;
 
     std::thread process_thread_;
+
+    std::atomic<bool> have_start_ = false;
 
 
 };

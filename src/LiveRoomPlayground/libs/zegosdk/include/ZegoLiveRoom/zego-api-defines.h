@@ -78,19 +78,24 @@ namespace ZEGO
             ZegoVideoMirrorModePreviewCaptureBothNoMirror = 2,    ///< 预览不启用镜像，推流不启用镜像
             ZegoVideoMirrorModePreviewNoMirrorPublishMirror = 3   ///< 预览不启用镜像，推流启用镜像
         };
-        
+
+        /**
+         @warning Deprecated 将参考 EXTERNAL_RENDER::VideoRenderType
+         */
         enum VideoExternalRenderType
         {
             DECODE_RGB_SERIES = 0,   ///< 回调时，抛解码后数据，视频帧数据格式转换成RGB系列数据；设置了该类型后，SDK内部渲染无效。
             DECODE = 1,              ///< 回调时，抛解码后数据，视频帧数据格式根据回调参数决定；设置了该类型后，SDK内部渲染无效。
-            NOT_DECODE = 2,           ///< 回调时，抛解码之前的帧数据给用户自解码；设置了该类型后，SDK内部渲染无效。
-			DECODE_RENDER = 3		 ///< 回调时，抛解码后数据，视频帧数据格式根据回调参数决定；设置了该类型后，SDK内部渲染同时有效。
+            NOT_DECODE = 2,          ///< 回调时，抛解码之前的帧数据给用户自解码；设置了该类型后，SDK内部渲染无效。
+            DECODE_RENDER = 3,       ///< 回调时，抛解码后数据，视频帧数据格式根据回调参数决定；设置了该类型后，SDK内部渲染同时有效。
+            DECODE_YUV_SERIES = 4    ///< 回调时，抛解码后数据，视频帧数据格式转换成YUV系列数据；设置了该类型后，SDK内部渲染无效。
         };
-        
+
         enum ZegoVideoCodecAvc
         {
-            VIDEO_CODEC_DEFAULT = 0, ///< 不支持分层编码
-            VIDEO_CODEC_MULTILAYER = 1 ///< 分层编码 要达到和VIDEO_CODEC_DEFAULT相同的编码质量，建议码率和VIDEO_CODEC_DEFAULT相比增加20%左右
+            VIDEO_CODEC_DEFAULT = 0, ///< 默认编码,不支持分层编码
+            VIDEO_CODEC_MULTILAYER = 1, ///< 分层编码 要达到和VIDEO_CODEC_DEFAULT相同的编码质量，建议码率和VIDEO_CODEC_DEFAULT相比增加20%左右
+            VIDEO_CODEC_VP8 = 2,    ///< VP8编码
         };
 
         
@@ -187,14 +192,18 @@ namespace ZEGO
         
         enum ZegoStreamRelayCDNDetail
         {
-            Relay_None = 0,                       ///< 无
-            Relay_ServerError = 8,                ///< 服务器错误
-            Relay_HandShakeFailed = 9,            ///< 握手失败
-            Relay_AccessPointError = 10,          ///< 接入点错误
-            Relay_CreateStreamFailed = 11,        ///< 创建流失败
-            Relay_BadName = 12,                   ///< BAD NAME
-            Relay_CDNServerDisconnected = 13,     ///< CDN服务器主动断开
-            Relay_Disconnected = 14,              ///< 主动断开
+            Relay_None = 0,                         ///< 无
+            Relay_ServerError = 8,                  ///< 服务器错误
+            Relay_HandShakeFailed = 9,              ///< 握手失败
+            Relay_AccessPointError = 10,            ///< 接入点错误
+            Relay_CreateStreamFailed = 11,          ///< 创建流失败
+            Relay_BadName = 12,                     ///< BAD NAME
+            Relay_CDNServerDisconnected = 13,       ///< CDN服务器主动断开
+            Relay_Disconnected = 14,                ///< 主动断开
+            
+            MixStream_AllInputStreamClosed = 1214,   ///< 混流输入流会话关闭, 混流转推CDN时有效
+            MixStream_AllInputStreamNoData = 1215,  ///< 混流输入流全部没有数据, 混流转推CDN时有效
+            MixStream_ServerInternalError = 1230,   ///< 混流服务器内部错误，混流转推CDN时有效
         };
         
         struct ZegoStreamRelayCDNInfo

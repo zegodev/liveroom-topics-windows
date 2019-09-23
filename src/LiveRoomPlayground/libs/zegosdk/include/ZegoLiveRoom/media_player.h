@@ -36,6 +36,7 @@ namespace AVE
         {
         public:
             virtual void OnPlayVideoData(const char* data, int len, const VideoDataFormat& format) = 0;
+            virtual void OnPlayVideoData2(const char **pData, int* len, const VideoDataFormat& format) = 0;
         };
 
         virtual void SetEventCallback(EventCallback* callback) = 0;
@@ -54,12 +55,13 @@ namespace AVE
         virtual long SetProcessInterval(long interval_ms) = 0;
         
         virtual void SetView(void *view) = 0;
-        //format support:ARGB32/ABGR32/RGBA32/BGRA32
+        //format support:ARGB32/ABGR32/RGBA32/BGRA32/I420/NV12/NV21
         virtual void SetVideoPlayCallback(VideoPlayCallback *callback, VideoPixelFormat format) = 0;
         virtual long SetAudioStream(long streamidx) = 0;
 		virtual long GetAudioStreamCount() = 0;
         virtual void SetRepeatMode(bool repeat_play) = 0;
         virtual long TakeSnapshot() = 0;
+        virtual long RequireHWDecoder() = 0;
     };
 }
 

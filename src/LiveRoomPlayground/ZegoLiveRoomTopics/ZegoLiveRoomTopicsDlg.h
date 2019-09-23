@@ -20,6 +20,7 @@
 #include "JoinLive/JoinLiveUI/JoinLiveDlg.h"
 #include "MixStream/MixStreamUI/MixStreamDlg.h"
 #include "ScreenRecorder/ScreenRecorderUI/ScreenRecorderDlg.h"
+#include "RoomMessage/RoomMessageUI/RoomMessageDlg.h"
 
 using std::vector;
 
@@ -65,6 +66,7 @@ protected:
     CJoinLiveDlg * join_live_dlg_ = nullptr;
     CMixStreamDlg * mixstream_dlg_ = nullptr;
 	CScreenRecorderDlg *screen_recorder_dlg_ = nullptr;
+	CRoomMessageDlg *room_message_dlg = nullptr;
 
     std::vector<void*> dlg_list_;
 

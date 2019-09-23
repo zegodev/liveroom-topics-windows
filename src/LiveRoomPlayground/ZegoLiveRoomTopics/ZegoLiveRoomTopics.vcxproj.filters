@@ -94,6 +94,12 @@
     <Filter Include="Topics\ScreenRecorder\ScreenRecorderUI">
       <UniqueIdentifier>{77240252-95ed-403b-baef-45aded29045d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Topics\RoomMessage">
+      <UniqueIdentifier>{d5a8d7e5-b8e5-478f-8885-0ea69f7827e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Topics\RoomMessage\RoomMessageUI">
+      <UniqueIdentifier>{b519986b-fef3-43c5-9313-4cd09a5769be}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -459,6 +465,18 @@
     <ClInclude Include="..\Topics\ScreenRecorder\ZGScreenRecorderDemoHelper.h">
       <Filter>Topics\ScreenRecorder</Filter>
     </ClInclude>
+    <ClInclude Include="..\Topics\RoomMessage\RoomMessageUI\resource.h">
+      <Filter>Topics\RoomMessage\RoomMessageUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\RoomMessage\RoomMessageUI\RoomMessageDlg.h">
+      <Filter>Topics\RoomMessage\RoomMessageUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\RoomMessage\ZegoRoomMessageDemo.h">
+      <Filter>Topics\RoomMessage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Topics\ExternalVideoFilter\GreyVideoFilter.h">
+      <Filter>Topics\ExternalVideoFilter</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -698,6 +716,15 @@
     <ClCompile Include="..\Topics\ScreenRecorder\ZGScreenRecorderDemoHelper.cpp">
       <Filter>Topics\ScreenRecorder</Filter>
     </ClCompile>
+    <ClCompile Include="..\Topics\RoomMessage\RoomMessageUI\RoomMessageDlg.cpp">
+      <Filter>Topics\RoomMessage\RoomMessageUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\RoomMessage\ZegoRoomMessageDemo.cpp">
+      <Filter>Topics\RoomMessage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Topics\ExternalVideoFilter\GreyVideoFilter.cpp">
+      <Filter>Topics\ExternalVideoFilter</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ZegoLiveRoomTopics.rc">
@@ -738,6 +765,9 @@
     </ResourceCompile>
     <ResourceCompile Include="..\Topics\ScreenRecorder\ScreenRecorderUI\ScreenRecorder.rc">
       <Filter>Topics\ScreenRecorder\ScreenRecorderUI</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="..\Topics\RoomMessage\RoomMessageUI\RoomMessage.rc">
+      <Filter>Topics\RoomMessage\RoomMessageUI</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>

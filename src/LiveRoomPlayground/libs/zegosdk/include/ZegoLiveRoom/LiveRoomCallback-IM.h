@@ -44,40 +44,7 @@ namespace ZEGO
              @param messageId 消息 Id
              */
             virtual void OnSendRoomMessage(int errorCode, const char *pszRoomID, int sendSeq, unsigned long long messageId) {}
-            
-            /**
-             创建会话消息结果
-
-             @param errorCode 错误码，0 表示无错误
-             @param pszRoomID 房间 ID
-             @param sendSeq 消息 seq
-             @param pszConversationID 会话 ID
-             */
-            virtual void OnCreateConversation(int errorCode, const char *pszRoomID, int sendSeq, const char *pszConversationID) {}
-            
-            /**
-             获取会话信息结果
-
-             @param errorCode 错误码，0 表示无错误
-             @param pszRoomID 房间 ID
-             @param pszConverID 会话 ID
-             @param pConverInfo 会话信息
-             @param pMemberList 会话成员列表
-             @param memberCount 会话成员数量
-             */
-            virtual void OnGetConversationInfo(int errorCode, const char *pszRoomID, const char *pszConverID, ROOM::ZegoConverInfo *pConverInfo, ROOM::ZegoUser *pMemberList, unsigned int memberCount) {}
-           
-            /**
-             发送会话消息
-
-             @param errorCode 错误码，0 表示无错误
-             @param pszRoomID 房间 ID
-             @param pszConverID 会话 ID
-             @param sendSeq 消息 seq
-             @param messageId 消息 Id
-             */
-            virtual void OnSendConversationMessage(int errorCode, const char *pszRoomID, const char *pszConverID, int sendSeq, unsigned long long messageId) {}
-            
+     
             /**
              收到房间消息回调
 
@@ -97,15 +64,6 @@ namespace ZEGO
              @param haveMore 是否还有更多消息
              */
             virtual void OnGetRoomMessage(int erroCode, ROOM::ZegoRoomMessage *pMessageInfo, unsigned int messageCount, const char *pszRoomID, bool haveMore) {}
-            
-            /**
-             收到会话消息
-
-             @param pMessageInfo 消息信息
-             @param pszConversationID 会话 ID
-             @param pszRoomID 房间 ID
-             */
-            virtual void OnRecvConversationMessage(ROOM::ZegoConversationMessage *pMessageInfo, const char *pszConversationID, const char *pszRoomID) {}
             
             /**
              发送不可靠消息结果，这个接口用于大并发情景

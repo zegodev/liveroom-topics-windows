@@ -72,7 +72,7 @@ int ZegoVideoCapExternal::SetCamera(std::string deviceId)
 	}
 
 #ifdef _WIN32
-	AVE::Camera *pCameraDevice = ZEGO::CAMERA::CreateCamera();
+	AVE::Camera *pCameraDevice = zego_liveroom_create_camera();
 #else
     AVE::Camera *pCameraDevice = nullptr;
 #endif
@@ -98,7 +98,7 @@ int ZegoVideoCapExternal::SetCamera(std::string deviceId)
 	{
 		
 #ifdef _WIN32
-        ZEGO::CAMERA::DestroyCamera(pCameraDevice);
+		zego_liveroom_destroy_camera(pCameraDevice);
 #else
         pCameraDevice = nullptr;
 #endif
@@ -116,7 +116,7 @@ int ZegoVideoCapExternal::RemoveCamera()
 
 		
 #ifdef _WIN32
-		ZEGO::CAMERA::DestroyCamera(pCameraDevice);
+		zego_liveroom_destroy_camera(pCameraDevice);
 #else
         pCameraDevice = nullptr;
 #endif

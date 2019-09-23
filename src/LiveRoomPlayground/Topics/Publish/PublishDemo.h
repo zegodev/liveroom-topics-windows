@@ -107,6 +107,9 @@ protected:
 
     virtual void OnInitSDK(int nError) override;
 
+	virtual void OnLogWillOverwrite() override;
+
+	virtual void OnLogUploadResult(int errorCode) override;
 
     virtual void OnLoginRoom(int errorCode, const char *pszRoomID, const COMMON::ZegoStreamInfo *pStreamInfo, unsigned int streamCount) override;
 

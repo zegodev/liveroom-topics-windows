@@ -185,6 +185,19 @@ namespace MEDIAPLAYER
     ZEGOAVKIT_API bool SetProcessInterval(long interval, ZegoMediaPlayerIndex index = ZegoMediaPlayerIndexFirst);
     
     /**
+     设置使用硬件解码
+     
+     @param index 播放器序号, 默认为 ZegoMediaPlayerIndexFirst。
+     @return 设置是否成功
+     
+     @note 当前只支持 iOS 系统
+     @note 需要在加载媒体资源之前设置，即在 Start 或者 Load 之前
+     @note 即使设置了使用硬件解码，引擎也会根据当前硬件情况决定是否使用
+     @note 多次调用没有影响
+     */
+    ZEGOAVKIT_API bool RequireHWDecoder(ZegoMediaPlayerIndex index = ZegoMediaPlayerIndexFirst);
+    
+    /**
      设置播放器事件回调
      
      @param callback 回调 IZegoMediaPlayerEventCallback

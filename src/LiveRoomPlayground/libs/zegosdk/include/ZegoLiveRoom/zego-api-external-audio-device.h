@@ -22,7 +22,8 @@ extern "C" {
     {
         kZegoAuxPublishChannelAudioSrcTypeNone                      = -1,   /**< 无声 */
         kZegoAuxPublishChannelAudioSrcTypeSameAsMainPublishChannel  = 0,    /**< 和主推流通道一样 */
-        kZegoAuxPublishChannelAudioSrcTypeExternalCapture           = 1,    /*** 使用外部采集 */
+        kZegoAuxPublishChannelAudioSrcTypeExternalCapture           = 1,    /**< 使用外部采集 */
+        kZegoAuxPublishChannelAudioSrcTypePlayer                    = 2,    /**< 使用媒体播放器的音源 */
     } ZegoAuxPublishChannelAudioSrcType;
     
     /**

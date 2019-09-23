@@ -133,6 +133,16 @@ void PublishDemo::OnInitSDK(int nError)
     }
 }
 
+void PublishDemo::OnLogWillOverwrite()
+{
+	PrintLogToView("日志已满 OnLogWillOverwrite");
+}
+
+void PublishDemo::OnLogUploadResult(int errorCode)
+{
+	PrintLogToView("日志上传结果 OnLogUploadResul: %d", errorCode);
+}
+
 void PublishDemo::OnLoginRoom(int errorCode, const char *pszRoomID, const COMMON::ZegoStreamInfo *pStreamInfo, unsigned int streamCount)
 {
     if (errorCode == 0)

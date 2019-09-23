@@ -22,7 +22,7 @@ ZGManager::~ZGManager()
 {
 }
 
-void ZGManager::EnableExternalVideoCapture(AVE::VideoCaptureFactory* factory, LIVEROOM::IZegoVideoRenderCallback* renderer)
+void ZGManager::EnableExternalVideoCapture(AVE::VideoCaptureFactory* factory, ZEGO::EXTERNAL_RENDER::IZegoVideoRenderCallback* renderer)
 {
     if (sdk_have_inited_)
     {
@@ -32,11 +32,12 @@ void ZGManager::EnableExternalVideoCapture(AVE::VideoCaptureFactory* factory, LI
     LIVEROOM::SetVideoCaptureFactory(factory);
     if (renderer != nullptr)
     {
-        LIVEROOM::EnableExternalRender(true);
-        LIVEROOM::SetExternalRenderCallback(renderer);
+	
+		ZEGO::EXTERNAL_RENDER::SetVideoRenderType(ZEGO::EXTERNAL_RENDER::VIDEO_RENDER_TYPE_RGB);
+		ZEGO::EXTERNAL_RENDER::SetVideoRenderCallback(renderer);
     }
     else {
-        LIVEROOM::EnableExternalRender(false);
+        LIVEROOM::EnableExternalRender(ZEGO::EXTERNAL_RENDER::VIDEO_RENDER_TYPE_NONE);
     }
     InitSdk();
 }

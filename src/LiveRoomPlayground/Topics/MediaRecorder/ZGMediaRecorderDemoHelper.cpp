@@ -37,6 +37,8 @@ void ZGMediaRecorderDemoHelper::LoginRoom()
     LIVEROOM::EnableAEC(true);
     // 开启噪音抑制
     LIVEROOM::EnableNoiseSuppress(true);
+	// 音效均衡器
+	LIVEROOM::SetAudioEqualizerGain(2, 10);
 
     LIVEROOM::LoginRoom(stream_id_.c_str(), ZEGO::LIVEROOM::Audience, stream_id_.c_str());
     SetCurStatus(kZGMediaRecord_PublishStatus_Starting_Login_Room);

@@ -56,35 +56,6 @@ namespace ZEGO
          @return 操作是否成功
          */
         ZEGO_API bool GetRoomMessage(ROOM::ZegoMessagePriority priority, bool ascendOrder, unsigned long long messageId, int messageCount);
-        
-        /**
-         在房间中创建一个会话
-
-         @param conversationName 会话名称
-         @param memberList 会话成员列表
-         @param memberCount 会话成员数量
-         @return 消息 seq
-         */
-        ZEGO_API int CreateConversation(const char *conversationName, ROOM::ZegoUser *memberList, unsigned int memberCount);
-        
-        /**
-         获取会话相关信息
-
-         @param conversationId 会话 Id
-         @return true 成功，false 失败
-         */
-        ZEGO_API bool GetConversationInfo(const char *conversationId);
-        
-        /**
-         在会话中发送一条消息
-
-         @param conversationId 会话 Id
-         @param type 会话类型
-         @param messageContent 消息内容
-         @return 消息 seq
-         */
-        ZEGO_API int SendConversationMessage(const char *conversationId, ROOM::ZegoMessageType type, const char *messageContent);
-        
         /**
          发送不可靠信道消息，主要用于大并发的场景，发送一些非必须到达的消息
          

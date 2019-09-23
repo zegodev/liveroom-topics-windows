@@ -93,14 +93,6 @@ namespace ZEGO
          */
         ZEGO_API bool SetBusinessType(int nType);
         
-        /**
-         是否使用聊天室功能
-
-         @param bChatRoom 是否使用聊天室功能，true 使用，false 不使用。默认为 false
-         @return true 成功，false 失败
-         @attention zegoliveroom 自带 IM 功能，随 SDK 初始化。如果要额外使用聊天室，需要启用聊天室功能
-         */
-        ZEGO_API bool SetUseChatRoom(bool bChatRoom);
         
         /**
          设置用户信息

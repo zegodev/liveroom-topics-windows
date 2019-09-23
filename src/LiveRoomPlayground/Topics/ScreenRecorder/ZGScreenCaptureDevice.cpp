@@ -23,6 +23,10 @@ void ZGScreenCaptureDevice::AttachDevice()
 {
 	// 确保在InitSDK 之前调用  **第二路推流通道**
 	VCAP::SetVideoCaptureFactory(this, AV::PUBLISH_CHN_AUX);
+
+	// 确保在InitSDK 之前调用 选择辅助推流通道的音频采集源
+	int ret = AUDIODEVICE::SetAudioSrcForAuxiliaryPublishChannel(kZegoAuxPublishChannelAudioSrcTypeSameAsMainPublishChannel);
+
 }
 
 void ZGScreenCaptureDevice::OpenDevice()
