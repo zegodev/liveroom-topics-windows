@@ -72,7 +72,7 @@ void ZGScreenRecorderDemoHelper::OnLoginRoom(int errorCode, const char *pszRoomI
 
 }
 
-void ZGScreenRecorderDemoHelper::OnKickOut(int reason, const char *pszRoomID)
+void ZGScreenRecorderDemoHelper::OnKickOut(int reason, const char *pszRoomID, const char* pszCustomReason/*=""*/)
 {
 
 }

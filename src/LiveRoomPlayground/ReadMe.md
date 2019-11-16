@@ -8,7 +8,7 @@ cd src
 使用vs2013或者以上版本打开工程文件`ZegoLiveRoomTopics.sln`。
 
 
-右键项目，`生成事件`-->`生预成事件`-->`命令行`，删除掉生成appid的头文件。
+在解决方案资源管理器中，右键ZegoLiveRoomTopics项目，选择`属性`-->`生成事件`-->`预生成事件`-->`命令行`，删除掉自动生成appid的头文件。
 `$(SolutionDir)AppSupport/gen_appconfig_header.bat`
 
 修改`AppSupport`目录下`AppIDHelper.h.in`文件为`AppIDHelper.h`。

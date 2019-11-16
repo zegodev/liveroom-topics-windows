@@ -26,6 +26,8 @@ public:
     // 刷新滤镜处理等级，例如美颜等级
     virtual void UpdateFilterLevel(int level){}
 
+    virtual void Release(){}
+
 };
 
 #endif // VideoFilterProcessBase_h__

@@ -84,7 +84,7 @@ void ZGMediaPlayerPublishHelper::OnPublishStateUpdate(int stateCode, const char*
 }
 
 
-void ZGMediaPlayerPublishHelper::OnKickOut(int reason, const char *pszRoomID)
+void ZGMediaPlayerPublishHelper::OnKickOut(int reason, const char *pszRoomID, const char* pszCustomReason/*=""*/)
 {
     ZGENTER_FUN_LOG;
 }

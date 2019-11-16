@@ -196,6 +196,29 @@ namespace MEDIAPLAYER
      @note 多次调用没有影响
      */
     ZEGOAVKIT_API bool RequireHWDecoder(ZegoMediaPlayerIndex index = ZegoMediaPlayerIndexFirst);
+
+    /**
+     设置播放控件显示模式
+
+     @param mode 显示模式。详见 AV::ZegoVideoViewMode，默认为 ZegoVideoViewModeScaleAspectFit 模式
+     @param index 播放器序号, 默认为 ZegoMediaPlayerIndexFirst
+     */
+    ZEGOAVKIT_API void SetViewMode(AV::ZegoVideoViewMode mode, ZegoMediaPlayerIndex index = ZegoMediaPlayerIndexFirst);
+
+    /**
+     设置播放的背景颜色
+
+     @param color 颜色,取值为0x00RRGGBB
+     @param index 播放器序号, 默认为 ZegoMediaPlayerIndexFirst
+     */
+    ZEGOAVKIT_API void SetBackgroundColor(int color, ZegoMediaPlayerIndex index = ZegoMediaPlayerIndexFirst);
+    
+    /**
+     清除播放控件播放结束后, 在控件上保留的最后一帧画面
+     
+     @param index 播放器序号, 默认为 ZegoMediaPlayerIndexFirst
+     */
+    ZEGOAVKIT_API void ClearView(ZegoMediaPlayerIndex index = ZegoMediaPlayerIndexFirst);
     
     /**
      设置播放器事件回调
@@ -232,6 +255,14 @@ namespace MEDIAPLAYER
      @note 使用多实例媒体播放器时，应该使用这个接口设置回调，便于在回调中区分是哪个播放器实例的回调
      */
     ZEGOAVKIT_API void SetVideoDataWithIndexCallback(IZegoMediaPlayerVideoDataWithIndexCallback *callback, ZegoMediaPlayerVideoPixelFormat format, ZegoMediaPlayerIndex index = ZegoMediaPlayerIndexFirst);
+
+    /**
+     设置音频数据回调
+
+     @param callback 回调
+     @param index 播放器序号，默认为 ZegoMediaPlayerIndexFirst
+     */
+    ZEGOAVKIT_API void SetAudioDataCallback(IZegoMediaPlayerAudioDataCallback *callback, ZegoMediaPlayerIndex index = ZegoMediaPlayerIndexFirst);
     
 }
 }

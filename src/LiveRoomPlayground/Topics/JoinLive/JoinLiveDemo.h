@@ -150,7 +150,7 @@ protected:
     virtual void OnLogoutRoom(int errorCode, const char *pszRoomID) override;
 
 
-    virtual void OnKickOut(int reason, const char *pszRoomID) override;
+    virtual void OnKickOut(int reason, const char *pszRoomID, const char* pszCustomReason="") override;
 
 
     virtual void OnDisconnect(int errorCode, const char *pszRoomID) override;

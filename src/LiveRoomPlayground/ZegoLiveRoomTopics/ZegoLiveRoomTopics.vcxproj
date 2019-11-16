@@ -83,7 +83,7 @@
     <LinkIncremental>true</LinkIncremental>
     <IntDir>$(SolutionDir)\build_dir\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)\bin\$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath>./;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)/libs/zegosdk/include/ZegoLiveRoom;$(SolutionDir)/libs/tencent_beauty/;$(SolutionDir)/libs/;$(SolutionDir)/libs/fusdk/Windows/include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -95,7 +95,7 @@
     <LinkIncremental>false</LinkIncremental>
     <IntDir>$(SolutionDir)\build_dir\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)\bin\$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath>./;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)/libs/zegosdk/include/ZegoLiveRoom;$(SolutionDir)/libs/tencent_beauty/;$(SolutionDir)/libs/;$(SolutionDir)/libs/fusdk/Windows/include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -159,7 +159,7 @@ echo F | xcopy /y "$(SolutionDir)\libs\fusdk\assets\face_beautification.bundle" 
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>./../libs/zegosdk/libs/$(Platform)/ZegoLiveRoom.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>./../libs/zegosdk/libs/$(Platform)/ZegoLiveRoom.lib;./../libs/fusdk/Windows/win64_release/nama.lib;comsvcs.lib;ws2_32.lib;comsuppw.lib;Wininet.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Midl>
@@ -176,15 +176,24 @@ echo F | xcopy /y "$(SolutionDir)\libs\fusdk\assets\face_beautification.bundle" 
       <Command>$(SolutionDir)AppSupport/gen_appconfig_header.bat</Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>
-echo F | xcopy /y "$(SolutionDir)\libs\zegosdk\libs\$(Platform)\ZegoLiveRoom.dll" "$(SolutionDir)\bin\$(Platform)\$(Configuration)\ZegoLiveRoom.dll"      
+      <Command>echo F | xcopy /y "$(SolutionDir)\libs\zegosdk\libs\$(Platform)\ZegoLiveRoom.dll" "$(SolutionDir)\bin\$(Platform)\$(Configuration)\ZegoLiveRoom.dll"      
 xcopy /y "$(SolutionDir)\Res" "$(SolutionDir)\bin\$(Platform)\$(Configuration)\Res\"
 echo D | xcopy /y "$(SolutionDir)\Res" "$(SolutionDir)\compile_product_output\bin\Res\"
 echo F | xcopy /y "$(SolutionDir)\libs\zegosdk\libs\$(Platform)\ZegoLiveRoom.dll" "$(SolutionDir)\compile_product_output\bin\ZegoLiveRoom.dll"
 echo F |xcopy /y "$(SolutionDir)\bin\$(Platform)\$(Configuration)\$(ProjectName).exe" "$(SolutionDir)\compile_product_output\bin\$(ProjectName).exe"
-echo F | xcopy /y "$(SolutionDir)\Topics\ExternalVideoCapture\ScreenCapture\libs\x86\ZegoScreenCapture.dll" "$(SolutionDir)\compile_product_output\bin\ZegoScreenCapture.dll"
-echo F | xcopy /y "$(SolutionDir)\Topics\ExternalVideoCapture\ScreenCapture\libs\x86\ZegoScreenCapture.dll" "$(SolutionDir)\bin\$(Platform)\$(Configuration)\ZegoScreenCapture.dll"
-echo F |xcopy /y "$(OutDir)$(TargetName).pdb" "$(SolutionDir)\compile_product_output\$(TargetName).pdb"</Command>
+echo F | xcopy /y "$(SolutionDir)\Topics\ExternalVideoCapture\ScreenCapture\libs\x64\ZegoScreenCapture.dll" "$(SolutionDir)\compile_product_output\bin\ZegoScreenCapture.dll"
+echo F | xcopy /y "$(SolutionDir)\Topics\ExternalVideoCapture\ScreenCapture\libs\x64\ZegoScreenCapture.dll" "$(SolutionDir)\bin\$(Platform)\$(Configuration)\ZegoScreenCapture.dll"
+echo F |xcopy /y "$(OutDir)$(TargetName).pdb" "$(SolutionDir)\compile_product_output\$(TargetName).pdb"
+echo F | xcopy /y "$(SolutionDir)\libs\tencent_beauty\ilivefiltersdk.dll" "$(SolutionDir)\bin\$(Platform)\$(Configuration)\ilivefiltersdk.dll"    
+echo F | xcopy /y "$(SolutionDir)\libs\tencent_beauty\ilivefiltersdk.dll" "$(SolutionDir)\compile_product_output\bin\ilivefiltersdk.dll"
+echo F | xcopy /y "$(SolutionDir)\libs\fusdk\Windows\win64_release\libsgemm.dll" "$(SolutionDir)\bin\$(Platform)\$(Configuration)\libsgemm.dll"
+echo F | xcopy /y "$(SolutionDir)\libs\fusdk\Windows\win64_release\libsgemm.dll" "$(SolutionDir)\compile_product_output\bin\libsgemm.dll"
+echo F | xcopy /y "$(SolutionDir)\libs\fusdk\Windows\win64_release\nama.dll" "$(SolutionDir)\bin\$(Platform)\$(Configuration)\nama.dll"
+echo F | xcopy /y "$(SolutionDir)\libs\fusdk\Windows\win64_release\nama.dll" "$(SolutionDir)\compile_product_output\bin\nama.dll"
+echo F | xcopy /y "$(SolutionDir)\libs\fusdk\assets\v3.bundle" "$(SolutionDir)\bin\$(Platform)\$(Configuration)\Res\v3.bundle"
+echo F | xcopy /y "$(SolutionDir)\libs\fusdk\assets\v3.bundle" "$(SolutionDir)\compile_product_output\bin\Res\v3.bundle"
+echo F | xcopy /y "$(SolutionDir)\libs\fusdk\assets\face_beautification.bundle" "$(SolutionDir)\bin\$(Platform)\$(Configuration)\Res\face_beautification.bundle"
+echo F | xcopy /y "$(SolutionDir)\libs\fusdk\assets\face_beautification.bundle" "$(SolutionDir)\compile_product_output\bin\Res\face_beautification.bundle"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -203,7 +212,7 @@ echo F |xcopy /y "$(OutDir)$(TargetName).pdb" "$(SolutionDir)\compile_product_ou
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>./../libs/zegosdk/libs/$(Platform)/ZegoLiveRoom.lib;./../libs/tencent_beauty/ilivefiltersdk.lib;./../libs/fusdk/Windows/win32_release/nama.lib;comsvcs.lib;ws2_32.lib;comsuppw.lib;Wininet.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>./../libs/zegosdk/libs/$(Platform)/ZegoLiveRoom.lib;./../libs/fusdk/Windows/win32_release/nama.lib;comsvcs.lib;ws2_32.lib;comsuppw.lib;Wininet.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Midl>
@@ -256,7 +265,7 @@ echo F | xcopy /y "$(SolutionDir)\libs\fusdk\assets\face_beautification.bundle" 
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>./../libs/zegosdk/libs/$(Platform)/ZegoLiveRoom.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>./../libs/zegosdk/libs/$(Platform)/ZegoLiveRoom.lib;./../libs/fusdk/Windows/win64_release/nama.lib;comsvcs.lib;ws2_32.lib;comsuppw.lib;Wininet.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Midl>
@@ -273,16 +282,24 @@ echo F | xcopy /y "$(SolutionDir)\libs\fusdk\assets\face_beautification.bundle" 
       <Command>$(SolutionDir)AppSupport/gen_appconfig_header.bat</Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>
-echo F | xcopy /y "$(SolutionDir)\libs\zegosdk\libs\$(Platform)\ZegoLiveRoom.dll" "$(SolutionDir)\bin\$(Platform)\$(Configuration)\ZegoLiveRoom.dll"      
+      <Command>echo F | xcopy /y "$(SolutionDir)\libs\zegosdk\libs\$(Platform)\ZegoLiveRoom.dll" "$(SolutionDir)\bin\$(Platform)\$(Configuration)\ZegoLiveRoom.dll"      
 xcopy /y "$(SolutionDir)\Res" "$(SolutionDir)\bin\$(Platform)\$(Configuration)\Res\"
 echo D | xcopy /y "$(SolutionDir)\Res" "$(SolutionDir)\compile_product_output\bin\Res\"
 echo F | xcopy /y "$(SolutionDir)\libs\zegosdk\libs\$(Platform)\ZegoLiveRoom.dll" "$(SolutionDir)\compile_product_output\bin\ZegoLiveRoom.dll"
 echo F |xcopy /y "$(SolutionDir)\bin\$(Platform)\$(Configuration)\$(ProjectName).exe" "$(SolutionDir)\compile_product_output\bin\$(ProjectName).exe"
-echo F | xcopy /y "$(SolutionDir)\Topics\ExternalVideoCapture\ScreenCapture\libs\x86\ZegoScreenCapture.dll" "$(SolutionDir)\compile_product_output\bin\ZegoScreenCapture.dll"
-echo F | xcopy /y "$(SolutionDir)\Topics\ExternalVideoCapture\ScreenCapture\libs\x86\ZegoScreenCapture.dll" "$(SolutionDir)\bin\$(Platform)\$(Configuration)\ZegoScreenCapture.dll"
+echo F | xcopy /y "$(SolutionDir)\Topics\ExternalVideoCapture\ScreenCapture\libs\x64\ZegoScreenCapture.dll" "$(SolutionDir)\compile_product_output\bin\ZegoScreenCapture.dll"
+echo F | xcopy /y "$(SolutionDir)\Topics\ExternalVideoCapture\ScreenCapture\libs\x64\ZegoScreenCapture.dll" "$(SolutionDir)\bin\$(Platform)\$(Configuration)\ZegoScreenCapture.dll"
 echo F |xcopy /y "$(OutDir)$(TargetName).pdb" "$(SolutionDir)\compile_product_output\$(TargetName).pdb"
-</Command>
+echo F | xcopy /y "$(SolutionDir)\libs\tencent_beauty\ilivefiltersdk.dll" "$(SolutionDir)\bin\$(Platform)\$(Configuration)\ilivefiltersdk.dll"    
+echo F | xcopy /y "$(SolutionDir)\libs\tencent_beauty\ilivefiltersdk.dll" "$(SolutionDir)\compile_product_output\bin\ilivefiltersdk.dll"
+echo F | xcopy /y "$(SolutionDir)\libs\fusdk\Windows\win64_release\libsgemm.dll" "$(SolutionDir)\bin\$(Platform)\$(Configuration)\libsgemm.dll"
+echo F | xcopy /y "$(SolutionDir)\libs\fusdk\Windows\win64_release\libsgemm.dll" "$(SolutionDir)\compile_product_output\bin\libsgemm.dll"
+echo F | xcopy /y "$(SolutionDir)\libs\fusdk\Windows\win64_release\nama.dll" "$(SolutionDir)\bin\$(Platform)\$(Configuration)\nama.dll"
+echo F | xcopy /y "$(SolutionDir)\libs\fusdk\Windows\win64_release\nama.dll" "$(SolutionDir)\compile_product_output\bin\nama.dll"
+echo F | xcopy /y "$(SolutionDir)\libs\fusdk\assets\v3.bundle" "$(SolutionDir)\bin\$(Platform)\$(Configuration)\Res\v3.bundle"
+echo F | xcopy /y "$(SolutionDir)\libs\fusdk\assets\v3.bundle" "$(SolutionDir)\compile_product_output\bin\Res\v3.bundle"
+echo F | xcopy /y "$(SolutionDir)\libs\fusdk\assets\face_beautification.bundle" "$(SolutionDir)\bin\$(Platform)\$(Configuration)\Res\face_beautification.bundle"
+echo F | xcopy /y "$(SolutionDir)\libs\fusdk\assets\face_beautification.bundle" "$(SolutionDir)\compile_product_output\bin\Res\face_beautification.bundle"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -335,7 +352,6 @@ echo F |xcopy /y "$(OutDir)$(TargetName).pdb" "$(SolutionDir)\compile_product_ou
     <ClInclude Include="..\Topics\ExternalVideoCapture\ZGExternalVideoCatpureDemoHelper.h" />
     <ClInclude Include="..\Topics\ExternalVideoCapture\ZGExternalVideoSource.h" />
     <ClInclude Include="..\Topics\ExternalVideoCapture\ZGImageSource.h" />
-    <ClInclude Include="..\Topics\ExternalVideoFilter\BeautifyFilter.h" />
     <ClInclude Include="..\Topics\ExternalVideoFilter\ExternalVideoFilterUI\ExternalVideoFilterDlg.h" />
     <ClInclude Include="..\Topics\ExternalVideoFilter\ExternalVideoFilterUI\resource.h" />
     <ClInclude Include="..\Topics\ExternalVideoFilter\FuBeautifyFilter.h" />
@@ -434,7 +450,6 @@ echo F |xcopy /y "$(OutDir)$(TargetName).pdb" "$(SolutionDir)\compile_product_ou
     <ClCompile Include="..\Topics\ExternalVideoCapture\ZGExternalVideoSource.cpp" />
     <ClCompile Include="..\Topics\ExternalVideoCapture\ZGImageSource.cpp" />
     <ClCompile Include="..\Topics\ExternalVideoCapture\ZGVideoRender.cpp" />
-    <ClCompile Include="..\Topics\ExternalVideoFilter\BeautifyFilter.cpp" />
     <ClCompile Include="..\Topics\ExternalVideoFilter\ExternalVideoFilterUI\ExternalVideoFilterDlg.cpp" />
     <ClCompile Include="..\Topics\ExternalVideoFilter\FuBeautifyFilter.cpp" />
     <ClCompile Include="..\Topics\ExternalVideoFilter\GreyVideoFilter.cpp" />

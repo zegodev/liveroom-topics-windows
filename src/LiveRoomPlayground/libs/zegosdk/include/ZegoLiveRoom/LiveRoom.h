@@ -268,7 +268,11 @@ namespace ZEGO
          @param bEnable true 打开，false 失败
          */
         ZEGO_API void EnableMixSystemPlayout(bool bEnable);
-        
+
+	
+		
+
+		ZEGO_API void MixSysPlayoutWithProperty(bool bEnable, ZegoMixSysPlayoutPropertyMask properties = MIX_PROP_NONE);
         /**
          获取麦克风音量
 
@@ -430,10 +434,25 @@ namespace ZEGO
          @attention "alsa_capture_device_name" string value: plughw:[card_id],[device_id], eg: plughw:1,0, default is plug:default. view the device list with arecord. for Linux
          @attention "alsa_playback_device_name" string value: plughw:[card_id],[device_id], eg: plughw:1,0, default is plug:default. view the device list with aplay. for Linux
          @attention "play_nodata_abort", bool value, default: false，设置拉流时没拉到数据是否终止拉流，设置为false表示不终止，设置为true表示终止，拉流之前调用有效
+		 @attention "room_retry_time", uint32 value, default:300S 设置房间异常后自动恢复最大重试时间，SDK尽最大努力恢复，单位为S，SDK默认为300s，设置为0时不重试
+         @attention "av_retry_time", uint32 value, default:300S
+             设置推拉流异常后自动恢复最大重试时间，SDK尽最大努力恢复，单位为S，SDK默认为300s，设置为0时不重试
          */
         ZEGO_API void SetConfig(const char *config);
-        
-#if defined(ANDROID) || TARGET_OS_IPHONE
+
+        /**
+         给推流通道设置扩展参数，一般不建议修改
+
+         @param param_config 参数配置信息
+         @param idx 推流通道索引，默认主通道
+
+         @attention 配置项写法，例如 "zego_channel_param_key_video_swencoder_usage=camera", 等号后面值的类型要看下面每一项的定义
+         @attention "zego_channel_param_key_video_swencoder_usage", string value: camera|screen，设置编码时使用场景模式，仅使用 OpenH264 编码时有效
+         @attention "zego_channel_param_key_video_x264_config_tune", string value: animation, 设置编码的 tune 值，目前只支持 animation，仅使用 X264 编码时有效
+         @attention 初始化 SDK 之后推流前设置才生效，推流过程中设置无效
+         */
+        ZEGO_API void SetChannelExtraParam(const char *param_config, AV::PublishChannelIndex idx = AV::PUBLISH_CHN_MAIN);
+
         /**
          设置是否允许SDK使用麦克风设备
          
@@ -443,8 +462,7 @@ namespace ZEGO
          @note 接口由于涉及对设备的操作，极为耗时，不建议随便调用，只在真正需要让出麦克风给其他应用的时候才调用。
          */
         ZEGO_API bool EnableMicDevice(bool enable);
-#endif
-        
+
 	}
 }
 

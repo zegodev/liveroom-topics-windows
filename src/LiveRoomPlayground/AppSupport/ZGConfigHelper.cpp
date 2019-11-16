@@ -56,7 +56,7 @@ void ZGConfigHelper::ActivateVideoPublishStream(bool enable)
 {
 	if (ZGManagerInstance()->SdkIsInited())
 	{
-		int result = 0; //LIVEROOM::MuteVideoPublish(AV::PUBLISH_CHN_MAIN, enable);
+		int result = LIVEROOM::MuteVideoPublish(enable);
 		PrintLogToView("ActivateVideoPublishStream:%d(bool), Result:%d", enable, result);
 	}
 }
@@ -65,7 +65,8 @@ void ZGConfigHelper::ActivateAudioPublishStream(bool enable)
 {
 	if (ZGManagerInstance()->SdkIsInited())
 	{
-		PrintLogToView("ActivateAudioPublishStream 暂时不支持");
+        int result = LIVEROOM::MuteAudioPublish(enable);
+        PrintLogToView("ActivateAudioPublishStream:%d(bool), Result:%d", enable, result);
 	}
 }
 

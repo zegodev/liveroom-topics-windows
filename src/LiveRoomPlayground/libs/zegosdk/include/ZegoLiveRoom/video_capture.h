@@ -157,7 +157,7 @@ namespace AVE {
     };
     
     struct VideoCodecConfig {
-        VideoCodecConfig() : width(0), height(0), codec_type(CODEC_TYPE_AVC_AVCC), media_side_info(0), media_side_info_size(0), is_external_clock(false) {
+        VideoCodecConfig() : width(0), height(0), codec_type(CODEC_TYPE_AVC_AVCC), media_side_info(0), media_side_info_size(0), is_external_clock(false), rotation(0) {
         }
         
         int width;
@@ -167,6 +167,7 @@ namespace AVE {
         int media_side_info_size;
 
         bool is_external_clock;
+        int rotation; // counterclockwise degree
     };
     
     class VideoCaptureEncodedFrameCallback {

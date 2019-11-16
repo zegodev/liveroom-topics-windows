@@ -290,7 +290,7 @@ void JoinLiveDemo::OnLogoutRoom(int errorCode, const char *pszRoomID)
     PrintLogToView("已退出登录");
 }
 
-void JoinLiveDemo::OnKickOut(int reason, const char *pszRoomID)
+void JoinLiveDemo::OnKickOut(int reason, const char *pszRoomID, const char* pszCustomReason/*=""*/)
 {
     PrintLogToView("被踢掉线，reason = %d", reason);
     UpdateLoginEvent(kZGJoinLiveLoginEventKickOut);

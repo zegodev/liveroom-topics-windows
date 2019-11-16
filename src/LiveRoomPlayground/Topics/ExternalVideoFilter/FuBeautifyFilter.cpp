@@ -15,6 +15,7 @@
 #pragma comment(lib,"glu32.lib")
 
 
+
 FuBeautifyFilter::FuBeautifyFilter()
 {
 }
@@ -112,6 +113,17 @@ void FuBeautifyFilter::FilterProcessRGBAData(unsigned char * data, int frame_len
     fuRenderItemsEx2(FU_FORMAT_RGBA_BUFFER, reinterpret_cast<int*>(data), FU_FORMAT_RGBA_BUFFER, reinterpret_cast<int*>(data), frame_w, frame_h, frame_id_++, handles_.data(), handles_.size(), NAMA_RENDER_FEATURE_FULL, NULL);
 }
 
+void FuBeautifyFilter::Release()
+{
+    if (hglrc_)
+    {
+        wglDeleteContext(hglrc_);
+        hglrc_ = nullptr;
+    }
+    fuOnDeviceLost();
+    fuDestroyAllItems();
+}
+
 bool FuBeautifyFilter::InitFuSdk()
 {
     // 初始化fu sdk
@@ -138,6 +150,7 @@ bool FuBeautifyFilter::LoadFuResource()
     handles_.push_back(beauty_handles_);
     return true;
 }
+
 
 bool FuBeautifyFilter::InitOpenGL()
 {
@@ -173,10 +186,10 @@ bool FuBeautifyFilter::InitOpenGL()
     }
     int ret = SetPixelFormat(hgldc, spf, &pfd);
 
-    HGLRC hglrc = wglCreateContext(hgldc);
-    wglMakeCurrent(hgldc, hglrc);
+    hglrc_ = wglCreateContext(hgldc);
+    wglMakeCurrent(hgldc, hglrc_);
 
-    if (hglrc != nullptr)
+    if (hglrc_ != nullptr)
     {
         //OpenGL函数的地址，如果4个中任意一个不为空值，则OpenGL环境是可用的
         //此后的所有Nama SDK调用都会基于这个context

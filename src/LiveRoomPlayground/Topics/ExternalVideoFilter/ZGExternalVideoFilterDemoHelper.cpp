@@ -107,7 +107,7 @@ void ZGExternalVideoFilterDemoHelper::OnLoginRoom(int errorCode, const char *psz
     }
 }
 
-void ZGExternalVideoFilterDemoHelper::OnKickOut(int reason, const char *pszRoomID)
+void ZGExternalVideoFilterDemoHelper::OnKickOut(int reason, const char *pszRoomID, const char* pszCustomReason/*=""*/)
 {
     SetCurStatus(kZGExternalVideoFilter_PublishStatus_None);
 }

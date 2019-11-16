@@ -13,15 +13,15 @@
 #include "ZegoLiveRoom/zego-api-defines.h"
 #include "ZegoLiveRoom/video_capture.h"
 
-// namespace ZEGO
-// {
-//     namespace CAMERA
-//     {
-//         ZEGOAVKIT_API AVE::Camera* CreateCamera();
-// 
-//         ZEGOAVKIT_API void DestroyCamera(AVE::Camera *pCamera);
-//     }
-// }
+namespace ZEGO
+{
+    namespace CAMERA
+    {
+        ZEGOAVKIT_API AVE::Camera* CreateCamera();
+
+        ZEGOAVKIT_API void DestroyCamera(AVE::Camera *pCamera);
+    }
+}
 
 #ifdef __cplusplus
 

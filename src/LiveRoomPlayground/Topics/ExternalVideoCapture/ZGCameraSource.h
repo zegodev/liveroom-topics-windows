@@ -49,7 +49,7 @@ private:
     vector<std::shared_ptr<ZGExternalVideoData> > capture_video_data_vec_;
 
     // 缓冲区大小设置，环形缓冲
-    const int MAX_VIDEO_BUF_LEN = 10;
+    const int MAX_VIDEO_BUF_LEN = 2;
 
     // 写索引位置
     std::atomic<int> write_index_ = 0;

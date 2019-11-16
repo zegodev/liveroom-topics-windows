@@ -36,7 +36,7 @@ public:
 protected:
 	virtual void OnLoginRoom(int errorCode, const char *pszRoomID, const COMMON::ZegoStreamInfo *pStreamInfo, unsigned int streamCount) override;
 	virtual void OnInitSDK(int nError) override;
-	virtual void OnKickOut(int reason, const char *pszRoomID) override;
+	virtual void OnKickOut(int reason, const char *pszRoomID, const char* pszCustomReason="") override;
 	virtual void OnDisconnect(int errorCode, const char *pszRoomID) override;
 	virtual void OnCustomCommand(int errorCode, int requestSeq, const char *pszRoomID) override;
 	virtual void OnRecvCustomCommand(const char *pszUserId, const char *pszUserName, const char *pszContent, const char *pszRoomID) override;

@@ -483,7 +483,7 @@ void MixStreamDemo::OnLogoutRoom(int errorCode, const char *pszRoomID)
     PrintLogToView("已退出登录");
 }
 
-void MixStreamDemo::OnKickOut(int reason, const char *pszRoomID)
+void MixStreamDemo::OnKickOut(int reason, const char *pszRoomID, const char* pszCustomReason/*=""*/)
 {
     PrintLogToView("被踢掉线，reason = %d", reason);
     UpdateLoginEvent(kZGMixStreamLoginEventKickOut);

@@ -45,6 +45,7 @@ bool PlayDemo::InitSDK(PlayInitSDKConfig c)
     LIVEROOM::SetUser(c.user_id.c_str(), c.user_name.c_str());
     LIVEROOM::SetLivePlayerCallback(this);
     LIVEROOM::SetRoomCallback(this);
+    LIVEROOM::SetLiveEventCallback(this);
 
     cur_real_data_.bit_rate_bps_per_second = 0;
     cur_real_data_.frame_rate = 0;
@@ -80,6 +81,16 @@ bool PlayDemo::StartPlay(PlayConfig c)
     return LIVEROOM::StartPlayingStream(c.stream_id.c_str(), c.view_hwnd, c.play_param.c_str());
 }
 
+void PlayDemo::OnRemoteCameraStatusUpdate(const char* pStreamID, int nStatus, int nReason)
+{
+    PrintLogToView("对端摄像头状态 stream id = %s, status = %d", pStreamID, nStatus);
+}
+
+void PlayDemo::OnRemoteMicStatusUpdate(const char* pStreamID, int nStatus, int nReason)
+{
+    PrintLogToView("对端麦克风状态 stream id = %s, status = %d", pStreamID, nStatus);
+}
+
 std::string PlayDemo::DescOfStatus(ZGPlayStatus status)
 {
     static string status_des_array[] = {
@@ -94,6 +105,11 @@ std::string PlayDemo::DescOfStatus(ZGPlayStatus status)
     };
 
     return status_des_array[status];
+}
+
+void PlayDemo::OnAVKitEvent(int event, AV::EventInfo* pInfo)
+{
+    
 }
 
 void PlayDemo::OnInitSDK(int nError)
@@ -135,7 +151,7 @@ void PlayDemo::OnLoginRoom(int errorCode, const char *pszRoomID, const ZegoStrea
     }
 }
 
-void PlayDemo::OnKickOut(int reason, const char *pszRoomID)
+void PlayDemo::OnKickOut(int reason, const char *pszRoomID, const char* pszCustomReason/*=""*/)
 {
     PrintLogToView("被踢掉线，reason = %d", reason);
 }
@@ -199,11 +215,6 @@ void PlayDemo::OnVideoSizeChanged(const char* pStreamID, int nWidth, int nHeight
 void PlayDemo::OnRecvRemoteAudioFirstFrame(const char* pStreamID)
 {
 	PrintLogToView("收到音频首帧: streamId= %s", pStreamID);
-}
-
-void PlayDemo::OnRemoteCameraStatusUpdate(const char* pStreamID, int nStatus)
-{
-	PrintLogToView("OnRemoteCameraStatusUpdate: streamId= %s, status=%d", pStreamID, nStatus);
 }
 
 void PlayDemo::UpdateStatus(ZGPlayStatus s)

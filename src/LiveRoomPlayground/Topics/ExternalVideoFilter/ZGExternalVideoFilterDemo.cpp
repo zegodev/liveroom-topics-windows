@@ -6,7 +6,6 @@
 
 #include "BeautifyFilter.h"
 #include "FuBeautifyFilter.h"
-#include "GreyVideoFilter.h"
 
 ZGExternalVideoFilterDemo::ZGExternalVideoFilterDemo()
 {
@@ -40,8 +39,6 @@ void ZGExternalVideoFilterDemo::EnableVideoFilter(bool enable)
         // 开启视频外部滤镜，IniSDK之前调用
         LIVEROOM::SetVideoFilterFactory(this);
 
-        // 美颜滤镜初始化
-        filter_process_ = std::shared_ptr<VideoFilterProcessBase>(new GreyVideoFilter());
     }
 
     // 使用测试环境，生产上线时，需要联系zego技术支持切换为正式环境，并修改为 SetUseTestEnv(FALSE); 表示启用正式环境
@@ -79,9 +76,13 @@ void ZGExternalVideoFilterDemo::AllocateAndStart(Client* client)
     read_index_ = 0;
     pending_count_ = 0;
 
-	// 美颜处理线程
-	process_thread_ = std::thread(&ZGExternalVideoFilterDemo::BeautifyProcess, this);
-   
+    // 美颜滤镜初始化
+    filter_process_ = std::shared_ptr<VideoFilterProcessBase>(new FuBeautifyFilter());
+
+    // 美颜处理线程
+    process_thread_ = std::thread(&ZGExternalVideoFilterDemo::BeautifyProcess, this);
+
+
 }
 
 void ZGExternalVideoFilterDemo::StopAndDeAllocate()
@@ -89,11 +90,7 @@ void ZGExternalVideoFilterDemo::StopAndDeAllocate()
     ZGENTER_FUN_LOG;
     is_exit_ = true;
 
-	if (process_thread_.joinable())
-	{
-		process_thread_.join();
-	}
-
+    process_thread_.join();
 
     if (client_ != nullptr)
     {
@@ -132,17 +129,14 @@ int ZGExternalVideoFilterDemo::DequeueInputBuffer(int width, int height, int str
 
     if (!have_start_)
     {
-        ZGLog("have not start");
         return -1;
     }
 
     if (pending_count_ >= MAX_FILTER_FRAME_COUNT)
     {
-        ZGLog("pending_count_ >= MAX_FILTER_FRAME_COUNT, return, %d > %d", pending_count_, MAX_FILTER_FRAME_COUNT);
+        ZGLog("pending_count_ >= MAX_FILTER_FRAME_COUNT, return");
         return -1;
     }
-
-    //filter_data_list_[write_index_]->cur_time = GetTickCount();
 
     //ZGLog("width = %d, height = %d, stride = %d ", width, height, stride);
 
@@ -165,6 +159,7 @@ int ZGExternalVideoFilterDemo::DequeueInputBuffer(int width, int height, int str
             ZGLog("write_index_ error");
         }
     }
+
     return write_index_;
 }
 
@@ -205,8 +200,6 @@ void ZGExternalVideoFilterDemo::QueueInputBuffer(int index, int width, int heigh
     write_index_ = (write_index_ + 1) % MAX_FILTER_FRAME_COUNT;
 
     pending_count_++;
-
-    //ZGLog("pending_count_++, pending_count_ = %d", pending_count_);
 }
 
 
@@ -244,10 +237,6 @@ void ZGExternalVideoFilterDemo::BeautifyProcess()
                     memcpy(dst, src_data, filter_data_list_[read_index_]->width_*filter_data_list_[read_index_]->height_ * cal_frame_factor_);
 
                     pool->QueueInputBuffer(index, filter_data_list_[read_index_]->width_, filter_data_list_[read_index_]->height_, filter_data_list_[read_index_]->stride_, filter_data_list_[read_index_]->timestamp_100n_);
-
-                    //DWORD elapse_time = GetTickCount() - filter_data_list_[read_index_]->cur_time;
-                    //ZGLog("elapse time = %d", elapse_time);
-
                 }
 
             }
@@ -263,7 +252,7 @@ void ZGExternalVideoFilterDemo::BeautifyProcess()
         std::this_thread::sleep_for(std::chrono::milliseconds(TICK_PERIOD_MS));
     }
 
-    have_start_ = false;
+    filter_process_->Release();
 
     //ZGLEAVE_FUN_LOG;
 

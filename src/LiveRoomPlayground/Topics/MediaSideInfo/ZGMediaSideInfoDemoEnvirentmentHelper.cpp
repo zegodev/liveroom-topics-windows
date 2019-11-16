@@ -212,7 +212,7 @@ void ZGMediaSideInfoDemoEnvirentmentHelper::OnLoginRoom(int errorCode, const cha
     }
 }
 
-void ZGMediaSideInfoDemoEnvirentmentHelper::OnKickOut(int reason, const char *pszRoomID)
+void ZGMediaSideInfoDemoEnvirentmentHelper::OnKickOut(int reason, const char *pszRoomID, const char* pszCustomReason/*=""*/)
 {
     SetCurStatus(kZGMediaSideTopicStatus_None);
 }

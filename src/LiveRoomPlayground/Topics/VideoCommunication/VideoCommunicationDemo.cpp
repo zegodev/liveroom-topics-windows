@@ -270,7 +270,7 @@ void VideoCommunicationDemo::OnLogoutRoom(int errorCode, const char *pszRoomID)
     PrintLogToView("已退出登录");
 }
 
-void VideoCommunicationDemo::OnKickOut(int reason, const char *pszRoomID)
+void VideoCommunicationDemo::OnKickOut(int reason, const char *pszRoomID, const char* pszCustomReason/*=""*/)
 {
     PrintLogToView("被踢掉线，reason = %d", reason);
     UpdateLoginEvent(kZGVideoCommunicationLoginEventKickOut);

@@ -170,7 +170,7 @@ void ZGExternalVideoCatpureDemoHelper::OnLoginRoom(int errorCode, const char *ps
     }
 }
 
-void ZGExternalVideoCatpureDemoHelper::OnKickOut(int reason, const char *pszRoomID)
+void ZGExternalVideoCatpureDemoHelper::OnKickOut(int reason, const char *pszRoomID, const char* pszCustomReason/*=""*/)
 {
     SetCurStatus(kZGExternalVideoCaptureStatus_None);
 }

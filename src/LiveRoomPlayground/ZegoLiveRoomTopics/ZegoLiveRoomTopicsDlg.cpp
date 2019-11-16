@@ -287,7 +287,7 @@ void CZegoLiveRoomTopicsDlg::InitTopicList()
     advanced_topic_list_contronl_.AddString(TOPIC_EXTERNAL_VIDEO_RENDER);
 
 	advanced_topic_list_contronl_.AddString(TOPIC_SCREEN_RECORDER);
-	advanced_topic_list_contronl_.AddString(TOPIC_ROOM_MESSAGE);
+	//advanced_topic_list_contronl_.AddString(TOPIC_ROOM_MESSAGE);
     
 }
 

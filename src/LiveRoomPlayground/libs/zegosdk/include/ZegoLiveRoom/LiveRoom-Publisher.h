@@ -129,7 +129,28 @@ namespace ZEGO
          @attention 调用此接口SetMixStreamConfig无效，混流需要调用MixStream
          */
         ZEGO_API bool StartPublishing2(const char* pszTitle, const char* pszStreamID, int flag, const char* pszParams = 0, AV::PublishChannelIndex idx = AV::PUBLISH_CHN_MAIN);
+
+        /**
+         推流时是否发送视频数据。
+
+         @param mute true 不发送（仅预览），false 发送
+         @param idx 推流通道索引. 默认为主Channel
+         @return 0 代表设置成功成功，否则设置失败
+         @attention 拉流端通过 OnRemoteCameraStatusUpdate 回调监听此状态是否改变;
+         @attention 仅拉 UDP 流时，才能接收到状态变更通知;
+        */
+        ZEGO_API int MuteVideoPublish(bool mute, AV::PublishChannelIndex idx = AV::PUBLISH_CHN_MAIN);
         
+        /**
+         推流时是否发送音频数据。
+         
+         @param mute true 不发送，false 发送
+         @param idx 推流通道索引. 默认为主Channel
+         @return 0 代表设置成功成功，否则设置失败
+         @attention 可以通过 OnAudioRecordCallback 回调获取本地音频数据
+         */
+        ZEGO_API int MuteAudioPublish(bool mute, AV::PublishChannelIndex idx = AV::PUBLISH_CHN_MAIN);
+
         /**
          停止直播
 
@@ -350,6 +371,15 @@ namespace ZEGO
          @note 默认启用预览镜像，不启用推流镜像
          */
         ZEGO_API bool SetVideoMirrorMode(AV::ZegoVideoMirrorMode mode, AV::PublishChannelIndex idx = AV::PUBLISH_CHN_MAIN);
+        
+        /**
+         设置预览视频控件的背景颜色
+         
+         @param  color 颜色,取值为0x00RRGGBB
+         @param idx 推流 channel Index. 默认为主Channel
+         @return true 成功，false 失败
+         */
+        ZEGO_API bool SetPreviewViewBackgroundColor(int color, AV::PublishChannelIndex idx = AV::PUBLISH_CHN_MAIN);
         
         /**
          设置预览渲染朝向

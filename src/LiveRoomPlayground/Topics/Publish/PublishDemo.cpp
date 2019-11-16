@@ -160,7 +160,7 @@ void PublishDemo::OnLogoutRoom(int errorCode, const char *pszRoomID)
     UpdateStatus(kZGStatus_None);
 }
 
-void PublishDemo::OnKickOut(int reason, const char *pszRoomID)
+void PublishDemo::OnKickOut(int reason, const char *pszRoomID, const char* pszCustomReason/*=""*/)
 {
     UpdateStatus(kZGStatus_None);
     PrintLogToView("±»ÌßµôÏß£¬reason = %d", reason);

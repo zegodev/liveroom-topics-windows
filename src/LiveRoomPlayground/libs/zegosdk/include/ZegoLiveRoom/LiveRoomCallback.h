@@ -63,7 +63,7 @@ namespace ZEGO
              @param pszRoomID 房间 ID
              @attention 可在该回调中处理用户被踢出房间后的下一步处理（例如报错、重新登录提示等）
              */
-            virtual void OnKickOut(int reason, const char *pszRoomID) = 0;
+            virtual void OnKickOut(int reason, const char *pszRoomID, const char* pszCustomReason="") = 0;
             
             /**
              与 server 断开通知

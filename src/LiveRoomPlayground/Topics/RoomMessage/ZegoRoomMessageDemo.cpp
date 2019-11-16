@@ -100,7 +100,7 @@ void ZegoRoomMessageDemo::OnInitSDK(int nError)
 	}
 }
 
-void ZegoRoomMessageDemo::OnKickOut(int reason, const char *pszRoomID)
+void ZegoRoomMessageDemo::OnKickOut(int reason, const char *pszRoomID, const char* pszCustomReason/*=""*/)
 {
 
 }

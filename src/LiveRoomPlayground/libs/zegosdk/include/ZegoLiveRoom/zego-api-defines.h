@@ -106,6 +106,12 @@ namespace ZEGO
             AudioDevice_Output,         /**< 输出设备 */
         };
         
+		enum MixSysPlayoutPropertyMask
+		{
+			MIX_PROP_NONE = 0,
+			MIX_PROP_ENABLE_AGC_FOR_SYS_PLAYOUT = 1,
+		};
+
         struct DeviceInfo
         {
             char szDeviceId[ZEGO_MAX_COMMON_LEN];
@@ -658,6 +664,10 @@ namespace ZEGO
              */
             ZEGO_DEVICE_ERROR_GENERIC = -1,
             /**
+             无效设备 ID
+             */
+            ZEGO_DEVICE_ERROR_INVALID_ID = -2,
+            /**
              没有权限
              */
             ZEGO_DEVICE_ERROR_NO_AUTHORIZATION = -3,
@@ -665,6 +675,56 @@ namespace ZEGO
              采集帧率为0
              */
             ZEGO_DEVICE_ERROR_ZERO_FPS = -4,
+            /**
+             设备被占用
+             */
+            ZEGO_DEVICE_ERROR_IN_USE_BY_OTHER = -5,
+            /**
+             设备未插入 
+             */
+            ZEGO_DEVICE_ERROR_UNPLUGGED = -6,
+            /**
+             需要重启系统
+             */
+            ZEGO_DEVICE_ERROR_REBOOT_REQUIRED = -7,
+            /**
+             媒体服务无法恢复
+             */
+            ZEGO_DEVICE_ERROR_MEDIA_SERVICES_LOST = -8,
+        };
+
+        enum ZegoDeviceErrorReason
+        {
+            /** 一般性错误 */
+            ZEGO_DEVICE_ERROR_REASON_GENERIC = -1,
+            /** 无效设备 ID */
+            ZEGO_DEVICE_ERROR_REASON_INVALID_ID = -2,
+            /** 没有权限 */
+            ZEGO_DEVICE_ERROR_REASON_NO_AUTHORIZATION = -3,
+            /** 采集帧率为0 */
+            ZEGO_DEVICE_ERROR_REASON_ZERO_FPS = -4,
+            /** 设备被占用 */
+            ZEGO_DEVICE_ERROR_REASON_IN_USE_BY_OTHER = -5,
+            /** 设备未插入 */
+            ZEGO_DEVICE_ERROR_REASON_UNPLUGGED = -6,
+            /** 需要重启系统 */
+            ZEGO_DEVICE_ERROR_REASON_REBOOT_REQUIRED = -7,
+            /** 媒体服务无法恢复 */
+            ZEGO_DEVICE_ERROR_REASON_MEDIA_SERVICES_LOST = -8,
+            /** 没有错误 */
+            ZEGO_DEVICE_ERROR_REASON_NONE = 0,
+            /** 禁用 */
+            ZEGO_DEVICE_ERROR_REASON_DISABLED = 2,
+            /** 屏蔽采集 */
+            ZEGO_DEVICE_ERROR_REASON_MUTE = 3,
+            /** 中断 */
+            ZEGO_DEVICE_ERROR_REASON_INTERRUPTION = 4,
+            /** 在后台 */
+            ZEGO_DEVICE_ERROR_REASON_IN_BACKGROUND = 5,
+            /** 前台有多个 APP 运行 */
+            ZEGO_DEVICE_ERROR_REASON_MULTI_FOREGROUND_APP = 6,
+            /** 系统压力过大 */
+            ZEGO_DEVICE_ERROR_REASON_SYSTEM_PRESSURE = 7,
         };
     }
 }

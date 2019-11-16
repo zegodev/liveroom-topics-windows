@@ -29,6 +29,9 @@ public:
 
     virtual void FilterProcessRGBAData(unsigned char * data, int frame_len, int frame_w, int frame_h) override;
 
+
+    virtual void Release() override;
+
 protected:
 
     bool InitOpenGL();
@@ -43,6 +46,8 @@ protected:
 
     int beauty_handles_ = 0;
     std::vector<int> handles_;
+
+    HGLRC hglrc_ = nullptr;
 
 };
 

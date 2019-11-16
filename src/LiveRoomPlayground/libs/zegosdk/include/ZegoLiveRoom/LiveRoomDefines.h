@@ -82,6 +82,12 @@ namespace ZEGO
             int width;               ///< 视频宽度
             int height;              ///< 视频高度
         };
+
+		enum ZegoMixSysPlayoutPropertyMask
+		{
+			MIX_PROP_NONE = 0,
+			MIX_PROP_ENABLE_AGC_FOR_SYS_PLAYOUT = 1,
+		};
     }
 }
 

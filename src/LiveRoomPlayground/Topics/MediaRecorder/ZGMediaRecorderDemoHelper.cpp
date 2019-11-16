@@ -124,7 +124,7 @@ void ZGMediaRecorderDemoHelper::OnLoginRoom(int errorCode, const char *pszRoomID
     }
 }
 
-void ZGMediaRecorderDemoHelper::OnKickOut(int reason, const char *pszRoomID)
+void ZGMediaRecorderDemoHelper::OnKickOut(int reason, const char *pszRoomID, const char* pszCustomReason/*=""*/)
 {
     SetCurStatus(kZGMediaRecord_PublishStatus_None);
 }

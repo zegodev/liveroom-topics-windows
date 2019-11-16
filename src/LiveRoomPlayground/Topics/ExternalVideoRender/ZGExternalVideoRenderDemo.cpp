@@ -19,7 +19,7 @@ ZGExternalVideoRenderDemo::~ZGExternalVideoRenderDemo()
 {
 }
 
-void ZGExternalVideoRenderDemo::EnableExternalRender(ZEGO::EXTERNAL_RENDER::VideoRenderType type)
+void ZGExternalVideoRenderDemo::EnableExternalRender(AV::VideoExternalRenderType type)
 {
     ZGENTER_FUN_LOG;
 
@@ -30,14 +30,20 @@ void ZGExternalVideoRenderDemo::EnableExternalRender(ZEGO::EXTERNAL_RENDER::Vide
         ZGManagerInstance()->UninitSdk();
     }
 
-    ZEGO::EXTERNAL_RENDER::SetVideoRenderType(cur_external_render_type_);
-	ZEGO::EXTERNAL_RENDER::SetVideoRenderCallback(this);
+    // EnableExternalRender要在InitSDK之前调用
+    // type 设置为 DECODE_RGB_SERIES 时，视频数据在回调 OnVideoDataCallback 获取，格式为RGB格式系列
+    // type 设置为 DECODE 时，视频数据在回调 OnVideoDataCallback2 获取，本地预览推流的视频数据格式为RGB系列，拉流数据为YUV的 PIXEL_FORMAT_I420 格式
+    // type 设置为 DECODE_RENDER 时，内部渲染生效的同时可以通过调用EnableVideoRender设定是否抛出视频数据，默认不抛出视频数据
+    // 
+    ZEGO::EXTERNAL_RENDER::EnableExternalRender(true, cur_external_render_type_);
+
+    ZEGO::EXTERNAL_RENDER::SetExternalRenderCallback(this);
 
     // 使用测试环境，生产上线时，需要联系zego技术支持切换为正式环境，并修改为 SetUseTestEnv(FALSE); 表示启用正式环境
     LIVEROOM::SetUseTestEnv(TRUE);
     ZGManagerInstance()->InitSdk();
 
-    if (cur_external_render_type_ >= ZEGO::EXTERNAL_RENDER::VIDEO_RENDER_TYPE_EXTERNAL_INTERNAL_RGB)
+    if (cur_external_render_type_ == ZEGO::AV::DECODE_RENDER)
     {
         // 设置内部渲染的同时，回调推流的视频数据
         // 在推流前调用
@@ -53,29 +59,15 @@ void ZGExternalVideoRenderDemo::SetVideoDataCallBack(ExternalVideoRenderDataCall
 }
 
 
-void ZGExternalVideoRenderDemo::SetFlipMode(const char* pszStreamID, int mode)
+void ZGExternalVideoRenderDemo::OnVideoDataCallback2( unsigned char **pData, int* dataLen, const char* pszStreamID, int width, int height, int strides[4], AVE::VideoPixelFormat pixelFormat)
 {
-
-}
-
-void ZGExternalVideoRenderDemo::OnVideoDecodeCallback(const unsigned char* data, int length, const char* pszStreamID, const AVE::VideoCodecConfig& codec_config, bool b_keyframe, double reference_time_ms)
-{
-
-}
-
-void ZGExternalVideoRenderDemo::OnVideoRenderCallback(unsigned char **pData, int* dataLen, const char* pszStreamID, int width, int height, int strides[4], AVE::VideoPixelFormat pixelFormat)
-{
-	if (pszStreamID == nullptr)
-	{
-		return;
-	}
 //    ZGENTER_FUN_LOG;
-    ZGLog("ZGExternalVideoRenderDemo::OnVideoRenderCallback , pixelFormat = %s", ZGHelperInstance()->GetPixelFormatDesc(pixelFormat).c_str());
+    ZGLog("ZGExternalVideoRenderDemo::OnVideoDataCallback2 , pixelFormat = %s", ZGHelperInstance()->GetPixelFormatDesc(pixelFormat).c_str());
 
     // 通过pszStreamID 判断是 kZegoVideoDataMainPublishingStream 还是 kZegoVideoDataAuxPublishingStream 
-	// kZegoVideoDataMainPublishingStream 表示主通道推流的视频数据 本地渲染
-	// kZegoVideoDataAuxPublishingStream 表示辅通道推流的视频数据 本地渲染
-	// 不是上述两种，则为拉流渲染
+// kZegoVideoDataMainPublishingStream 表示主通道推流的视频数据
+// kZegoVideoDataAuxPublishingStream 表示辅通道推流的视频数据
+// 不是上述两种，则为
     if (strcmp(pszStreamID, ZEGO::EXTERNAL_RENDER::kZegoVideoDataMainPublishingStream) == 0)
     {
         // 推流主通道数据
@@ -156,3 +148,31 @@ void ZGExternalVideoRenderDemo::OnVideoRenderCallback(unsigned char **pData, int
         }
     }
 }
+
+void ZGExternalVideoRenderDemo::OnVideoDataCallback(const unsigned char *pData, int dataLen, const char* pszStreamID, int width, int height, int strides[4])
+{
+//    ZGENTER_FUN_LOG;
+    // 通过pszStreamID 判断是 kZegoVideoDataMainPublishingStream 还是 kZegoVideoDataAuxPublishingStream 
+    // kZegoVideoDataMainPublishingStream 表示主通道推流的视频数据
+    // kZegoVideoDataAuxPublishingStream 表示辅通道推流的视频数据
+    // 不是上述两种，则为拉流数据
+    if (strcmp(pszStreamID, ZEGO::EXTERNAL_RENDER::kZegoVideoDataMainPublishingStream) == 0)
+    {
+        // 推流主通道数据
+        if (local_video_data_cb_)
+        {
+            local_video_data_cb_(pszStreamID, pData, dataLen, width, height);
+        }        
+    }else if (strcmp(pszStreamID, ZEGO::EXTERNAL_RENDER::kZegoVideoDataAuxPublishingStream) == 0)
+    {
+        // 推流辅通道数据
+    }else
+    {
+        // 拉流数据
+        if (remote_video_data_cb_)
+        {
+            remote_video_data_cb_(pszStreamID, pData, dataLen, width, height);
+        }
+    }
+}
+

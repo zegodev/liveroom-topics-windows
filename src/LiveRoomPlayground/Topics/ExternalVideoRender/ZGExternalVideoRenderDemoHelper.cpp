@@ -115,7 +115,7 @@ void ZGExternalVideoRenderDemoHelper::OnLoginRoom(int errorCode, const char *psz
     }
 }
 
-void ZGExternalVideoRenderDemoHelper::OnKickOut(int reason, const char *pszRoomID)
+void ZGExternalVideoRenderDemoHelper::OnKickOut(int reason, const char *pszRoomID, const char* pszCustomReason/*=""*/)
 {
     SetCurStatus(kZGExternalVideoRender_PublishStatus_None);
 }

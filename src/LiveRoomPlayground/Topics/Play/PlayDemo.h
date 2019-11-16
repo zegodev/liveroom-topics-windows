@@ -10,6 +10,7 @@
 #include "ZegoLiveRoom/LiveRoomCallBack.h"
 
 #include "AppSupport/ZGLog.h"
+#include "ZegoLiveRoom/AVDefines.h"
 
 using namespace ZEGO;
 
@@ -73,7 +74,8 @@ typedef std::function<void(const PlayRealDataInfo & status)> ZGPlayRealDataRefre
 
 class PlayDemo : 
     public LIVEROOM::IRoomCallback,
-    public LIVEROOM::ILivePlayerCallback
+    public LIVEROOM::ILivePlayerCallback,
+    public AV::IZegoLiveEventCallback
 {
 public:
     PlayDemo();
@@ -93,7 +95,15 @@ public:
 
     std::string DescOfStatus(ZGPlayStatus status);
 
+
+    virtual void OnAVKitEvent(int event, ZEGO::AV::EventInfo* pInfo) override;
+
 protected:
+
+    virtual void OnRemoteCameraStatusUpdate(const char* pStreamID, int nStatus, int nReason) override;
+ 
+ 
+    virtual void OnRemoteMicStatusUpdate(const char* pStreamID, int nStatus, int nReason) override;
 
 
     virtual void OnInitSDK(int nError) override;
@@ -111,7 +121,7 @@ protected:
     virtual void OnLoginRoom(int errorCode, const char *pszRoomID, const ZegoStreamInfo *pStreamInfo, unsigned int streamCount) override;
 
 
-    virtual void OnKickOut(int reason, const char *pszRoomID) override;
+    virtual void OnKickOut(int reason, const char *pszRoomID, const char* pszCustomReason="") override;
 
 
     virtual void OnDisconnect(int errorCode, const char *pszRoomID) override;
@@ -139,7 +149,6 @@ protected:
 
 	virtual void OnRecvRemoteAudioFirstFrame(const char* pStreamID) override;
 
-	virtual void OnRemoteCameraStatusUpdate(const char* pStreamID, int nStatus) override;
 
 private:
     void UpdateStatus(ZGPlayStatus s);

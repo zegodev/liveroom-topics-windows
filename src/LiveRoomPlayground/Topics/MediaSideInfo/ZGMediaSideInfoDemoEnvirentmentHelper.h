@@ -88,7 +88,7 @@ public:
 
 protected:
     virtual void OnLoginRoom(int errorCode, const char *pszRoomID, const ZegoStreamInfo *pStreamInfo, unsigned int streamCount) override;
-    virtual void OnKickOut(int reason, const char *pszRoomID) override;
+    virtual void OnKickOut(int reason, const char *pszRoomID, const char* pszCustomReason="") override;
     virtual void OnDisconnect(int errorCode, const char *pszRoomID) override;
     virtual void OnStreamUpdated(ZegoStreamUpdateType type, ZegoStreamInfo *pStreamInfo, unsigned int streamCount, const char *pszRoomID) override;
     virtual void OnStreamExtraInfoUpdated(ZegoStreamInfo *pStreamInfo, unsigned int streamCount, const char *pszRoomID) override;

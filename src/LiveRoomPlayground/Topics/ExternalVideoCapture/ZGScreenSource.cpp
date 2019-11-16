@@ -5,7 +5,11 @@
 
 #include "../../libs/libyuv/include/libyuv.h"
 
+#ifdef _X86_
 #pragma comment(lib, "./../Topics/ExternalVideoCapture/ScreenCapture/libs/x86/ZegoScreenCapture.lib")
+#else
+#pragma comment(lib, "./../Topics/ExternalVideoCapture/ScreenCapture/libs/x64/ZegoScreenCapture.lib")
+#endif
 
 #ifdef _DEBUG
 #pragma comment(lib, "./../libs/libyuv/libs/libyuv_d.lib")
@@ -18,7 +22,7 @@ ZGScreenSource::ZGScreenSource()
 {
     capture_video_data_vec_.resize(MAX_VIDEO_BUF_LEN);
 
-    zego_screencapture_reg_captured_frame_available_notify(&ZGScreenSource::OnScreenCaptureData, this);
+    zego_screencapture_reg_captured_frame_available_notify((zego_screencapture_captured_frame_available_notify_func)&ZGScreenSource::OnScreenCaptureData, this);
     zego_screencapture_reg_capture_error_notify(&ZGScreenSource::OnScreenCaptureError, this);
 }
 

@@ -280,6 +280,27 @@ namespace MEDIAPLAYER
          */
         virtual void OnPlayVideoData2(const char **pData, int* len, ZegoMediaPlayerVideoDataFormat& format, ZegoMediaPlayerIndex index) {}
     };
+
+    /**
+     * 音频数据回调
+     */
+    class IZegoMediaPlayerAudioDataCallback
+    {
+    public:
+        /**
+         播放器将解码后的音频数据回调出来，SDK 会同步等待调用者修改完毕，再将修改后的音频数据与当前流混流。
+
+         @param data 解码后的 pcm 音频数据
+         @param length  数据长度
+         @param sample_rate 采样率
+         @param channels 通道数（单通道还是双通道）
+         @param bit_depth 位深
+         @parma index 播放器序号
+         @note 同步回调
+         @note 调用者应直接修改此段内存中的数据 
+         */
+        virtual void OnPlayAudioData(unsigned char *const data, int length, int sample_rate, int channels, int bit_depth, ZegoMediaPlayerIndex index) = 0;
+    };
     
 }   // MEDIAPLAYER
 }   // ZEGO

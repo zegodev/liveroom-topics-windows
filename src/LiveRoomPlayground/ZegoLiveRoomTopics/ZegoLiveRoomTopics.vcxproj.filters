@@ -354,9 +354,6 @@
     <ClInclude Include="..\Topics\ExternalVideoFilter\ZGExternalVideoFilterDemo.h">
       <Filter>Topics\ExternalVideoFilter</Filter>
     </ClInclude>
-    <ClInclude Include="..\Topics\ExternalVideoFilter\BeautifyFilter.h">
-      <Filter>Topics\ExternalVideoFilter</Filter>
-    </ClInclude>
     <ClInclude Include="..\Topics\ExternalVideoFilter\VideoFilterProcessBase.h">
       <Filter>Topics\ExternalVideoFilter</Filter>
     </ClInclude>
@@ -618,9 +615,6 @@
       <Filter>Topics\ExternalVideoFilter</Filter>
     </ClCompile>
     <ClCompile Include="..\Topics\ExternalVideoFilter\ZGExternalVideoFilterDemo.cpp">
-      <Filter>Topics\ExternalVideoFilter</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Topics\ExternalVideoFilter\BeautifyFilter.cpp">
       <Filter>Topics\ExternalVideoFilter</Filter>
     </ClCompile>
     <ClCompile Include="..\Topics\ExternalVideoFilter\VideoFilterProcessBase.cpp">

@@ -141,4 +141,3 @@ bool MixStreamHelper::ParseExtraInfoForMixStreamId(string extra_info, string & m
     return false;
 }
 
-
