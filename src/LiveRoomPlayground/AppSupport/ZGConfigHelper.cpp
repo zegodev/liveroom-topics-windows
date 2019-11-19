@@ -70,6 +70,24 @@ void ZGConfigHelper::ActivateAudioPublishStream(bool enable)
 	}
 }
 
+void ZGConfigHelper::ActivateVideoPlayStream(std::string streamID, bool enable)
+{
+	if (ZGManagerInstance()->SdkIsInited())
+	{
+		int result = LIVEROOM::ActivateVideoPlayStream(streamID.c_str(), enable);
+		PrintLogToView("ActivateVideoPlayStream:%d(bool), Result:%d", enable, result);
+	}
+}
+
+void ZGConfigHelper::ActivateAudioPlayStream(std::string streamID, bool enable)
+{
+	if (ZGManagerInstance()->SdkIsInited())
+	{
+		int result = LIVEROOM::ActivateAudioPlayStream(streamID.c_str(), enable);
+		PrintLogToView("ActivateAudioPlayStream:%d(bool), Result:%d", enable, result);
+	}
+}
+
 void ZGConfigHelper::SetPlayVolume(int play_volume)
 {
     if (ZGManagerInstance()->SdkIsInited())

@@ -549,4 +549,9 @@ echo F | xcopy /y "$(SolutionDir)\libs\fusdk\assets\face_beautification.bundle" 
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="ZegoLiveRoomTopics.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

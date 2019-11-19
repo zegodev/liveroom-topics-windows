@@ -58,6 +58,8 @@ public:
     void EnableCaptureMirror(bool enable);
 	void ActivateVideoPublishStream(bool enable);
 	void ActivateAudioPublishStream(bool enable);
+	void ActivateVideoPlayStream(std::string streamID, bool enable);
+	void ActivateAudioPlayStream(std::string streamID, bool enable);
     void SetPlayVolume(int play_volume);
     void SetPublishResolution(int w, int h);
     void SetVideoBitrate(int video_bitrate);
