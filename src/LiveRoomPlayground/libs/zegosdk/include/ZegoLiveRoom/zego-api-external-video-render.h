@@ -32,25 +32,64 @@ namespace ZEGO
             VIDEO_RENDER_TYPE_EXTERNAL_INTERNAL_YUV = 5
         };
 
+        /**
+         * SDK 用于将接收到的待渲染视频帧数据回调给调用者
+         */
         class IZegoVideoRenderCallback
         {
         public:
-              virtual void OnVideoRenderCallback(unsigned char **pData, int* dataLen, 
+            /**
+             视频帧数据回调
+             @param pData 视频数据每个面的起始地址，共四个面
+             @param dataLen 视频数据每个面的长度起始地址
+             @param pszStreamID 流 ID，如果是本地预览数据，值为 kZegoVideoDataMainPublishingStream 或者 kZegoVideoDataAuxPublishingStream
+             @param width 视频帧宽度
+             @param height 视频帧高度
+             @param strides 视频帧每个平面一行字节数
+             @param pixel_format 视频帧数据格式
+             */
+            virtual void OnVideoRenderCallback(unsigned char **pData, int* dataLen, 
                                      const char* pszStreamID, 
                                      int width, int height, int strides[4],                                               
                                      AVE::VideoPixelFormat pixel_format) = 0;
 
-              virtual void SetFlipMode(const char* pszStreamID, int mode) = 0;
+            /**
+             通知即将接收的帧数据是否需要翻转
+             @param pszStreamID 流 ID，如果是本地预览数据，值为 kZegoVideoDataMainPublishingStream 或者 kZegoVideoDataAuxPublishingStream
+             @param mode 翻转类型，参见 VideoFlipMode 定义
+             @note 仅本地预览的外部渲染会回调。此处的 mode 是基于推流图像计算出来的，和 SetVideoMirrorMode 不一定一致，请基于 SetFlipMode 的参数决定是否翻转
+             */
+            virtual void SetFlipMode(const char* pszStreamID, int mode) = 0;
 
-              virtual ~IZegoVideoRenderCallback() {};
+            /**
+             通知即将接收的帧数据需要旋转的角度
+             @param pszStreamID 流 ID，如果是本地预览数据，值为 kZegoVideoDataMainPublishingStream 或者 kZegoVideoDataAuxPublishingStream
+             @param rotation 逆时针旋转角度
+             */
+            virtual void SetRotation(const char* pszStreamID, int rotation) = 0;
+
+            virtual ~IZegoVideoRenderCallback() {};
         };
 
+        /**
+         * SDK 用于将接收到的待渲染视频码流回调给调用者
+         */
         class IZegoVideoDecodeCallback
         {
         public:
+            /**
+             * 视频码流数据回调
+             * @param data 待解码码流数据起始地址
+             * @param length 待解码码流数据长度
+             * @param pszStreamID 流 ID
+             * @param codec_config 视频码流附加信息
+             * @param b_keyframe 是否关键帧
+             * @param reference_time_ms 采集时间戳
+             */
             virtual void OnVideoDecodeCallback(const unsigned char* data, int length,
                                        const char* pszStreamID, const AVE::VideoCodecConfig& codec_config,
                                        bool b_keyframe, double reference_time_ms) = 0;
+
             virtual ~IZegoVideoDecodeCallback() {}
         };
 

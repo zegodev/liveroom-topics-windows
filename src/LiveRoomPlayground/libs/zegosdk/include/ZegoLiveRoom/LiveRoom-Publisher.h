@@ -548,31 +548,11 @@ namespace ZEGO
         ZEGO_API void SetPreviewWaterMarkRect(int left, int top, int right, int bottom, AV::PublishChannelIndex idx = AV::PUBLISH_CHN_MAIN);
         
         /**
-         设置外部采集模块
-
-         @param factory 工厂对象
-         @param idx 推流 channel Index. 默认为主Channel
-         @note 必须在 InitSDK 前调用，并且不能置空
-         @warning Deprecated 请使用 zego-api-external-video-capture.h 的 SetVideoCaptureFactory 代替
-         */
-        ZEGO_API void SetVideoCaptureFactory(AVE::VideoCaptureFactory* factory, AV::PublishChannelIndex idx = AV::PUBLISH_CHN_MAIN);
-        
-        /**
          设置选用分层编码
          @param codecId 设备 ID
          @return true 成功，false 失败
          */
         ZEGO_API bool SetVideoCodecId(AV::ZegoVideoCodecAvc codecId, AV::PublishChannelIndex nChannel = AV::PUBLISH_CHN_MAIN);
-        
-        /**
-         设置外部滤镜模块
-
-         @param factory 工厂对象
-         @param idx 推流 channel Index. 默认为主Channel
-         @note 必须在 InitSDK 前调用，并且不能置空
-         @waring Deprecated，请使用 zego-api-external-video-filter.h 的 SetVideoFilterFactory
-         */
-        ZEGO_API void SetVideoFilterFactory(AVE::VideoFilterFactory* factory, AV::PublishChannelIndex idx = AV::PUBLISH_CHN_MAIN);
         
         /**
          设置音频前处理函数

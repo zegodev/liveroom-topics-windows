@@ -90,6 +90,15 @@ namespace ZEGO
             
             */
             virtual void OnDeviceError(const char* deviceName, int errorCode) {}
+
+#ifdef WIN32
+			/**
+			开始重试设备时通知
+
+			@param deviceName 设备名称
+			*/
+			virtual void OnRetryDevice(const char* deviceName,const char* deviceID) {}
+#endif
         };
     }
 }

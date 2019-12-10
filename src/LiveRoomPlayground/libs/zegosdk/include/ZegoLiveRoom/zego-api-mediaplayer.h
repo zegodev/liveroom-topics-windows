@@ -120,17 +120,14 @@ namespace MEDIAPLAYER
      */
     ZEGOAVKIT_API void Load(const char* path, ZegoMediaPlayerIndex index = ZegoMediaPlayerIndexFirst);
     
+    
     /**
      设置显示视频的view
      
      @param view 播放的控件
      @param index 播放器序号, 默认为 ZegoMediaPlayerIndexFirst
      */
-#if TARGET_OS_IPHONE || TARGET_OS_OSX || defined(ANDROID)
-    ZEGOAVKIT_API void SetView(std::shared_ptr<void> view, ZegoMediaPlayerIndex index = ZegoMediaPlayerIndexFirst);
-#else
     ZEGOAVKIT_API void SetView(void *view, ZegoMediaPlayerIndex index = ZegoMediaPlayerIndexFirst);
-#endif
     
     
     /**

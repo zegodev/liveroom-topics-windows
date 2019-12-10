@@ -37,7 +37,7 @@ void ZGExternalVideoFilterDemo::EnableVideoFilter(bool enable)
     if (enable)
     {
         // 开启视频外部滤镜，IniSDK之前调用
-        LIVEROOM::SetVideoFilterFactory(this);
+        VIDEOFILTER::SetVideoFilterFactory(this);
 
     }
 

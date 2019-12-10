@@ -23,18 +23,6 @@ namespace ZEGO
          @return true 成功，false 失败
          */
         ZEGO_API bool SetIMCallback(IIMCallback* pCB);
-    
-        /**
-         发送聊天室消息
-
-         @param type 消息类型
-         @param category 消息分类
-         @param priority 消息优先级
-         @param messageContent 消息内容, 不超过 512 字节
-         @return 消息 seq
-         @note Deprecated. 请使用 SendRoomMessageEx(ROOM::ZegoMessageType, ROOM::ZegoMessageCategory, const char *)
-         */
-        ZEGO_API int SendRoomMessage(ROOM::ZegoMessageType type, ROOM::ZegoMessageCategory category, ROOM::ZegoMessagePriority priority, const char *messageContent);
         
         /**
          发送聊天室消息

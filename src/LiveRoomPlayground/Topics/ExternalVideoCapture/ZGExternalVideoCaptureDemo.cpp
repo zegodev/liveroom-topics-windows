@@ -26,7 +26,7 @@ void ZGExternalVideoCaptureDemo::EnableExternalVideoCapture()
     ZGENTER_FUN_LOG;
 
     // 在InitSDK 之前调用
-    LIVEROOM::SetVideoCaptureFactory(this);
+    VCAP::SetVideoCaptureFactory(this);
     LIVEROOM::SetUseTestEnv(TRUE);
     ZGManagerInstance()->InitSdk();
     // 开麦克风

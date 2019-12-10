@@ -461,7 +461,8 @@ namespace ZEGO
             ZEGO_AUDIO_DEVICE_MODE_COMMUNICATION = 1,    /**< 开启系统回声消除 */
             ZEGO_AUDIO_DEVICE_MODE_GENERAL = 2,          /**< 关闭系统回声消除 */
             ZEGO_AUDIO_DEVICE_MODE_AUTO = 3,             /**< 根据场景自动选择是否开启系统回声消除 */
-            ZEGO_AUDIO_DEVICE_MODE_COMMUNICATION2 = 4,   /**< 开启系统回声消除，与communication相比，communication2会始终占用麦克风设备 */
+            ZEGO_AUDIO_DEVICE_MODE_COMMUNICATION2 = 4,   /**< 开启系统回声消除，与 ZEGO_AUDIO_DEVICE_MODE_COMMUNICATION 相比，该模式会始终占用麦克风设备 */
+            ZEGO_AUDIO_DEVICE_MODE_COMMUNICATION3 = 5,   /**< 开启系统回声消除，与 ZEGO_AUDIO_DEVICE_MODE_COMMUNICATION 相比，该模式下麦后释放麦克风，切回媒体音量 */
         };
         
         /** 延迟模式 */

@@ -284,26 +284,6 @@ namespace ZEGO
          */
         ZEGO_API bool SetPlayQualityMonitorCycle(unsigned int timeInMS);
         
-        // * external video render
-        
-        /**
-         设置是否使用外部视频渲染
-
-         @param bEnable true 开启，false 不开启
-         @param nType 0 表示使用 OnVideoDataCallback 回调接口，1 表示使用 OnVideoDataCallback2 回调接口，这两个接口都定义在 IZegoVideoRenderCallback 中。
-         @warning Deprecated，请使用 zego-api-external-video-render.h 的 EnableExternalRender 代替
-         */
-        ZEGO_API void EnableExternalRender(bool bEnable, int nType = 0);
-        
-        
-        /**
-         设置外部渲染回调
-
-         @param pCB 回调实现实例
-         @warning Deprecated，请使用 zego-api-external-video-render.h 的 SetExternalRenderCallback 代替
-         */
-        ZEGO_API void SetExternalRenderCallback(IZegoVideoRenderCallback* pCB);
-        
         
         // * audio record
         

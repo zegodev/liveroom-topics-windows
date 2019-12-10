@@ -437,6 +437,7 @@ namespace ZEGO
 		 @attention "room_retry_time", uint32 value, default:300S 设置房间异常后自动恢复最大重试时间，SDK尽最大努力恢复，单位为S，SDK默认为300s，设置为0时不重试
          @attention "av_retry_time", uint32 value, default:300S
              设置推拉流异常后自动恢复最大重试时间，SDK尽最大努力恢复，单位为S，SDK默认为300s，设置为0时不重试
+		 @attention "device_mgr_mode=1"  设备管理模式 1：手动模式  2：半自动模式 3：全自动模式  默认选项 1
          */
         ZEGO_API void SetConfig(const char *config);
 
