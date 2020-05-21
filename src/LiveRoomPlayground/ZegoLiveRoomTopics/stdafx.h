@@ -43,7 +43,7 @@
 
 
 
-
+#define ZEGO_MEDIA_PLAYER
 
 
 

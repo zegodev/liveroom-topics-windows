@@ -18,14 +18,30 @@ namespace AVE
     class MediaCaptureFactory;
     class VideoFilterFactory;
     struct AudioFrame;
-    struct ExtPrepSet;
-    typedef void (*OnPrepCallback)(const AVE::AudioFrame& inFrame, AVE::AudioFrame& outFrame);
+    struct ExtAudioProcSet;
+    typedef ExtAudioProcSet ExtPrepSet;
+
+    /**
+     音频前处理回调函数定义
+
+     @param inFrame 待处理音频数据
+     @param outFrame 处理后的音频数据
+     @attention 请确保在当前线程完成，且不要做耗时操作
+     */
+    typedef void (*OnPrepCallback)(const AudioFrame& inFrame, AudioFrame& outFrame);
 }
 
 namespace ZEGO
 {
     namespace LIVEROOM
     {
+		/**
+		获取 SDK 支持的最大同时支持的推流路数
+
+		@return 最大支持推流路数
+		*/
+        ZEGO_API int GetMaxPublishChannelCount();
+
         /**
          设置直播主播相关信息通知的回调
 
@@ -105,19 +121,41 @@ namespace ZEGO
         ZEGO_API void SetCDNPublishTarget(const char *pszCDNPublishTarget, AV::PublishChannelIndex idx = AV::PUBLISH_CHN_MAIN);
         
         /**
+         设置推流加密密钥
+         
+         @param pszKey 加密密钥
+         @param nkeyLen 密钥长度（支持16/24/32字节）
+         @param idx 推流 channel Index. 默认为主Channel
+         @attention 在InitSDK之后调用
+         */
+        ZEGO_API void SetPublishEncryptKey(const unsigned char *pKey, int nkeyLen, AV::PublishChannelIndex idx = AV::PUBLISH_CHN_MAIN);
+        
+        /**
          开始直播
+
+         @attention 调用此 API 推直播流，必须在调用初始化 SDK 接口之后调用。
+
+         @note
+          1. 推流成功后，等待 ILivePublisherCallback::OnPublishStateUpdate 回调
+          2. 若中途收到 IRoomCallback::OnDisconnect 回调，则不会再收到 ILivePublisherCallback::OnPublishStateUpdate 回调。
 
          @param pszTitle 直播名称
          @param pszStreamID 流 ID
          @param flag 直播属性，参考 ZegoPublishFlag
          @param pszParams 推流参数
          @return true 成功，false 失败
-         @attention 推流成功后，等待 ILivePublisherCallback::OnPublishStateUpdate 回调
          */
         ZEGO_API bool StartPublishing(const char* pszTitle, const char* pszStreamID, int flag, const char* pszParams = 0);
         
         /**
          开始直播
+
+         @attention 调用此 API 推直播流，必须在调用初始化 SDK 接口之后调用。
+
+         @note 
+            1. 推流成功后，等待 ILivePublisherCallback::OnPublishStateUpdate 回调
+            2. 若中途收到 IRoomCallback::OnDisconnect 回调，则不会再收到 ILivePublisherCallback::OnPublishStateUpdate 回调
+            3. 调用此接口 SetMixStreamConfig 无效，混流需要调用 MixStream。
          
          @param pszTitle 直播名称
          @param pszStreamID 流 ID
@@ -125,8 +163,6 @@ namespace ZEGO
          @param pszParams 推流参数
          @param idx 推流 channel Index. 默认为主Channel
          @return true 成功，false 失败
-         @attention 推流成功后，等待 ILivePublisherCallback::OnPublishStateUpdate 回调
-         @attention 调用此接口SetMixStreamConfig无效，混流需要调用MixStream
          */
         ZEGO_API bool StartPublishing2(const char* pszTitle, const char* pszStreamID, int flag, const char* pszParams = 0, AV::PublishChannelIndex idx = AV::PUBLISH_CHN_MAIN);
 
@@ -188,41 +224,6 @@ namespace ZEGO
          @return 请求seq，正值为有效，等待 ILivePublisherCallback::OnEndJoinLive 回调
          */
         ZEGO_API int EndJoinLive(const char* pszUserID);
-
-        /**
-         设置混流数据配置
-
-         @warning Deprecated，请使用 zego-api-mix-stream.h 中的 MixStreamEx 代替
-         
-         @param pszMixStreamID 混流 ID
-         @param nMixVideoWidth 混流后视频的宽
-         @param nMixVideoHeight 混流后视频的高
-         @return true 成功，false 失败
-         */
-        ZEGO_API bool SetMixStreamConfig(const char* pszMixStreamID, int nMixVideoWidth, int nMixVideoHeight);
-        
-        /**
-         更新混流配置
-
-         @warning Deprecated，请使用 zego-api-mix-stream.h 中的 MixStreamEx 代替
-         
-         @param pConfigList 输入流配置数组首元素指针
-         @param size 输入流个数
-         @return true 成功，false 失败
-         */
-        ZEGO_API bool UpdateMixInputStreams(AV::ZegoMixStreamConfig* pConfigList, int size);
-        
-        /**
-         开始混流
-         
-         @warning Deprecated，请使用 zego-api-mix-stream.h 中的 MixStreamEx 代替
-         
-         @param config 混流配置
-         @param seq 请求序号，回调会带回此 seq
-         @return true 成功，等待回调，false 失败
-         @note 每次需要更新混流配置时，都可以调用此接口；如果需要多次调用，可以通过传入不同的 seq 区分回调
-         */
-        ZEGO_API bool MixStream(const AV::ZegoCompleteMixStreamConfig& config, int seq);
         
         /**
          硬件编码开关
@@ -419,7 +420,7 @@ namespace ZEGO
         /**
          音频采集自动增益开关
 
-         @param bEnable true 开启，false 关闭
+         @param bEnable true 开启，false 关闭 默认关闭
          @return true 成功，false 失败
          @discussion 建议在推流前调用设置
          */
@@ -486,15 +487,6 @@ namespace ZEGO
         ZEGO_API void SetCaptureVolume(int volume);
         
         /**
-         混音开关
-
-         @param bEnable true 启用混音输入，false 关闭混音输入。默认 false
-         @return true 成功，false 失败
-         @warning Deprecated 请使用 zego-api-audio-aux.h 中的 EnableAux 方法
-         */
-        ZEGO_API bool EnableAux(bool bEnable);
-        
-        /**
          混音静音开关
          
          @note 1. 当开启静音后，主播端将听不到混音内容，观众端依然能听到混音声音。
@@ -558,19 +550,20 @@ namespace ZEGO
          设置音频前处理函数
 
          @param prep 前处理函数指针
-         @note 必须在 InitSDK 前调用
-         @waring Deprecated，请使用 SetAudioPrep2
-         */
-        ZEGO_API void SetAudioPrep(void(*prep)(const short* inData, int inSamples, int sampleRate, short *outData));
-        
-        /**
-         设置音频前处理函数
-
-         @param prep 前处理函数指针
          @param set 预处理的采样率等参数设置
          @note 必须在 InitSDK 前调用
+         @deprecated 请使用 SetAudioPrepCallback
          */
         ZEGO_API void SetAudioPrep2(AVE::OnPrepCallback prep, const AVE::ExtPrepSet& set);
+
+        /**
+         设置音频前处理函数, 并开启/关闭音频前处理特性
+
+         @param callback 音频前处理函数指针
+         @param config 预处理的采样率等参数设置
+         @attention 必须在 InitSDK 后且在推流前调用
+         */
+        ZEGO_API void SetAudioPrepCallback(AVE::OnPrepCallback callback, const AVE::ExtPrepSet& config);
         
         /**
          设置编码器码率控制策略
@@ -584,6 +577,8 @@ namespace ZEGO
         /**
          发送媒体次要信息开关
 
+         @warning Deprecated，请使用 zego-api-media-side-info.h 中的 SetMediaSideFlags 代替
+
          @param bStart true 开启, false 关闭
          @param bOnlyAudioPublish true 纯音频直播，不传输视频数据, false 音视频直播，传输视频数据
 		 @param mediaInfoType 请参考 MediaInfoType 定义，建议使用 SeiZegoDefined
@@ -595,6 +590,8 @@ namespace ZEGO
         
         /**
          发送媒体次要信息
+
+         @warning Deprecated，请使用 zego-api-media-side-info.h 中的 SendMediaSideInfo 代替
 
          @param inData 媒体次要信息数据
          @param dataLen 数据长度
@@ -615,7 +612,7 @@ namespace ZEGO
          设置视频采集缩放时机
          
          @param mode 视频采集缩放时机，请参考 AV::ZegoCapturePipelineScaleMode 定义。默认为 ZegoCapturePipelinePreScale
-         @discussion 初始化 SDK 后，StartPreview 前调用。StartPreview 之后设置不会立即生效，而是在下次摄像头启动预览时生效。
+         @discussion 初始化 SDK 后，StartPreview, StartPublish 前调用。摄像头启动之后设置不会立即生效，而是在下次摄像头启动时生效。
          */
         ZEGO_API void SetCapturePipelineScaleMode(AV::ZegoCapturePipelineScaleMode mode);
         
@@ -692,7 +689,23 @@ namespace ZEGO
         @return true 调用成功，false 调用失败
          */
         ZEGO_API bool EnableNoiseSuppress(bool bEnable);
-        
+
+        /**
+          设置音频采集降噪等级
+          @param mode 降噪等级，详见 ZegoANSMode 定义
+          @return true 成功，false 失败
+          @note 仅在 EnableNoiseSuppress 为 true 时有效, 默认为 MEDIUM
+         */
+        ZEGO_API bool SetNoiseSuppressMode(AV::ZegoANSMode mode);
+
+        /**
+         音频采集的瞬态噪声抑制开关（消除键盘、敲桌子等瞬态噪声）
+
+         @param bEnable true 开启，false 关闭
+         @return true 调用成功，false 调用失败
+         */
+        ZEGO_API bool EnableTransientNoiseSuppress(bool bEnable);
+
         /**
          设置推流质量监控周期
          
@@ -711,6 +724,30 @@ namespace ZEGO
          @attention 在InitSDK之后调用有效。使用此接口前请与即构技术支持联系确认是否支持此功能
          */
         ZEGO_API bool SetAudioEqualizerGain(int bandIndex, float bandGain);
+
+        /**
+         给推流通道设置扩展参数，一般不建议修改
+
+         @param param_config 参数配置信息
+         @param idx 推流通道索引，默认主通道
+
+         @attention 配置项写法，例如 "zego_channel_param_key_video_swencoder_usage=camera", 等号后面值的类型要看下面每一项的定义
+         @attention "zego_channel_param_key_video_swencoder_usage", string value: camera|screen，设置编码时使用场景模式，仅使用 OpenH264 编码时有效
+         @attention "zego_channel_param_key_video_x264_config_tune", string value: animation, 设置编码的 tune 值，目前只支持 animation，仅使用 X264 编码时有效
+         @attention 初始化 SDK 之后推流前设置才生效，推流过程中设置无效
+         */
+        ZEGO_API void SetChannelExtraParam(const char *param_config, AV::PublishChannelIndex idx = AV::PUBLISH_CHN_MAIN);
+
+        /**
+         获取推流通道扩展参数
+
+         @param key 需要获取的参数类型，目前仅支持 AVCaptureDevice
+         @param idx 推流通道索引，默认主通道
+
+         @attention 初始化 SDK 之后调用
+         @attention 目前仅支持 Mac/iOS 平台
+         */
+        ZEGO_API void* GetChannelExtraParam(AV::ChannelExtraParamKey key, AV::PublishChannelIndex idx = AV::PUBLISH_CHN_MAIN);
     }
 }
 #endif /* LiveRoom_Publisher_h */

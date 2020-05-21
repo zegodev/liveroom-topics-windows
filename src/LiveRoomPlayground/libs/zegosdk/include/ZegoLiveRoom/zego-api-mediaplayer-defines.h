@@ -39,6 +39,36 @@ namespace MEDIAPLAYER
         ZegoMediaPlayerIndexFourth  = 3
     };
     
+    enum ZegoMediaPlayerAudioChannel
+    {
+        ZegoMediaPlayerAudioChannelLeft  = 1,
+        ZegoMediaPlayerAudioChannelRight = 2,
+        ZegoMediaPlayerAudioChannelAll   = 3
+    };
+
+    /**
+     媒体播放器错误码
+     */
+    enum ZegoMediaPlayerError
+    {
+        /** ok */
+        ZegoMediaPlayerErrorOK = 0,
+        /** 文件格式不支持 */
+        ZegoMediaPlayerErrorFile = -1,
+        /** 路径不存在 */
+        ZegoMediaPlayerErrorPath = -2,
+        /** 文件无法解码 */
+        ZegoMediaPlayerErrorCodec = -3,
+        /** 文件中没有可播放的音视频流 */
+        ZegoMediaPlayerErrorNoSupportStream = -4,
+        /** 文件解析过程中出现错误 */
+        ZegoMediaPlayerErrorDemux = -5,
+        /** 播放掉帧 */
+        ZegoMediaPlayerErrorFrameDrop = -6,
+        /** 加载资源超时 */
+        ZegoMediaPlayerErrorLoadTimeout = -7
+    };
+    
     struct ZegoMediaPlayerVideoDataFormat
     {
         int width;
@@ -66,6 +96,11 @@ namespace MEDIAPLAYER
         }
     };
     
+    /**
+     * 媒体播放器事件回调
+     * 
+     * @warning Deprecated，请使用 IZegoMediaPlayerEventWithIndexCallback 替代
+     */ 
     class IZegoMediaPlayerEventCallback
     {
     public:
@@ -75,13 +110,7 @@ namespace MEDIAPLAYER
         virtual void OnPlayStart() = 0;
         /**
          播放出错
-         
-         PLAY_ERROR_NOERROR = 0,
-         PLAY_ERROR_FILE =  -1，文件格式不支持,
-         PLAY_ERROR_PATH =  -2，路径不存在,
-         PLAY_ERROR_CODEC = -3, 文件无法解码
-         PLAY_ERROR_NO_SUPPORT_STREAM = -4,文件中没有可播放的音视频流
-         PLAY_ERROR_DEMUX = -5, 文件解析过程中出现错误
+         @param errCode 错误码, 详见 ZegoMediaPlayerError
          */
         virtual void OnPlayError(const int errCode) = 0;
         /**
@@ -147,6 +176,8 @@ namespace MEDIAPLAYER
      * 当格式为ARGB32/ABGR32/RGBA32/BGRA32，数据通过OnPlayVideoData回调。
      * 当格式为I420/NV12/NV21，数据通过OnPlayVideoData2回调。
      * 其他非法格式都判定为I420
+     * 
+     * @warning Deprecated，请使用 IZegoMediaPlayerVideoDataWithIndexCallback 替代
      */
     class IZegoMediaPlayerVideoDataCallback
     {
@@ -181,13 +212,7 @@ namespace MEDIAPLAYER
         virtual void OnPlayStart(ZegoMediaPlayerIndex index) = 0;
         /**
          播放出错
-         
-         PLAY_ERROR_NOERROR = 0,
-         PLAY_ERROR_FILE =  -1，文件格式不支持,
-         PLAY_ERROR_PATH =  -2，路径不存在,
-         PLAY_ERROR_CODEC = -3, 文件无法解码
-         PLAY_ERROR_NO_SUPPORT_STREAM = -4,文件中没有可播放的音视频流
-         PLAY_ERROR_DEMUX = -5, 文件解析过程中出现错误
+         @param errCode 错误码, 详见 ZegoMediaPlayerError
          */
         virtual void OnPlayError(const int errCode, ZegoMediaPlayerIndex index) = 0;
         /**

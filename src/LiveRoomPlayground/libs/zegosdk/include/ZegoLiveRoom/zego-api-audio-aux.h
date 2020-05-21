@@ -61,11 +61,25 @@ namespace ZEGO
         ZEGOAVKIT_API bool SetAuxCallback(IZegoAuxCallback* pCB);
         
         /**
-         设置混音音量
+         设置混音本地播放音量和推流音量
          
         @param volume 音量 0 ~ 100，默认为 50
          */
         ZEGOAVKIT_API void SetAuxVolume(int volume);
+        
+        /**
+         设置混音本地播放音量
+         
+         @param volume 音量 0 ~ 100，默认为 50
+         */
+        ZEGOAVKIT_API void SetAuxPlayVolume(int volume);
+        
+        /**
+         设置混音推流音量
+         
+         @param volume 音量 0 ~ 100，默认为 50
+         */
+        ZEGOAVKIT_API void SetAuxPublishVolume(int volume);
         
         /**
          混音静音开关

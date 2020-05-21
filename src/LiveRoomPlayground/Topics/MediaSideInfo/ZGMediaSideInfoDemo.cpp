@@ -35,8 +35,8 @@ void ZGMediaSideInfoDemo::InitSideInfoConfig(ZGMediaSideInfoDemoConfig config)
 }
 
 void ZGMediaSideInfoDemo::ActivateMediaSideInfoForPublishChannel(AV::PublishChannelIndex idx /*= AV::PUBLISH_CHN_MAIN*/)
-{	
-    MEDIASIDEINFO::SetMediaSideFlags(true, config_.only_audio_publish, AV::SeiUserUnregisted, idx);
+{
+    MEDIASIDEINFO::SetMediaSideFlags(true, config_.only_audio_publish, idx);
     MEDIASIDEINFO::SetMediaSideCallback(this);
 }
 
@@ -72,7 +72,7 @@ void ZGMediaSideInfoDemo::SendMediaSideInfo(uint8_t * data, int len, AV::Publish
 void ZGMediaSideInfoDemo::onRecvMediaSideInfo(const char * pszStreamID, const unsigned char *pBuf, int dataLen)
 {
     ZGENTER_FUN_LOG;
-    ZGLog("streamid = %s, data buf = %p , datalen = %d", pszStreamID, pBuf, dataLen);
+    ZGLog("streamid = %s, data buf = %s , datalen = %d", pszStreamID, pBuf, dataLen);
     if (!side_info_cb_ && !user_data_cb_)
     {
         ZGLog("no side info call back, return");

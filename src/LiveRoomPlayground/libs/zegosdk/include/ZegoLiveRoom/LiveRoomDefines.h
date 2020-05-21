@@ -53,6 +53,17 @@ namespace ZEGO
             bool isHardwareVenc;    ///< 是否硬编
             int width;              ///< 视频宽度
             int height;             ///< 视频高度
+
+            double totalBytes = 0.; ///< 已发送的总字节数，包括音频、视频及媒体次要信息等
+            double audioBytes = 0.; ///< 已发送的音频字节数
+            double videoBytes = 0.; ///< 已发送的视频字节数
+            
+            double cpuAppUsage = 0.;    ///< 当前 APP 的 CPU 使用率
+            double cpuTotalUsage = 0.;  ///< 当前系统的 CPU 使用率
+            
+            double memoryAppUsage = 0.;         ///< 当前 APP 的内存使用率
+            double memoryTotalUsage = 0.;       ///< 当前系统的内存使用率
+            double memoryAppUsed = 0.;          ///< 当前 APP 的内存使用量, 单位 MB(win返回的是app实际占用内存工作集=专用内存工作集+共享内存工作集)
         };
         
         struct ZegoPlayQuality
@@ -81,6 +92,17 @@ namespace ZEGO
             bool isHardwareVdec;     ///< 是否硬解
             int width;               ///< 视频宽度
             int height;              ///< 视频高度
+
+            double totalBytes = 0.; ///< 已接收的总字节数，包括音频、视频及媒体次要信息等
+            double audioBytes = 0.; ///< 已接收的音频字节数
+            double videoBytes = 0.; ///< 已接收的视频字节数
+            
+            double cpuAppUsage = 0.;        ///< 当前 APP 的 CPU 使用率
+            double cpuTotalUsage = 0.;      ///< 当前系统的 CPU 使用率
+            
+            double memoryAppUsage = 0.;         ///< 当前 APP 的内存使用率
+            double memoryTotalUsage = 0.;       ///< 当前系统的内存使用率
+            double memoryAppUsed = 0.;          ///< 当前 APP 的内存使用量, 单位 MB
         };
 
 		enum ZegoMixSysPlayoutPropertyMask

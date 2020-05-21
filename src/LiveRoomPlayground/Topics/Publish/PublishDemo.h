@@ -171,10 +171,10 @@ protected:
     virtual void OnPreviewSnapshot(AV::PublishChannelIndex index, void *pImage) override;
 
 
-    virtual void OnAuxCallback(unsigned char *pData, int *pDataLen, int *pSampleRate, int *pNumChannels) override;
+    //virtual void OnAuxCallback(unsigned char *pData, int *pDataLen, int *pSampleRate, int *pNumChannels) override;
 
 
-    virtual void OnMixStream(const AV::ZegoMixStreamResult& result, const char* pszMixStreamID, int seq) override;
+    //virtual void OnMixStream(const AV::ZegoMixStreamResult& result, const char* pszMixStreamID, int seq) override;
 
 
     virtual void OnRelayCDNStateUpdate(const char *streamID, AV::ZegoStreamRelayCDNInfo* statesInfo, unsigned int statesInfoCount) override;
@@ -186,7 +186,7 @@ protected:
     virtual void OnCaptureVideoFirstFrame(AV::PublishChannelIndex idx) override;
 
 
-    virtual void OnUpdateMixStreamConfig(unsigned int uiErrorCode, const char* pszMixStreamID, const ZegoPublishingStreamInfo& oStreamInfo) override;
+    //virtual void OnUpdateMixStreamConfig(unsigned int uiErrorCode, const char* pszMixStreamID, const ZegoPublishingStreamInfo& oStreamInfo) override;
 
     virtual void OnAudioDeviceStateChanged(ZEGO::AV::AudioDeviceType deviceType, ZEGO::AV::DeviceInfo *deviceInfo, ZEGO::AV::DeviceState state) override;
 

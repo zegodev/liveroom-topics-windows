@@ -52,17 +52,45 @@ std::string GBKToUTF8(const char* str_gbk)
     return str;
 }
 
-std::string UTF8ToGBK(const char * str_utf8)
+//std::string UTF8ToGBK(const char * str_utf8)
+//{
+//    // gbk与unicode之间的转换器
+//    std::wstring_convert<WCHAR_GBK>  cvtGBK(new WCHAR_GBK(GBK_NAME));
+//    // utf8与unicode之间的转换器
+//    std::wstring_convert<WCHAR_UTF8> cvtUTF8;
+//
+//    std::wstring ustr = cvtUTF8.from_bytes(str_utf8);
+//    string str = cvtGBK.to_bytes(ustr);
+//    return str;
+//
+//}
+
+std::string UTF8ToGBK(const char* str)
 {
-    // gbk与unicode之间的转换器
-    std::wstring_convert<WCHAR_GBK>  cvtGBK(new WCHAR_GBK(GBK_NAME));
-    // utf8与unicode之间的转换器
-    std::wstring_convert<WCHAR_UTF8> cvtUTF8;
+    string out;
+    WCHAR *strSrc;
+    char *szRes;
+    int len = 0;
 
-    std::wstring ustr = cvtUTF8.from_bytes(str_utf8);
-    string str = cvtGBK.to_bytes(ustr);
-    return str;
+    //获得临时变量的大小
+    int i = MultiByteToWideChar(CP_UTF8, 0, str, -1, NULL, 0);
+    strSrc = new WCHAR[i + 1];
+    MultiByteToWideChar(CP_UTF8, 0, str, -1, strSrc, i);
 
+    //获得临时变量的大小
+    i = WideCharToMultiByte(CP_ACP, 0, strSrc, -1, NULL, 0, NULL, NULL);
+    szRes = new char[i + 1];
+    WideCharToMultiByte(CP_ACP, 0, strSrc, -1, szRes, i, NULL, NULL);
+
+    out = szRes;
+    //len = (i + 1)*sizeof(CHAR);
+    //memcpy(out, szRes, len);
+    //out[len + 1] = '\0';
+
+    delete[]strSrc;
+    delete[]szRes;
+
+    return out;
 }
 
 std::string StringFormat(const char *fmt, ...)

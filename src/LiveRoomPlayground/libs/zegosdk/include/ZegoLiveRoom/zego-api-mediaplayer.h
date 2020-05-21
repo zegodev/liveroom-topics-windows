@@ -40,12 +40,44 @@ namespace MEDIAPLAYER
     ZEGOAVKIT_API void InitWithType(const ZegoMediaPlayerType type, ZegoMediaPlayerIndex index = ZegoMediaPlayerIndexFirst);
     
     /**
-     设置音量
+     设置本地播放音量, 如果播放器设置了推流模式, 也会设置推流音量
      
      @param volume 音量，范围在0到100，默认值是50
      @param index 播放器序号, 默认为 ZegoMediaPlayerIndexFirst
      */
     ZEGOAVKIT_API void SetVolume(const int volume, ZegoMediaPlayerIndex index = ZegoMediaPlayerIndexFirst);
+    
+    /**
+     设置推流音量
+     
+     @param volume 推流音量，范围在0到100，默认值是50
+     @param index 播放器序号, 默认为 ZegoMediaPlayerIndexFirst
+     */
+    ZEGOAVKIT_API void SetPublishVolume(const int volume, ZegoMediaPlayerIndex index = ZegoMediaPlayerIndexFirst);
+    
+    /**
+     设置本地播放音量
+     
+     @param volume 本地播放音量，范围在0到100，默认值是50
+     @param index 播放器序号, 默认为 ZegoMediaPlayerIndexFirst
+     */
+    ZEGOAVKIT_API void SetPlayVolume(const int volume, ZegoMediaPlayerIndex index = ZegoMediaPlayerIndexFirst);
+
+    /**
+     获取推流音量
+     
+     @param index 播放器序号, 默认为 ZegoMediaPlayerIndexFirst
+     @return 返回推流音量
+     */
+    ZEGOAVKIT_API int GetPublishVolume(ZegoMediaPlayerIndex index = ZegoMediaPlayerIndexFirst);
+    
+    /**
+     获取本地播放音量
+     
+     @param index 播放器序号, 默认为 ZegoMediaPlayerIndexFirst
+     @return 返回本地播放音量
+     */
+    ZEGOAVKIT_API int GetPlayVolume(ZegoMediaPlayerIndex index = ZegoMediaPlayerIndexFirst);
     
     /**
      开始播放
@@ -216,9 +248,88 @@ namespace MEDIAPLAYER
      @param index 播放器序号, 默认为 ZegoMediaPlayerIndexFirst
      */
     ZEGOAVKIT_API void ClearView(ZegoMediaPlayerIndex index = ZegoMediaPlayerIndexFirst);
+
+    /**
+     设置是否开启精准搜索
+
+     @param enable 是否开启
+     @param index 播放器序号, 默认为 ZegoMediaPlayerIndexFirst
+     @note: 播放文件之前调用，即Start或Load前，播放过程中调用不起作用，但可能对下个文件的播放起作用.
+     */
+    ZEGOAVKIT_API void EnableAccurateSeek(bool enable, ZegoMediaPlayerIndex index = ZegoMediaPlayerIndexFirst);
+
+    /**
+     设置精确搜索的超时时间
+
+     @param timeoutInMS 超时时间, 单位毫秒. 有效值区间 [2000, 10000]
+     @param index 播放器序号, 默认为 ZegoMediaPlayerIndexFirst
+     @note 如果不设置, SDK 内部默认是设置 5000 毫秒
+     */
+    ZEGOAVKIT_API void SetAccurateSeekTimeout(long timeoutInMS, ZegoMediaPlayerIndex index = ZegoMediaPlayerIndexFirst);
+    
+    /**
+     设置播放声道
+     
+     @param channel 声道, 参见 ZegoMediaPlayerAudioChannel 定义. 播放器初始化时默认是 ZegoMediaPlayerAudioChannelAll
+     @param index 播放器序号, 默认为 ZegoMediaPlayerIndexFirst
+     */
+    ZEGOAVKIT_API void SetActiveAudioChannel(ZegoMediaPlayerAudioChannel channel, ZegoMediaPlayerIndex index = ZegoMediaPlayerIndexFirst);
+    
+    /**
+     设置声道音调
+     
+     @param channel 声道, 参见 ZegoMediaPlayerAudioChannel 定义
+     @param keyShiftValue 音调偏移值, 有效值范围 [-8.0, 8.0], 播放器初始化时默认是 0
+     @param index 播放器序号, 默认为 ZegoMediaPlayerIndexFirst
+     @note 可选择设置左声道、右声道、左右声道，当只设置一个声道时，另一个声道保持原值
+     */
+    ZEGOAVKIT_API void SetAudioChannelKeyShift(ZegoMediaPlayerAudioChannel channel, float keyShiftValue, ZegoMediaPlayerIndex index = ZegoMediaPlayerIndexFirst);
+    
+    /**
+     设置网络素材最大的缓存时长和缓存数据大小, 以先达到者为准
+
+     @param timeInMS 缓存最大时长, 单位 ms, 有效值为大于等于 2000, 如果填 0, 表示不限制
+     @param sizeInByte 缓存最大尺寸, 单位 byte, 有效值为大于等于 5000000, 如果填 0, 表示不限制
+     @param index 播放器序号, 默认为 ZegoMediaPlayerIndexFirst
+     @note 不允许 timeInMS 和 sizeInByte 都为 0
+     @note 在 Start 或者 Load 之前调用, 设置一次, 生命周期内一直有效
+    */
+    ZEGOAVKIT_API void SetOnlineResourceCache(int timeInMS, int sizeInByte, ZegoMediaPlayerIndex index = ZegoMediaPlayerIndexFirst);
+    
+    /**
+     获取网络素材缓存队列的缓存数据可播放的时长和缓存数据大小
+     @param timeInMS 缓存数据可播放的时长, 单位 ms
+     @param sizeInByte 缓存数据大小, 单位 byte
+     @param index 播放器序号, 默认为 ZegoMediaPlayerIndexFirst
+     @return true 调用成功, false 调用失败
+    */
+    ZEGOAVKIT_API bool GetOnlineResourceCacheStat(int* timeInMS, int* sizeInByte, ZegoMediaPlayerIndex index = ZegoMediaPlayerIndexFirst);
+    
+    /**
+     设置缓冲回调的阈值, 缓冲区可播放时长大于阈值时，开始播放, 并回调 OnBufferEnd
+
+     @param thresholdInMS  阈值, 单位 ms, 有效值为大于等于 1000
+     @param index 播放器序号, 默认为 ZegoMediaPlayerIndexFirst
+     @note 在 Start 或者 Load 之前调用, 设置一次, 生命周期内一直有效
+     @note SDK 默认值是 5000ms
+    */
+    ZEGOAVKIT_API void SetBufferThreshold(int thresholdInMS, ZegoMediaPlayerIndex index = ZegoMediaPlayerIndexFirst);
+    
+    /**
+     设置加载资源的超时时间
+
+     @param timeoutInMS 超时时间, 单位 ms, 有效值为大于等于 1000
+     @param index 播放器序号, 默认为 ZegoMediaPlayerIndexFirst
+     @note 在 Start 或者 Load 之前设置, 设置一次, 生命周期内一直有效, 
+     @note 当打开文件超过设定超时时间，会失败并回调 onPlayError
+     @note SDK 默认会一直等待
+     */
+    ZEGOAVKIT_API void SetLoadResourceTimeout(int timeoutInMS, ZegoMediaPlayerIndex index = ZegoMediaPlayerIndexFirst);
     
     /**
      设置播放器事件回调
+
+     @warning Deprecated，请使用 SetEventWithIndexCallback 替代
      
      @param callback 回调 IZegoMediaPlayerEventCallback
      @param index 播放器序号, 默认为 ZegoMediaPlayerIndexFirst
@@ -236,6 +347,8 @@ namespace MEDIAPLAYER
     
     /**
      设置视频帧数据回调
+
+     @warning Deprecated，请使用 SetVideoDataWithIndexCallback 替代
      
      @param callback 回调 IZegoMediaPlayerVideoDataCallback
      @param index 播放器序号, 默认为 ZegoMediaPlayerIndexFirst

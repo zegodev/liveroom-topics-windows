@@ -71,7 +71,10 @@ namespace ZEGO
              @param errorCode 错误码，0 表示无错误
              @param roomID 房间 ID
              @attention 建议开发者在此通知中进行重新登录、推/拉流、报错、友好性提示等其他恢复逻辑
-             @note 与 server 断开连接后，SDK 会进行重试，重试失败抛出此错误。请注意，此时 SDK 与服务器的所有连接均会断开
+             @note 
+                1. 一般客户端网络断开且超过超时重试时间的时候会回调此方法，ZEGO SDK 内部有重试逻辑，一般情况网络不可用时SDK内部会重试90s左右，若超过重试时间，则会通过此方法告知App业务层
+                2. 当收到此回调时，ZEGO SDK 已经做了重连尝试，业务侧收到此回调时可在UI界面给出友好提示，或者有限次的重连动作
+                3. 当收到此回调后，表示 SDK 已断开房间信令服务, 将不再有推/拉流状态回调。
              */
             virtual void OnDisconnect(int errorCode, const char *pszRoomID) = 0;
         

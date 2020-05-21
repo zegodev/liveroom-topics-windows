@@ -100,6 +100,28 @@ namespace ZEGO
 			virtual void OnRetryDevice(const char* deviceName,const char* deviceID) {}
 #endif
         };
+        
+#if TARGET_OS_IPHONE || defined(ANDROID)
+        class IZegoAudioRouteCallback
+        {
+        public:
+            virtual ~IZegoAudioRouteCallback(){}
+            
+            /// \brief 音频路由发生变化的回调
+            /// \param
+            virtual void OnAudioRouteChange(ZegoAudioRoute audioRoute) = 0;
+        };
+#endif
+        
+        class IZegoNetTypeCallback
+        {
+        public:
+            virtual ~IZegoNetTypeCallback(){}
+            
+            /// \brief 网络类型发生变化的回调
+            /// \param netType 网络类型
+            virtual void OnNetTypeChange(ZEGONetType netType) = 0;
+        };
     }
 }
 

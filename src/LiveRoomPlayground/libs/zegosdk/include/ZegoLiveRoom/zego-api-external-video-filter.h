@@ -19,9 +19,11 @@ namespace ZEGO
 namespace VIDEOFILTER
 {
     
-    /// \brief 设置外部滤镜模块
+    /// \brief 设置外部滤镜工厂；当置空时，关闭外部滤镜功能。
     /// \param factory 工厂对象
-    /// \note 必须在 InitSDK 前调用，并且不能置空
+    /// \param idx 推流通道
+    /// \note 必须在 推/拉流、预览 前设置；
+    /// \note 在 推/拉流、预览 过程中不要改变该工厂实例。
     ZEGOAVKIT_API void SetVideoFilterFactory(AVE::VideoFilterFactory* factory, AV::PublishChannelIndex idx = AV::PUBLISH_CHN_MAIN);
     
 }

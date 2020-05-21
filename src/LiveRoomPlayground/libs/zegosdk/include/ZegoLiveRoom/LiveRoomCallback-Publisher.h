@@ -96,37 +96,6 @@ namespace ZEGO
             virtual void OnPreviewSnapshot(AV::PublishChannelIndex index, void *pImage) {}
             
             /**
-             混音数据输入回调
-
-             @param pData 混音数据
-             <p><b>注意：</b>
-             1. 最大支持 48k 采样率、双声道、16位深的 PCM 音频数据；<br>
-             2. 实际数据长度应根据当前音频数据的采样率及声道数决定；<br>
-             3. 为确保混音效果，请不要在此 API 中执行耗时操作</p>
-             @param pDataLen pDataLen既是输入参数也是输出参数；
-                             作为输入参数，SDK会提供好长度值，用户按照这个长度写入数据即可，数据充足的情况下，无需更改*pDataLen的值
-                             作为输出参数，如果填写的数据不足SDK提供的长度值，则*pDataLen = 0,
-                             或者最后的尾音不足 SDK提供的长度值，可以用静音数据补齐。
-             @param pSampleRate 混音数据采样率，支持16k、32k、44.1k、48k
-             @param pNumChannels 混音数据声道数，支持1、2
-             @attention 用户调用该 API 将混音数据传递给 SDK
-             @note 混音数据 bit depth 必须为 16
-             @warning Deprecated 请使用 zego-api-audio-aux.h 中的 IZegoAudioAuxCallbackEx
-             */
-            virtual void OnAuxCallback(unsigned char *pData, int *pDataLen, int *pSampleRate, int *pNumChannels) {}
-            
-            /**
-             混流请求结果回调
-             
-             @warning Deprecated，请使用 zego-api-mix-stream.h 中的 OnMixStreamEx 代替
-
-             @param result 结果
-             @param pszMixStreamID 混流 ID
-             @param seq 请求 seq
-             */
-            virtual void OnMixStream(const AV::ZegoMixStreamResult& result, const char* pszMixStreamID, int seq) {}
-            
-            /**
              转推CDN状态通知
 
              @param streamID 流ID
@@ -157,13 +126,6 @@ namespace ZEGO
             virtual void OnCaptureAudioFirstFrame() {}
             
             virtual ~ILivePublisherCallback() {}
-            
-            /**
-             更新混流配置回调
-             
-             @warning Deprecated，请使用 zego-api-mix-stream.h 中的 OnMixStreamEx 代替
-             */
-            virtual void OnUpdateMixStreamConfig(unsigned int uiErrorCode, const char* pszMixStreamID, const ZegoPublishingStreamInfo& oStreamInfo) {}
         };
     }
 }

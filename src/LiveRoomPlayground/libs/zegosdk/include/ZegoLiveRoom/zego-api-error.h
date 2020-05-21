@@ -41,6 +41,9 @@ namespace ZEGO
         const unsigned int kStartUpdateStreamInfoError    = 10006001;
 		const unsigned int kNoMultiRoomLoginRole          = 10007001; //没有多房间权限，而调用多房间接口
 		const unsigned int kMultiRoomIDMappingOther       = 10007002;  //该roomid 已经在多房间另一套接口中使用
+		const unsigned int kNetWorkProbeNoUrl = 10007003;  
+		const unsigned int kNetWorkProbeStopPublish = 10007004; 
+		const unsigned int kNetWorkProbeStopPlay = 10007005; 
 		const unsigned int kFetalError1                   = 10007101;
         const unsigned int kFetalError2                   = 10007102;
         const unsigned int kFetalError3                   = 10007103;
@@ -49,7 +52,9 @@ namespace ZEGO
         const unsigned int kFetalError6                   = 10007106;
         const unsigned int kFetalError7                   = 10007107;
 		const unsigned int kSDKNoMoudleFunction           = 10008001; //sdk 没有编译此模块的功能 而你调用了该接口，联系技术支持 提供支持此功能的SDK
-        
+
+		const unsigned int kDeviceError = 10009001; //设备错误
+
         const unsigned int kNetworkNotConnectError        = 11000101;
         const unsigned int kNetworkDnsResolveError        = 11000404;
         
@@ -62,6 +67,7 @@ namespace ZEGO
         const unsigned int kEngineNoPlayDataError         = 12102001;
         const unsigned int kEngineNoPublishDataError      = 12102002;
         
+        const unsigned int kEngineUnknownError            = 12200000;
         const unsigned int kEngineConnectServerError      = 12200001;
         const unsigned int kEngineRtmpHandshakeError      = 12200002;
         const unsigned int kEngineRtmpAppConnectError     = 12200003;
@@ -76,6 +82,9 @@ namespace ZEGO
         const unsigned int kEngineRtpPlayOrPublishTimeoutError = 12200104;
         const unsigned int kEngineRtpPlayOrPublishDeniedError  = 12200105;
         const unsigned int kEngineRtpTimeoutError         = 12200106;
+        const unsigned int kEngineRtpDecryptError         = 12200107;
+        const unsigned int kEngineRtpDecryptNotSupport    = 12200108;
+        const unsigned int kEngineRtpSockError            = 12200109;
         const unsigned int kEngineHttpFlvProtocolError    = 12200200;
         const unsigned int kEngineHttpFlvHttpCodeError    = 12200201;
         const unsigned int kEngineHttpFlvParseFlvError    = 12200202;
@@ -123,11 +132,24 @@ namespace ZEGO
         const unsigned int kLiveRoomNoPushServerAddrError = 50001003;
         const unsigned int kLiveRoomNoPushCryptoKeyError  = 50001004;
         const unsigned int kLiveRoomNoPushTokenError      = 50001005;
-		const unsigned int kLiveRoomAutoRetryMaxTimeOut= 50001006; //最大的重试时间到了导致超时
-		const unsigned int kLiveRoomActiveReloginError = 50001007; //live room 激活重试时间失败
-		const unsigned int kLiveRoomActiveRetryIntrevalSuccess = 50001008;    //liveroom 房间激活重试策略成功 等待重试
-		const unsigned int kLiveRoomRetryRightNow = 50001009; //liveroom 将马上去尝试重新登录
-		const unsigned int kLiveRoomWaitNetOKWillRetry = 50001010; //live room 将等到网络恢复后将继续进行重试
+		const unsigned int kLiveRoomAutoRetryMaxTimeOut= 50001006;
+		const unsigned int kLiveRoomRetryRightNow = 50001009;
+		const unsigned int kLiveRoomWaitNetOKWillRetry = 50001010; 
+		const unsigned int kLiveRoomLogoutWhenLogining = 50001011;
+		const unsigned int kLiveRoomLogoutUserCancel = 50001012;
+
+		const unsigned int kLiveRoomHBErrorNoResp = 50001050;
+		const unsigned int kLiveRoomHBErrorByHttpTiemout = 50001051;
+
+		const unsigned int kLiveRoomReliableMessageParseBufError = 50001200;
+		const unsigned int kLiveRoomReliableMessageTransChannelError = 50001201;
+		const unsigned int kLiveRoomReliableUserMessageBufEmpty = 50001202;
+		const unsigned int kLiveRoomReliableUserMessageParseBufError = 50001203;
+		const unsigned int kLiveRoomGetUserListParseBufError = 50001204;
+		const unsigned int kLiveRoomHttpNullPtrError = 50001205;
+
+		const unsigned int kLiveRoomMultiZPushSessionIDNotMatchError = 50005021;
+		const unsigned int kLiveRoomMultiLimitRoomCountError = 50005022;
 
         const unsigned int kLiveRoomCouldntConnectError   = 51200007;
         const unsigned int kLiveRoomTimeoutError          = 51200028;
@@ -150,8 +172,6 @@ namespace ZEGO
         const unsigned int kLiveRoomRequiredReloginError  = 52002001;
         const unsigned int kLiveRoomThirdTokenAuthError   = 52002002;
         const unsigned int kLiveRoomNetBrokenTimeoutError = 52002003;
-		const unsigned int kLiveRoomMultiZPushSessionIDNotMatchError = 50005021;
-		const unsigned int kLiveRoomMultiLimitRoomCountError = 50005022;
         const unsigned int kLiveRoomAgentTimeoutError        = 55500001;
         const unsigned int kLiveRoomAgentDroppedError        = 55500002;
         
@@ -163,23 +183,29 @@ namespace ZEGO
         const unsigned int kRoomHbTimeoutError            = 60001005;
         const unsigned int kRoomStartConnectError         = 60001006;
         const unsigned int kRoomReconnectFailError        = 60001008;
-		const unsigned int kRoomLoginZPushNoCryptoKey     = 60001009; //登录zpush无校验key值
-		const unsigned int kRoomLoginCheckMD5Fail         = 60001010; //登录ZPush 过程中checkMd5 检验Error
-		const unsigned int kRoomRetryIPOver = 60001011;  //zpuh 轮训所有ip结束 也未链接成功
-		const unsigned int kRoomRetryActiveIPError = 60001012; //zpush 重试ip 激活策略失败 可能原因 ip list是空的。或者策略节点设置的时间是0
-		const unsigned int kRoomSendLoginNoZPushRsp = 60001013;  //zpush connect成功 之后 发送登录超过30s 没有回应 导致登录失败(若是http+tcp方式) 则是可能握手包也没回应
-		const unsigned int kRoomDoSendLoginMultiRoomReqError = 60001014;  //多房间发送登录请求失败
+		const unsigned int kRoomLoginZPushNoCryptoKey     = 60001009; 
+		const unsigned int kRoomLoginCheckMD5Fail         = 60001010; 
+		const unsigned int kRoomRetryIPOver = 60001011; 
+		const unsigned int kRoomRetryActiveIPError = 60001012; 
+		const unsigned int kRoomSendLoginNoZPushRsp = 60001013;  
+		const unsigned int kRoomDoSendLoginMultiRoomReqError = 60001014; 
 		const unsigned int kRoomZPushTcpClosed = 60001015;
+		const unsigned int kRoomConnectErrorQuic = 60001016;
 
         const unsigned int kRoomInvalidSocketError        = 60002001;
         const unsigned int kRoomInvalidRspError           = 60003001;
         const unsigned int kRoomDecodeSignError           = 62001001;
-		const unsigned int kRoomDecodeLoginError          = 62001002; //登录解包失败
+		const unsigned int kRoomDecodeLoginError          = 62001002;
         const unsigned int kRoomReplayAttacksError        = 62002001;
+		const unsigned int kRoomThirdTokenAuthError = 62002002;
         const unsigned int kRoomLoginCreateUserError      = 62010001;
         const unsigned int kRoomLoginSameCreateUserError  = 62010002;
         const unsigned int kRoomStatusTimeoutError        = 62010005;
         const unsigned int kRoomStatusRspError            = 62010006;
+		const unsigned int kRoomDispatchTokenBuildError = 62030011;
+		const unsigned int kRoomDispatchTokenDecodeError = 62030012;
+		const unsigned int kRoomDispatchTokenInvalidError = 62030013;
+		const unsigned int kRoomDispatchTokenExpiredError = 62030014;
         const unsigned int kRoomMultipleLoginKickoutError = 63000001;
         const unsigned int kRoomManualKickoutError        = 63000002;
         const unsigned int kRoomSessionErrorKickoutError  = 63000003;
@@ -210,6 +236,10 @@ namespace ZEGO
         const unsigned int kMixStreamAgentTimeoutError    = 85500001;
         const unsigned int kMixStreamAgentDroppedError    = 85500002;
 
+		const unsigned int kNetworkTraceGetDetectURLError = 120000001;
+		const unsigned int kNetworkTraceDownDetectConfigError = 120000002;
+		const unsigned int kNetworkTraceDecryptionURLBufError = 120000003;
+		const unsigned int kNetworkTraceReqDownDetectConfigError = 120000004;
 
         /**
          是否初始化SDK错误

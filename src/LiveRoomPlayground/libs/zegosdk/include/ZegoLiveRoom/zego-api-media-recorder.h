@@ -11,10 +11,9 @@ namespace ZEGO
         /** 媒体录制类型 */
         enum ZegoMediaRecordType
         {
-            ZEGO_MEDIA_RECORD_NONE = 0,  /**< 不录制任何数据 */
-            ZEGO_MEDIA_RECORD_AUDIO,     /**< 只录制音频 */
-            ZEGO_MEDIA_RECORD_VIDEO,     /**< 只录制视频 */
-            ZEGO_MEDIA_RECORD_BOTH       /**< 同时录制音频、视频 */
+            ZEGO_MEDIA_RECORD_AUDIO = 1,     /**< 只录制音频 */
+            ZEGO_MEDIA_RECORD_VIDEO = 2,     /**< 只录制视频 */
+            ZEGO_MEDIA_RECORD_BOTH  = 3      /**< 同时录制音频、视频 */
         };
         
         /** 媒体录制通道 */
@@ -30,6 +29,30 @@ namespace ZEGO
             ZEGO_MEDIA_RECORD_FLV = 1,       /**< FLV格式 */
             ZEGO_MEDIA_RECORD_MP4 = 2        /**< MP4格式 */
         };
+
+        enum ZegoMediaRecordErrorCode
+        {
+            /** 成功 */
+            ZEGO_MR_ERROR_CODE_SUCCESS = 0,
+            /** 路径太长 */
+            ZEGO_MR_ERROR_CODE_PATH_TOO_LONG,
+            /** 初始化 avcontext 失败 */
+            ZEGO_MR_ERROR_CODE_INIT_FAILED,
+            /** 打开文件失败 */
+            ZEGO_MR_ERROR_CODE_OPEN_FILE_FAILED,
+            /** 写文件头失败 */
+            ZEGO_MR_ERROR_CODE_WRITE_HEADER_FAILED,
+            /** 开始录制 */
+            ZEGO_MR_ERROR_CODE_RECORD_BEGIN,
+            /** 停止录制 */
+            ZEGO_MR_ERROR_CODE_RECORD_END,
+            /** 剩余空间不够 */
+            ZEGO_MR_ERROR_CODE_NO_SPACE,
+            /** 文件句柄异常 */
+            ZEGO_MR_ERROR_CODE_BAD_FILE_DESC,
+            /** IO 异常 */
+            ZEGO_MR_ERROR_CODE_IO_ERROR,
+        };
         
         class IZegoMediaRecordCallback
         {
@@ -37,7 +60,7 @@ namespace ZEGO
             /**
              媒体录制回调
              
-             @param errCode: 错误码， 0: 成功，1：存储路径太长，2：初始化 avcontext 失败，3：打开文件失败，4：写文件失败
+             @param errCode: 错误码，详见 ZegoMediaRecordErrorCode 定义
              @param channelIndex 录制通道
              @param storagePath 录制文件存储路径
              */
@@ -52,6 +75,17 @@ namespace ZEGO
              @param fileSize 文件大小，单位字节
              */
             virtual void OnRecordStatusUpdate(const ZegoMediaRecordChannelIndex channelIndex, const char* storagePath, const unsigned int duration, const unsigned int fileSize) {}
+            
+            /**
+            录制信息更新回调
+            
+            @param channelIndex 录制通道
+            @param storagePath 录制文件存储路径
+            @param duration 录制时长，单位毫秒
+            @param fileSize 文件大小，单位字节
+            @param quality 录制质量
+            */
+            virtual void OnRecordStatusUpdateWithQuality(const ZegoMediaRecordChannelIndex channelIndex, const char* storagePath, const unsigned int duration, const unsigned int fileSize, const AV::PublishQuality& quality) {}
             
             virtual ~ IZegoMediaRecordCallback() {}
         };

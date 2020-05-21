@@ -108,7 +108,10 @@ END_MESSAGE_MAP()
 
 CZegoLiveRoomTopicsDlg::CZegoLiveRoomTopicsDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_ZEGOLIVEROOMTOPICS_DIALOG, pParent),
+
+#ifdef ZEGO_MEDIA_PLAYER
     media_play_dlg_ptr_(nullptr),
+#endif
     media_recorder_dlg_ptr_(nullptr)
 {
 	//m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
@@ -379,55 +382,60 @@ void CZegoLiveRoomTopicsDlg::OnLbnSelchangeListTopicAdvanced()
 {
     int cur_sel = advanced_topic_list_contronl_.GetCurSel();
     bool have_processed = false;
-	if (cur_sel >= 0)
-	{
-		CString str;
-		advanced_topic_list_contronl_.GetText(cur_sel, str);
-		//MessageBox(str);
-		if (str == TOPIC_MIDIA_PLAYER)
-		{
-			if (media_play_dlg_ptr_ == nullptr)
-			{
-				media_play_dlg_ptr_ = MediaPlayerDialog::CreateDlgInstance(this);
-				dlg_list_.push_back(media_play_dlg_ptr_);
-			}
+    if (cur_sel >= 0)
+    {
+        CString str;
+        advanced_topic_list_contronl_.GetText(cur_sel, str);
+        //MessageBox(str);
+        if (str == TOPIC_MIDIA_PLAYER)
+        {
 
-			CRect rect;
-			GetDlgItem(IDC_PANEL)->GetWindowRect(rect);
-			ScreenToClient(&rect);
-			media_play_dlg_ptr_->MoveWindow(rect.left, rect.top, rect.Width(), rect.Height());
-			ShowDlg(media_play_dlg_ptr_);
-			media_play_dlg_ptr_->StartMediaPlayer();
-			have_processed = true;
-		}
-		else if (str == TOPIC_MEDIA_SIDE_INFO)
-		{
-			if (media_side_info_dlg_ptr_ == nullptr)
-			{
-				media_side_info_dlg_ptr_ = MediaSideInfoPannelDlg::CreateDlgInstance(this);
-				dlg_list_.push_back(media_side_info_dlg_ptr_);
-			}
-			CRect rect;
-			GetDlgItem(IDC_PANEL)->GetWindowRect(rect);
-			ScreenToClient(&rect);
-			media_side_info_dlg_ptr_->MoveWindow(rect.left, rect.top, rect.Width(), rect.Height());
-			ShowDlg(media_side_info_dlg_ptr_);
-			have_processed = true;
-		}
-		else if (str == TOPIC_MEDIA_RECORDER)
-		{
-			if (media_recorder_dlg_ptr_ == nullptr)
-			{
-				media_recorder_dlg_ptr_ = CMediaRecorderDlg::CreateDlgInstance(this);
-				dlg_list_.push_back(media_recorder_dlg_ptr_);
-			}
-			CRect rect;
-			GetDlgItem(IDC_PANEL)->GetWindowRect(rect);
-			ScreenToClient(&rect);
-			media_recorder_dlg_ptr_->MoveWindow(rect.left, rect.top, rect.Width(), rect.Height());
-			ShowDlg(media_recorder_dlg_ptr_);
-			media_recorder_dlg_ptr_->LoginAndPreview();
-			have_processed = true;
+#ifdef ZEGO_MEDIA_PLAYER
+            if (media_play_dlg_ptr_ == nullptr)
+            {
+                media_play_dlg_ptr_ = MediaPlayerDialog::CreateDlgInstance(this);
+                dlg_list_.push_back(media_play_dlg_ptr_);
+            }
+
+            CRect rect;
+            GetDlgItem(IDC_PANEL)->GetWindowRect(rect);
+            ScreenToClient(&rect);
+            media_play_dlg_ptr_->MoveWindow(rect.left, rect.top, rect.Width(), rect.Height());
+            ShowDlg(media_play_dlg_ptr_);
+            media_play_dlg_ptr_->StartMediaPlayer();
+#endif
+
+
+            have_processed = true;
+        }
+        else if (str == TOPIC_MEDIA_SIDE_INFO)
+        {
+            if (media_side_info_dlg_ptr_ == nullptr)
+            {
+                media_side_info_dlg_ptr_ = MediaSideInfoPannelDlg::CreateDlgInstance(this);
+                dlg_list_.push_back(media_side_info_dlg_ptr_);
+            }
+            CRect rect;
+            GetDlgItem(IDC_PANEL)->GetWindowRect(rect);
+            ScreenToClient(&rect);
+            media_side_info_dlg_ptr_->MoveWindow(rect.left, rect.top, rect.Width(), rect.Height());
+            ShowDlg(media_side_info_dlg_ptr_);
+            have_processed = true;
+        }
+        else if (str == TOPIC_MEDIA_RECORDER)
+        {
+            if (media_recorder_dlg_ptr_ == nullptr)
+            {
+                media_recorder_dlg_ptr_ = CMediaRecorderDlg::CreateDlgInstance(this);
+                dlg_list_.push_back(media_recorder_dlg_ptr_);
+            }
+            CRect rect;
+            GetDlgItem(IDC_PANEL)->GetWindowRect(rect);
+            ScreenToClient(&rect);
+            media_recorder_dlg_ptr_->MoveWindow(rect.left, rect.top, rect.Width(), rect.Height());
+            ShowDlg(media_recorder_dlg_ptr_);
+            media_recorder_dlg_ptr_->LoginAndPreview();
+            have_processed = true;
 
 		}
 		else if (str == TOPIC_EXTERNAL_VIDEO_CAPTURE)

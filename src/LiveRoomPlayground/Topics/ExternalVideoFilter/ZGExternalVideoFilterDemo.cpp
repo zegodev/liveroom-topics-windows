@@ -254,6 +254,8 @@ void ZGExternalVideoFilterDemo::BeautifyProcess()
 
     filter_process_->Release();
 
+    have_start_ = false;
+
     //ZGLEAVE_FUN_LOG;
 
 }

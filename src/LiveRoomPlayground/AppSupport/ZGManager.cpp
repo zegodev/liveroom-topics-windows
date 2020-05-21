@@ -32,11 +32,12 @@ void ZGManager::EnableExternalVideoCapture(AVE::VideoCaptureFactory* factory, EX
     VCAP::SetVideoCaptureFactory(factory);
     if (renderer != nullptr)
     {
-        EXTERNAL_RENDER::EnableExternalRender(true, AV::VideoExternalRenderType::DECODE_RGB_SERIES);
+   //     EXTERNAL_RENDER::EnableExternalRender(true, AV::VideoExternalRenderType::DECODE_RGB_SERIES);
+		EXTERNAL_RENDER::SetVideoRenderType(EXTERNAL_RENDER::VIDEO_RENDER_TYPE_RGB);
         EXTERNAL_RENDER::SetVideoRenderCallback(renderer);
     }
     else {
-        EXTERNAL_RENDER::EnableExternalRender(false, AV::VideoExternalRenderType::DECODE_RGB_SERIES);
+    //    EXTERNAL_RENDER::EnableExternalRender(false, AV::VideoExternalRenderType::DECODE_RGB_SERIES);
     }
     InitSdk();
 }

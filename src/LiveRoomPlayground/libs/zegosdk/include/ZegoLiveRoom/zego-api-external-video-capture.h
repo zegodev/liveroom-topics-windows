@@ -48,9 +48,10 @@ namespace ZEGO
         /**
          设置外部采集设备模块
          
-         @param factory 外部采集设备工厂
+         @param factory 外部采集工厂；当置空时，关闭外部采集功能。
          @param idx 推流通道
-         @attention 必须在 InitSDK 前调用，置空必须在 UninitSDK 之后
+         @attention 必须在 推/拉流、预览 前设置；
+         @attention 在 推/拉流、预览 过程中不要改变该工厂实例。
          */
         ZEGOAVKIT_API void SetVideoCaptureFactory(AVE::VideoCaptureFactory* factory, AV::PublishChannelIndex idx = AV::PUBLISH_CHN_MAIN);
         
@@ -62,7 +63,8 @@ namespace ZEGO
          @param callback 流控回调接口，当需要调整采集参数时，通过此回调通知
          @param idx 通道 ID，目前只支持对主通道进行流控
          @return true: 设置成功; false: 设置失败
-         @attention 必须在 InitSDK 前调用，置空必须在 UninitSDK 之后
+         @attention 必须在 推/拉流、预览 前调用；
+         @attention 在 推/拉流、预览 过程中不要改变该回调实例。
          */
         ZEGOAVKIT_API bool SetTrafficControlCallback(IZegoTrafficControlCallback* callback, AV::PublishChannelIndex idx = AV::PUBLISH_CHN_MAIN);
     }

@@ -41,7 +41,7 @@ public:
         return &z;
     }
 
-    void EnableExternalVideoCapture(AVE::VideoCaptureFactory* factory, ZEGO::EXTERNAL_RENDER::IZegoVideoRenderCallback* randerer);
+    void EnableExternalVideoCapture(AVE::VideoCaptureFactory* factory, EXTERNAL_RENDER::IZegoVideoRenderCallback* randerer);
     void EnableMic(bool enableMic);
     bool InitSdk(unsigned int uiAppID, unsigned char* sign, int len);
     bool InitSdk();

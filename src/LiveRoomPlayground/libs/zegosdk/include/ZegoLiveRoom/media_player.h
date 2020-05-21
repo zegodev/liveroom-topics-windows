@@ -13,6 +13,13 @@ namespace AVE
             TYPE_AUX            //play and mix into publish stream.
         };
         
+        enum AudioChannel
+        {
+            LEFT_CHANNEL = 0x01,
+            RIGHT_CHANNEL = 0x02,
+            ALL_CHANNEL = LEFT_CHANNEL | RIGHT_CHANNEL
+        };
+        
         class EventCallback
         {
         public:
@@ -47,7 +54,10 @@ namespace AVE
         
         virtual void SetEventCallback(EventCallback* callback) = 0;
 		virtual void SetPlayerType(PlayerType type) = 0;
-		virtual void SetVolume(int volume) = 0;  // volume: 0 ~ 100, default volume is 60
+		virtual void SetVolume(int volume) = 0;  // local volume: 0 ~ 100, default volume is 60
+		virtual void SetPublishVolume(int volume) = 0; // publish volume: 0 ~ 100, default volume is 60
+        virtual int  GetVolume() = 0;        // local volume
+        virtual int  GetPublishVolume() = 0; // publish volume
 		virtual void MuteLocal(bool bMute) = 0;
         virtual void Load(const char* path) = 0;
         // repeat_play: play repeat or not;
@@ -73,6 +83,15 @@ namespace AVE
         virtual long TakeSnapshot() = 0;
         virtual long RequireHWDecoder() = 0;
         virtual void SetBackgroundColor(int color) = 0;   //0x00RRGGBB
+        virtual void EnableAccurateSeek(bool bAccurate = false) = 0;
+        virtual void SetAccurateSeekTimeout(long timeout_ms = 5000) = 0;
+        virtual void SetActiveAudioChannel(AudioChannel channel) = 0;
+        // key_shift_value can set any value between -8.0 ~ 8.0
+        virtual int  SetAudioChannelKeyShift(AudioChannel channel, float key_shift_value) = 0;
+        virtual void SetNetSourceCache(int max_cache_ms, int max_cache_size) = 0;
+        virtual int  GetNetSourceCacheStat(int *cache_ms, int *cache_size) = 0;
+        virtual void SetBufferThreshold(int buffer_end_threshold_ms) = 0;
+        virtual void SetLoadResourceTimeout(int timeout_ms) = 0;
     };
     
     class IAudioEffectPlayer {
@@ -90,6 +109,9 @@ namespace AVE
         virtual void PauseEffect(unsigned int sound_id) = 0;
         virtual void ResumeEffect(unsigned int sound_id) = 0;
         virtual void SetVolume(unsigned int sound_id, int volume) = 0;
+        virtual int  SeekTo(unsigned int sound_id, long timestamp_ms) = 0;                          //Units in millisecond
+        virtual long GetDuration(unsigned int sound_id) = 0;
+        virtual long GetCurrentDuration(unsigned int sound_id) = 0;
         virtual void SetVolumeAll(int volume) = 0;
         virtual void PauseAll() = 0;
         virtual void ResumeAll() = 0;

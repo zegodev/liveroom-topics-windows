@@ -36,6 +36,8 @@ namespace ZEGO
         /**
          设置日志路径
 
+         @warning Deprecated. 请使用 SetLogDirAndSize 代替
+
          @param pszLogDir 日志路径
          @param pszSubFolder 日志子目录，如果指定了子目录，则日志文件会存放在此子目录下
          @return true 成功；flase 失败；
@@ -80,6 +82,8 @@ namespace ZEGO
         /**
          设置平台信息
 
+         @warning Deprecated. 不需要外部设置了
+
          @param pszInfo 平台信息
          */
         ZEGO_API void SetPlatformInfo(const char* pszInfo);
@@ -115,9 +119,10 @@ namespace ZEGO
 
 		 @param jvm jvm 仅用于 Android
 		 @param ctx ctx 仅用于 Android
+         @param clsLoader 仅用于 Android
 		 @return true 成功，false 失败
 		 */
-		ZEGO_API bool InitPlatform(void* jvm = 0, void* ctx = 0);
+		ZEGO_API bool InitPlatform(void* jvm = 0, void* ctx = 0, void* clsLoader = 0);
         
         /**
          初始化 SDK
@@ -214,7 +219,13 @@ namespace ZEGO
          @param pCB 回调对象指针
          */
         ZEGO_API void SetDeviceStateCallback(AV::IZegoDeviceStateCallback *pCB);
-        
+
+        /**
+         设置网络类型回调
+
+         @param pCB 回调对象指针
+         */
+        ZEGO_API void SetNetTypeCallback(AV::IZegoNetTypeCallback* pCB);
         
         //
         // * device
@@ -238,6 +249,23 @@ namespace ZEGO
          */
         ZEGO_API bool SetAudioDevice(AV::AudioDeviceType deviceType, const char* pszDeviceID);
         
+        /**
+	      获取视频设备的分辨率列表,获取完成后，外部拿到信息 建议立即调用FreeVideoDevCapabilityList 销毁SDK申请的内存。
+          mac 平台需在initsdk 回调后调用
+
+         @param pszVideoDeviceID 视频设备 ID
+         @param nVideoCapabilityInfoCount 支持分辨率列表个数
+         @return true 视频设备支持分辨率列表
+         */
+        ZEGO_API AV::DeviceVideoCapabilityInfo* GetVideoDevCapabilityList(const char* pszVideoDeviceID,int & nVideoCapabilityInfoCount);
+
+	    /**
+          释放视频设备的分辨率列表
+
+          @param parrVideoCapability 视频设备的分辨率列表
+	     */
+        ZEGO_API void FreeVideoDevCapabilityList(AV::DeviceVideoCapabilityInfo* parrVideoCapability);
+
         /**
          获取视频设备列表
 
@@ -434,25 +462,13 @@ namespace ZEGO
          @attention "alsa_capture_device_name" string value: plughw:[card_id],[device_id], eg: plughw:1,0, default is plug:default. view the device list with arecord. for Linux
          @attention "alsa_playback_device_name" string value: plughw:[card_id],[device_id], eg: plughw:1,0, default is plug:default. view the device list with aplay. for Linux
          @attention "play_nodata_abort", bool value, default: false，设置拉流时没拉到数据是否终止拉流，设置为false表示不终止，设置为true表示终止，拉流之前调用有效
-		 @attention "room_retry_time", uint32 value, default:300S 设置房间异常后自动恢复最大重试时间，SDK尽最大努力恢复，单位为S，SDK默认为300s，设置为0时不重试
-         @attention "av_retry_time", uint32 value, default:300S
-             设置推拉流异常后自动恢复最大重试时间，SDK尽最大努力恢复，单位为S，SDK默认为300s，设置为0时不重试
-		 @attention "device_mgr_mode=1"  设备管理模式 1：手动模式  2：半自动模式 3：全自动模式  默认选项 1
+         @attention "room_retry_time", uint32 value, default:300S 设置房间异常后自动恢复最大重试时间，SDK尽最大努力恢复，单位为S，SDK默认为300s，设置为0时不重试
+         @attention "av_retry_time", uint32 value, default:300S 设置推拉流异常后自动恢复最大重试时间，SDK尽最大努力恢复，单位为S，SDK默认为300s，设置为0时不重试
+         @attention "device_mgr_mode=1"  设备管理模式 1：手动模式  2：半自动模式 3：全自动模式  默认选项 1
+         @attention "play_clear_last_frame", bool value, default false. 停止拉流时，是否清除最后一帧内容
+         @attention "preview_clear_last_frame", bool value, default false. 停止预览时，是否清除最后一帧内容
          */
         ZEGO_API void SetConfig(const char *config);
-
-        /**
-         给推流通道设置扩展参数，一般不建议修改
-
-         @param param_config 参数配置信息
-         @param idx 推流通道索引，默认主通道
-
-         @attention 配置项写法，例如 "zego_channel_param_key_video_swencoder_usage=camera", 等号后面值的类型要看下面每一项的定义
-         @attention "zego_channel_param_key_video_swencoder_usage", string value: camera|screen，设置编码时使用场景模式，仅使用 OpenH264 编码时有效
-         @attention "zego_channel_param_key_video_x264_config_tune", string value: animation, 设置编码的 tune 值，目前只支持 animation，仅使用 X264 编码时有效
-         @attention 初始化 SDK 之后推流前设置才生效，推流过程中设置无效
-         */
-        ZEGO_API void SetChannelExtraParam(const char *param_config, AV::PublishChannelIndex idx = AV::PUBLISH_CHN_MAIN);
 
         /**
          设置是否允许SDK使用麦克风设备

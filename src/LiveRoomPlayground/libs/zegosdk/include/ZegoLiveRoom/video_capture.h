@@ -307,6 +307,8 @@ namespace AVE {
         BUFFER_TYPE_ASYNC_I420_MEM = 1 << 6,
         BUFFER_TYPE_ASYNC_I420_PIXEL_BUFFER = 1 << 7,
         BUFFER_TYPE_ASYNC_NV12_PIXEL_BUFFER = 1 << 8,
+        BUFFER_TYPE_ASYNC_CM_SAMPLE_BUFFER = 1 << 9,
+        BUFFER_TYPE_SYNC_CM_SAMPLE_BUFFER = 1 << 10,
     };
 
     class VideoBufferPool {

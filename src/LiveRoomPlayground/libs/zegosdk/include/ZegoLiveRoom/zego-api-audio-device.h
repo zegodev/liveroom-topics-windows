@@ -1,11 +1,12 @@
 #ifndef zego_api_audio_device_h
 #define zego_api_audio_device_h
 
+#include "zego-api-defines.h"
+
 namespace ZEGO
 {
     namespace AUDIODEVICE
     {
-#ifdef WIN32
         /**
          设置双声道采集
 
@@ -15,7 +16,6 @@ namespace ZEGO
          */
         ZEGOAVKIT_API bool EnableCaptureStereo(int captureType);
     }
-#endif
 }
 
 #endif /* zego_api_audio_device_h */

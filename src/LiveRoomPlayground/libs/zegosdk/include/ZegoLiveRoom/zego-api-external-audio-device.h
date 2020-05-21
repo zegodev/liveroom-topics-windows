@@ -98,35 +98,67 @@ extern "C" {
 
 namespace ZEGO { namespace AUDIODEVICE {
     
-    /** 参考 zego_external_audio_device_enable */
+    /** 
+     参考 zego_external_audio_device_enable 
+     
+     @warning Deprecated 不建议使用，请使用 zego_external_audio_device_enable 代替
+     */
     inline void EnableExternalAudioDevice(bool bEnable)
     { zego_external_audio_device_enable(bEnable); }
     
-    /** 参考 zego_external_audio_device_set_audio_src_for_auxiliary_publish_channel */
+    /** 
+     参考 zego_external_audio_device_set_audio_src_for_auxiliary_publish_channel 
+     
+     @warning Deprecated 不建议使用，请使用 zego_external_audio_device_set_audio_src_for_auxiliary_publish_channel 代替
+     */
     inline int SetAudioSrcForAuxiliaryPublishChannel(ZegoAuxPublishChannelAudioSrcType type)
     { return zego_external_audio_device_set_audio_src_for_auxiliary_publish_channel(type); }
     
-    /** 参考 zego_external_audio_device_start_capture */
+    /** 
+     参考 zego_external_audio_device_start_capture 
+     
+     @warning Deprecated 不建议使用，请使用 zego_external_audio_device_start_capture 代替
+     */
     inline int StartCapture(AV::PublishChannelIndex publish_channel)
     { return zego_external_audio_device_start_capture(publish_channel); }
     
-    /** 参考 zego_external_audio_device_stop_capture */
+    /** 
+     参考 zego_external_audio_device_stop_capture 
+     
+     @warning Deprecated 不建议使用，请使用 zego_external_audio_device_stop_capture 代替
+     */
     inline int StopCapture(AV::PublishChannelIndex publish_channel)
     { return zego_external_audio_device_stop_capture(publish_channel); }
     
-    /** 参考 zego_external_audio_device_on_record_audio_frame */
+    /** 
+     参考 zego_external_audio_device_on_record_audio_frame 
+     
+     @warning Deprecated 不建议使用，请使用 zego_external_audio_device_on_record_audio_frame 代替
+     */
     inline int OnRecordAudioFrame(AV::PublishChannelIndex publish_channel, ZegoAudioFrame* audio_frame)
     { return zego_external_audio_device_on_record_audio_frame(publish_channel, audio_frame); }
     
-    /** 参考 zego_external_audio_device_start_render */
+    /** 
+     参考 zego_external_audio_device_start_render 
+     
+     @warning Deprecated 不建议使用，请使用 zego_external_audio_device_start_render 代替
+     */
     inline int StartRender()
     { return zego_external_audio_device_start_render(); }
     
-    /** 参考 zego_external_audio_device_stop_render */
+    /** 
+     参考 zego_external_audio_device_stop_render 
+     
+     @warning Deprecated 不建议使用，请使用 zego_external_audio_device_stop_render 代替
+     */
     inline int StopRender()
     { return zego_external_audio_device_stop_render(); }
     
-    /** 参考 zego_external_audio_device_on_playback_audio_frame */
+    /** 
+     参考 zego_external_audio_device_on_playback_audio_frame 
+     
+     @warning Deprecated 不建议使用，请使用 zego_external_audio_device_on_playback_audio_frame 代替
+     */
     inline int OnPlaybackAudioFrame(ZegoAudioFrame* audio_frame)
     { return zego_external_audio_device_on_playback_audio_frame(audio_frame); }
     

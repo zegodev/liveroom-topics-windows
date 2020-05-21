@@ -118,6 +118,13 @@ namespace ZEGO
             char szDeviceName[ZEGO_MAX_COMMON_LEN];
         };
         
+		struct DeviceVideoCapabilityInfo
+		{
+			int height = 0;
+			int width = 0;
+			int fps = 0;
+		};
+
         /** 设备状态 */
         enum DeviceState
         {
@@ -228,14 +235,24 @@ namespace ZEGO
             unsigned int stateTime;
         };
         
+        /** 网络类型 */
         enum ZEGONetType
         {
+            /** 无网络 */
             ZEGO_NT_NONE = 0,
+            /** 网线 */
             ZEGO_NT_LINE = 1,
+            /** WIFI */
             ZEGO_NT_WIFI = 2,
+            /** 2G */
             ZEGO_NT_2G = 3,
+            /** 3G */
             ZEGO_NT_3G = 4,
+            /** 4G */
             ZEGO_NT_4G = 5,
+            /** 5G */
+            ZEGO_NT_5G = 6,
+            /** 未知类型 */
             ZEGO_NT_UNKNOWN = 32
         };
         
@@ -540,6 +557,17 @@ namespace ZEGO
             bool isHardwareVenc;    ///< 是否硬编
             int width;              ///< 视频宽度
             int height;             ///< 视频高度
+
+            double totalBytes = 0.; ///< 已发送的总字节数，包括音频、视频及媒体次要信息等
+            double audioBytes = 0.; ///< 已发送的音频字节数
+            double videoBytes = 0.; ///< 已发送的视频字节数
+            
+            double cpuAppUsage = 0.;    ///< 当前 APP 的 CPU 使用率
+            double cpuTotalUsage = 0.;  ///< 当前系统的 CPU 使用率
+            
+            double memoryAppUsage = 0.;     ///< 当前 APP 的内存使用率
+            double memoryTotalUsage = 0.;   ///< 当前系统的内存使用率
+            double memoryAppUsed = 0.;      ///< 当前 APP 的内存使用量,单位 MB
         };
         
         struct PlayQuality
@@ -568,6 +596,17 @@ namespace ZEGO
             bool isHardwareVdec;            ///< 是否硬解
             int width;                      ///< 视频宽度
             int height;                     ///< 视频高度
+
+            double totalBytes = 0.;         ///< 已接收的总字节数，包括音频、视频及媒体次要信息等
+            double audioBytes = 0.;         ///< 已接收的音频字节数
+            double videoBytes = 0.;         ///< 已接收的视频字节数
+            
+            double cpuAppUsage = 0.;        ///< 当前 APP 的 CPU 使用率
+            double cpuTotalUsage = 0.;      ///< 当前系统的 CPU 使用率
+            
+            double memoryAppUsage = 0.;         ///< 当前 APP 的内存使用率
+            double memoryTotalUsage = 0.;       ///< 当前系统的内存使用率
+            double memoryAppUsed = 0.;          ///< 当前 APP 的内存使用量,单位 MB
         };
         
         /** 推流通道 */
@@ -631,7 +670,9 @@ namespace ZEGO
         struct SoundLevelInfo
         {
             /**
-             音浪ID，用于标识用户，对应于 ZegoMixStreamConfig 的 pInputStreamList 中的单条输入流信息的 uSoundLevelID 参数的设置值。
+             音浪ID，用于标识流.
+             手动混流时, 对应于输入流信息中的 soundLevelID 字段.
+             自动混流时, 对应于房间流信息中的 streamNID 字段.
              */
             unsigned int soundLevelID;
             /**
@@ -655,6 +696,22 @@ namespace ZEGO
              轻度模式
              */
             AEC_MODE_SOFT
+        };
+
+        enum ZegoANSMode
+        {
+            /**
+             * 轻度模式
+             */
+            ANS_MODE_LOW = 0,
+            /**
+             * 中等模式
+             */
+            ANS_MODE_MEDIUM = 1,
+            /**
+             * 激进模式
+             */
+            ANS_MODE_HIGH = 2,
         };
         
         /** 设备错误码 */
@@ -692,6 +749,10 @@ namespace ZEGO
              媒体服务无法恢复
              */
             ZEGO_DEVICE_ERROR_MEDIA_SERVICES_LOST = -8,
+            /**
+             设备被SIRI占用
+             */
+            ZEGO_DEVICE_ERROR_IN_USE_BY_SIRI = -9,
         };
 
         enum ZegoDeviceErrorReason
@@ -712,6 +773,8 @@ namespace ZEGO
             ZEGO_DEVICE_ERROR_REASON_REBOOT_REQUIRED = -7,
             /** 媒体服务无法恢复 */
             ZEGO_DEVICE_ERROR_REASON_MEDIA_SERVICES_LOST = -8,
+            /** 设备被SIRI占用 */
+            ZEGO_DEVICE_ERROR_REASON_IN_USE_BY_SIRI = -9,
             /** 没有错误 */
             ZEGO_DEVICE_ERROR_REASON_NONE = 0,
             /** 禁用 */
@@ -727,6 +790,30 @@ namespace ZEGO
             /** 系统压力过大 */
             ZEGO_DEVICE_ERROR_REASON_SYSTEM_PRESSURE = 7,
         };
+
+        enum ChannelExtraParamKey
+        {
+            /** 设置编码场景模式，仅 OpehH264 有效 */
+            //ZEGO_CHANNEL_PARAM_KEY_VIDEO_SWENCODER_USAGE = 0,
+            /** 设置 X264 编码特性，目前仅支持 tune */
+            //ZEGO_CHANNEL_PARAM_KEY_VIDEO_X264_CONFIG = 1,
+            /** 获取 AVCaptureDevice 对象 */
+            ZEGO_CHANNEL_PARAM_KEY_AV_CAPTURE_DEVICE = 2,
+        };
+        
+        enum ZegoAudioRoute
+        {
+            /** 扬声器 */
+            ZEGO_AUDIO_ROUTE_SPEAKER = 0,
+            /** 耳机 */
+            ZEGO_AUDIO_ROUTE_HEADSET,
+            /** 蓝牙 */
+            ZEGO_AUDIO_ROUTE_BLUETOOTH,
+            /** 听筒 */
+            ZEGO_AUDIO_ROUTE_RECEIVER,
+            /** USB 音频设备 */
+            ZEGO_AUDIO_ROUTE_USB_AUDIO
+        };
     }
 }
 
@@ -741,6 +828,7 @@ extern "C" {
     ZEGOAVKIT_API void zego_stream_extra_info_add_rtmp_url(struct ZegoStreamExtraPlayInfo* info, const char* url);
     ZEGOAVKIT_API void zego_stream_extra_info_add_flv_url(struct ZegoStreamExtraPlayInfo* info, const char* url);
     ZEGOAVKIT_API void zego_stream_extra_info_set_params(struct ZegoStreamExtraPlayInfo* info, const char* params);
+    ZEGOAVKIT_API void zego_stream_extra_info_set_decrypt_key(struct ZegoStreamExtraPlayInfo* info, const unsigned char* key, int keylen);
     ZEGOAVKIT_API void zego_stream_extra_info_should_switch_server(struct ZegoStreamExtraPlayInfo* info, bool should);
     
 #ifdef __cplusplus

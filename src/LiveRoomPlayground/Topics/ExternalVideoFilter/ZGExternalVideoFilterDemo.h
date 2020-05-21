@@ -99,7 +99,7 @@ protected:
     virtual void Destroy(VideoFilter *vf) override;
 
 
-    const int MAX_FILTER_FRAME_COUNT = 5;
+    const int MAX_FILTER_FRAME_COUNT = 2;
     std::atomic<int> pending_count_ = 0;
     std::atomic<bool> is_exit_ = false;
 

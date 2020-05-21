@@ -19,7 +19,7 @@ using namespace ZEGO;
 typedef struct ZGMediaSideInfoDemoConfig
 {
     // 是否纯音频推流,true-存语音，不传输视频数据。false - 音视频直播，传输视频数据。默认为false
-    bool only_audio_publish = false;
+    bool only_audio_publish = true;
     // 是否自定义打包。true-发送的数据已经打包好了，并且符合打包规范, false-数据由 SDK 打包,默认为false
     bool custom_packet = false;
 

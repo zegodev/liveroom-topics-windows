@@ -35,6 +35,7 @@ namespace ZEGO
             ZEGO_NT_2G = 3,         /**< 2G网络 */
             ZEGO_NT_3G = 4,         /**< 3G网络 */
             ZEGO_NT_4G = 5,         /**< 4G网络 */
+            ZEGO_NT_5G = 6,         /**< 5G网络 */
             ZEGO_NT_UNKNOWN = 32    /**< 未知网络 */
         };
         
@@ -46,12 +47,14 @@ namespace ZEGO
                 szUserName[0] = '\0';
                 szStreamId[0] = '\0';
                 szExtraInfo[0] = '\0';
+                nStreamNId = 0;
             }
             
             char szUserId[ZEGO_MAX_USERID_LEN];
             char szUserName[ZEGO_MAX_USERNAME_LEN];
             char szStreamId[ZEGO_MAX_COMMON_LEN];
             char szExtraInfo[ZEGO_MAX_EXTRA_INFO_LEN];
+            int nStreamNId;
         };
         
         /** 流更新类型 */

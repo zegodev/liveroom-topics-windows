@@ -20,21 +20,31 @@ using std::string;
 typedef std::function<void(string stream_id, const unsigned char *pData, int dataLen, int width, int height)>  ExternalVideoRenderDataCallBackType;
 
 class ZGExternalVideoRenderDemo : 
-    public ZEGO::EXTERNAL_RENDER::IZegoExternalRenderCallback2
+    public ZEGO::EXTERNAL_RENDER::IZegoVideoRenderCallback
 {
 public:
     ZGExternalVideoRenderDemo();
     ~ZGExternalVideoRenderDemo();
 
+	void SetEnableExternalRender(bool bEnalble);
+	void EnablePlayRender(bool bEnable, string streamId);
+
     void EnableExternalRender(ZEGO::AV::VideoExternalRenderType type);
 
     void SetVideoDataCallBack(ExternalVideoRenderDataCallBackType cb_local, ExternalVideoRenderDataCallBackType cb_remote);
 
+
 protected:
 
-    virtual void OnVideoDataCallback2( unsigned char **pData, int* dataLen, const char* pszStreamID, int width, int height, int strides[4], AVE::VideoPixelFormat pixelFormat) override;
+    virtual void OnVideoRenderCallback(unsigned char **pData, int* dataLen, const char* pszStreamID, int width, int height, int strides[4], AVE::VideoPixelFormat pixel_format) override;
 
-    virtual void OnVideoDataCallback(const unsigned char *pData, int dataLen, const char* pszStreamID, int width, int height, int strides[4]) override;
+    virtual void SetFlipMode(const char* pszStreamID, int mode) override;
+
+    virtual void SetRotation(const char* pszStreamID, int rotation) override;
+
+//     virtual void OnVideoDataCallback2(unsigned char **pData, int* dataLen, const char* pszStreamID, int width, int height, int strides[4], AVE::VideoPixelFormat pixelFormat) override;
+// 
+//     virtual void OnVideoDataCallback(const unsigned char *pData, int dataLen, const char* pszStreamID, int width, int height, int strides[4]) override;
 
     ExternalVideoRenderDataCallBackType local_video_data_cb_;
     ExternalVideoRenderDataCallBackType remote_video_data_cb_;

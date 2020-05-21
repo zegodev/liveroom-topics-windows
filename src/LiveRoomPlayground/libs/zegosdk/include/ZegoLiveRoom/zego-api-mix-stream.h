@@ -56,7 +56,6 @@ namespace MIXSTREAM
          @param mixStreamID 混流任务ID
          @param statesInfo 混流转推CDN信息
          @param statesInfoCount 混流转推CDN信息个数
-         @discussion 混流直推即构服务器时，ZegoStreamRelayCDNInfo 中的 rtmpUrl 字段以 avertp:// 开头
          */
         virtual void OnMixStreamRelayCDNStateUpdate(const char *mixStreamID, AV::ZegoStreamRelayCDNInfo *statesInfo, unsigned int statesInfoCount) {}
         
@@ -116,13 +115,13 @@ namespace MIXSTREAM
      @return 大于 0 表示调用成功，且返回值为调用序号（seq），用以区分 OnMixStreamEx 回调；小于等于 0 表示调用失败。
      @note 1. 混流任务ID，表示混流任务的唯一ID，调用方应该保证 mixStreamID 的唯一性。如果 mixStreamID 相同，服务端就认为是更新同一个混流。
      
-     * 2. 此 API 既是开始混流接口，也是停止混流接口；需要停止混流时，将 ZegoMixStreamConfig 参数中的 pInputStreamList 置为空列表，即清空输入流列表，且开始、停止混流两次调用的 mixStreamID 参数保持一致。
+     * 2. 此 API 既是开始混流、更新混流接口，也是停止混流接口。
      
-     * 3. 当混流信息变更（例如：混流的输入流列表发生增减、调整混流视频的输出码率等）时，需要调用此接口更新 ZEGO 混流服务器上的混流配置信息，且注意每次调用时此 API 的 mixStreamID 参数需保证一致。
+     * 3.需要停止混流时，将 ZegoMixStreamConfig 参数中的 pInputStreamList 置为空列表（即清空输入流列表），pOutputList 设置为和开始或更新混流的一致，将 mixStreamID 参数设置为和开始或更新混流的一致。
      
-     * 4. 如果需要启动多个不同的混流，可以传入不同的 mixStreamID，通过返回的 seq 来区分接收的 -OnMixStreamEx 回调。
+     * 4. 当混流信息变更（例如：混流的输入流列表发生增减、调整混流视频的输出码率等）时，需要调用此接口更新 ZEGO 混流服务器上的混流配置信息，且注意每次调用时此 API 的 mixStreamID 参数需保证一致。
      
-     * 5. 调用推流 API StartPublishing() 时，需指定 flag 参数为 ZEGO_MIX_STREAM。
+     * 5. 如果需要启动多个不同的混流，可以传入不同的 mixStreamID，通过返回的 seq 来区分接收的 -OnMixStreamEx 回调。     
      */
     ZEGOAVKIT_API int MixStreamEx(const char* mixStreamID, const ZegoMixStreamConfig& config);
     

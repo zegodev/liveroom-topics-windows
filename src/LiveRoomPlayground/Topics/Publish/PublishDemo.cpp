@@ -274,15 +274,15 @@ void PublishDemo::OnPreviewSnapshot(AV::PublishChannelIndex index, void *pImage)
     
 }
 
-void PublishDemo::OnAuxCallback(unsigned char *pData, int *pDataLen, int *pSampleRate, int *pNumChannels)
-{
-    
-}
-
-void PublishDemo::OnMixStream(const AV::ZegoMixStreamResult& result, const char* pszMixStreamID, int seq)
-{
-    
-}
+// void PublishDemo::OnAuxCallback(unsigned char *pData, int *pDataLen, int *pSampleRate, int *pNumChannels)
+// {
+//     
+// }
+// 
+// void PublishDemo::OnMixStream(const AV::ZegoMixStreamResult& result, const char* pszMixStreamID, int seq)
+// {
+//     
+// }
 
 void PublishDemo::OnRelayCDNStateUpdate(const char *streamID, AV::ZegoStreamRelayCDNInfo* statesInfo, unsigned int statesInfoCount)
 {
@@ -299,10 +299,10 @@ void PublishDemo::OnCaptureVideoFirstFrame(AV::PublishChannelIndex idx)
     
 }
 
-void PublishDemo::OnUpdateMixStreamConfig(unsigned int uiErrorCode, const char* pszMixStreamID, const ZegoPublishingStreamInfo& oStreamInfo)
-{
-    
-}
+// void PublishDemo::OnUpdateMixStreamConfig(unsigned int uiErrorCode, const char* pszMixStreamID, const ZegoPublishingStreamInfo& oStreamInfo)
+// {
+//     
+// }
 
 void PublishDemo::PrintLogToView(const char * format, ...)
 {

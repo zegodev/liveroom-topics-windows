@@ -13,6 +13,23 @@
 #include "./LiveRoomCallback-Player.h"
 #include "./LiveRoomDefines-Player.h"
 
+namespace AVE
+{
+    struct AudioFrame;
+    struct ExtAudioProcSet;
+    typedef ExtAudioProcSet ExtPostpSet;
+    
+    /**
+     音频后处理回调函数定义
+     
+     @param streamId 流 ID, 当 streamId 为空串时，表明这是混音后的音频数据
+     @param inFrame 待处理音频数据
+     @param outFrame 处理后的音频数据
+     @attention 请确保在当前线程完成，且不要做耗时操作
+     */
+    typedef void (*OnPostpCallback)(const char* streamId, const AudioFrame& inFrame, AudioFrame& outFrame);
+}
+
 namespace ZEGO
 {
     namespace LIVEROOM
@@ -35,13 +52,24 @@ namespace ZEGO
         ZEGO_API bool SetLivePlayerCallback(ILivePlayerCallback* pCB);
         
         /**
+         设置拉流解密密钥（只用于拉流之后更新密钥）
+         
+         @param pszStreamID 需要设置密钥的用户流 ID
+         @param pszKey 解密密钥
+         @param nkeyLen 密钥长度（支持16/24/32字节）
+         @attention 在拉流之后调用
+         */
+        ZEGO_API void UpdatePlayDecryptKey(const char* pszStreamID, const unsigned char *pKey, int nkeyLen);
+        
+        /**
          播放多媒体流
 
-         @attetion 
-         * 1. 调用此 API可播放直播流，必须在调用初始化 SDK 接口之后调用。
+         @attention 
+          1. 调用此 API可播放直播流，必须在调用初始化 SDK 接口之后调用。
 
          @note 
-         * 1. 调用成功后，等待 ILivePlayerCallback::OnPlayStateUpdate 回调。
+          1. 调用成功后，等待 ILivePlayerCallback::OnPlayStateUpdate 回调。
+          2. 若中途收到 IRoomCallback::OnDisconnect 回调，则不会再收到 ILivePlayerCallback::OnPlayStateUpdate 回调。
 
          @param pszStreamID 需要播放的用户流 ID
          @param pView 用来渲染播放视频的视图
@@ -53,18 +81,19 @@ namespace ZEGO
         /**
          根据用户配置的多媒体流附加信息，播放多媒体流
 
-         @attetion 
-         * 1. 调用此 API可播放直播流，必须在调用初始化 SDK 接口之后调用。
+         @attention 
+          1. 调用此 API可播放直播流，必须在调用初始化 SDK 接口之后调用。
 
          @note 
-         * 1. 调用成功后，等待 ILivePlayerCallback::OnPlayStateUpdate 回调。
+          1. 调用成功后，等待 ILivePlayerCallback::OnPlayStateUpdate 回调。
+          2. 若中途收到 IRoomCallback::OnDisconnect 回调，则不会再收到 ILivePlayerCallback::OnPlayStateUpdate 回调。
          
          @param pszStreamID 需要播放的用户流 ID
          @param pView 用来渲染播放视频的视图
          @param info 多媒体流附加信息，请参考 ZegoStreamExtraPlayInfo 定义
          @return 成功，false 失败
          */
-        ZEGO_API bool StartPlayingStream2(const char* pszStreamID, void* pView, ZegoStreamExtraPlayInfo* info);
+        ZEGO_API bool StartPlayingStream2(const char* pszStreamID, void* pView, ZegoStreamExtraPlayInfo* info=nullptr);
 
         /**
          更新播放视图
@@ -146,6 +175,8 @@ namespace ZEGO
 
         /**
          默认扬声器开关
+
+         @warning Deprecated. 请使用 SetBuiltInSpeakerOn 替代
          
          @attention 
          * 1. 在拉流 StartPlayingStream 或 StartPlayingStream2 之前设置,且当前的 SetAudioDeviceMode 设置为 ZEGO_AUDIO_DEVICE_MODE_COMMUNICATION 时有效。
@@ -157,6 +188,20 @@ namespace ZEGO
          @return true 成功，false 失败
          */
         ZEGO_API bool setBuiltInSpeakerOn(bool bOn);
+
+        /**
+         默认扬声器开关
+         
+         @attention 
+         * 1. 在拉流 StartPlayingStream 或 StartPlayingStream2 之前设置,且当前的 SetAudioDeviceMode 设置为 ZEGO_AUDIO_DEVICE_MODE_COMMUNICATION 时有效。
+
+         @note
+         * 1. 设置为关闭后，扬声器无声音，耳机仍有声音输出。
+
+         @param bOn true 打开，false 关闭。默认 true
+         @return true 成功，false 失败
+         */
+        ZEGO_API bool SetBuiltInSpeakerOn(bool bOn);
         
         /**
          设置拉流的播放音量
@@ -272,6 +317,16 @@ namespace ZEGO
          @return true 成功，false 失败
          */
         ZEGO_API bool SetViewRotation(int nRotation, const char* pszStreamID);
+
+        /**
+         是否启用播放镜像
+         
+         @param bEnable true 启用，false 不启用。默认 true
+         @param pszStreamID 播放流 ID
+         @return true 成功，false 失败
+         @note 默认启用播放镜像
+         */
+        ZEGO_API bool EnableViewMirror(bool bEnable, const char* pszStreamID);
         
         /**
          设置拉流质量监控周期
@@ -283,8 +338,28 @@ namespace ZEGO
          @return true 成功，false 失败
          */
         ZEGO_API bool SetPlayQualityMonitorCycle(unsigned int timeInMS);
+
+        /**
+         设置音频后处理函数
+
+         @param callback 音频后处理函数指针
+         @param config 预处理的采样率等参数设置
+         @attention 必须在 InitSDK 后且在拉流前调用
+         @attention 仅在使用 EnableAudioPostp 开启了音频后处理特性后才会回调
+         @attention 请确保在当前线程完成，且不要做耗时操作
+         */
+        ZEGO_API void SetAudioPostpCallback(AVE::OnPostpCallback callback, const AVE::ExtPostpSet& config);
         
-        
+        /**
+         开启/关闭音频后处理特性
+         
+         @param enable true: 开启拉流音频后处理特性；false: 关闭拉流音频后处理特性
+         @param streamID 流 ID, 当 streamID 为空串时，表明需要混音后的音频数据
+         @attention 必须在拉流后调用
+         @attention 当拉流音频后处理特性开启时，待渲染音频数据通过 SetAudioPostpCallback 设置的回调函数指针返回
+         */
+        ZEGO_API void EnableAudioPostp(bool enable, const char* streamID);
+
         // * audio record
         
         /**
@@ -309,22 +384,23 @@ namespace ZEGO
         ZEGO_API bool SetAudioRecordCallback(AV::IZegoAudioRecordCallback* pCB);
         
         /**
-         音频录制回调开关
-
-         @param bEnable true 开启，false 不开启
-         @param nSampleRate 采样率
-         @return true 成功，false 失败
-         @warning Deprecated 已废弃，请使用 EnableSelectedAudioRecord
-         @attention 在启动推流或者启动本地录制（MediaRecorder）的时候，才能开启音频录制
-         */
-        ZEGO_API bool EnableAudioRecord(bool bEnable, int nSampleRate = 44100);
-        
-        /**
          设置回调, 接收媒体次要信息
          
+         @warning Deprecated，请使用 zego-api-media-side-info.h 中的 SetMediaSideCallback 代替
+
          @param pCB 回调函数指针
          */
         ZEGO_API void SetMediaSideCallback(OnMediaSideCallback* pCB);
+
+        /**
+         设置拉流优先级的权重，被置为 focus 的流，优先保证其质量。
+
+         @param streamID 流 ID，当为 null 时，恢复所有流的权重
+         @return true: 设置成功, false 设置失败
+         @attention 默认所有流的权重相同。
+         @attention 在本地网络不好的时候，保证focus流的同时，可能造成其他的卡顿更多。
+         */
+        ZEGO_API bool SetPlayStreamFocus(const char* streamID);
     }
 }
 
