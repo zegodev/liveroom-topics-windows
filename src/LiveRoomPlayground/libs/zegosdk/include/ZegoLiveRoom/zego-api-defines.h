@@ -79,18 +79,6 @@ namespace ZEGO
             ZegoVideoMirrorModePreviewNoMirrorPublishMirror = 3   ///< 预览不启用镜像，推流启用镜像
         };
 
-        /**
-         @warning Deprecated 将参考 EXTERNAL_RENDER::VideoRenderType
-         */
-        enum VideoExternalRenderType
-        {
-            DECODE_RGB_SERIES = 0,   ///< 回调时，抛解码后数据，视频帧数据格式转换成RGB系列数据；设置了该类型后，SDK内部渲染无效。
-            DECODE = 1,              ///< 回调时，抛解码后数据，视频帧数据格式根据回调参数决定；设置了该类型后，SDK内部渲染无效。
-            NOT_DECODE = 2,          ///< 回调时，抛解码之前的帧数据给用户自解码；设置了该类型后，SDK内部渲染无效。
-            DECODE_RENDER = 3,       ///< 回调时，抛解码后数据，视频帧数据格式根据回调参数决定；设置了该类型后，SDK内部渲染同时有效。
-            DECODE_YUV_SERIES = 4    ///< 回调时，抛解码后数据，视频帧数据格式转换成YUV系列数据；设置了该类型后，SDK内部渲染无效。
-        };
-
         enum ZegoVideoCodecAvc
         {
             VIDEO_CODEC_DEFAULT = 0, ///< 默认编码,不支持分层编码
@@ -263,6 +251,12 @@ namespace ZEGO
             ZEGO_SINGLE_ANCHOR  = 1 << 2,   ///< 单主播
         };
         
+		enum ZegoTaskType
+		{
+			TASK_NORMAL = 1, //正常任务
+			TASK_DELAY = 2, //延时类任务(如定时器任务)
+		};
+
         /// \brief 混流图层信息
         struct ZegoMixStreamConfig
         {
@@ -814,6 +808,8 @@ namespace ZEGO
             /** USB 音频设备 */
             ZEGO_AUDIO_ROUTE_USB_AUDIO
         };
+
+
     }
 }
 

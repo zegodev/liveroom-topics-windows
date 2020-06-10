@@ -334,7 +334,7 @@ namespace ZEGO
          @note
          * 1. 设置该 API 后，ILivePlayerCallback::OnPlayQualityUpdate 将会按照设置值的频率回调。
          
-         @param timeInMS 时间周期，单位为毫秒，取值范围为(500, 60000)。默认为 3000
+         @param timeInMS 时间周期，单位为毫秒，取值范围为(500, 60000)。大于3000必须为3000整数倍，否则sdk会自动向上取整（比如设置为5000，sdk内部会取整为6000），默认为 3000
          @return true 成功，false 失败
          */
         ZEGO_API bool SetPlayQualityMonitorCycle(unsigned int timeInMS);
@@ -382,15 +382,6 @@ namespace ZEGO
          @return true 成功，false 失败
          */
         ZEGO_API bool SetAudioRecordCallback(AV::IZegoAudioRecordCallback* pCB);
-        
-        /**
-         设置回调, 接收媒体次要信息
-         
-         @warning Deprecated，请使用 zego-api-media-side-info.h 中的 SetMediaSideCallback 代替
-
-         @param pCB 回调函数指针
-         */
-        ZEGO_API void SetMediaSideCallback(OnMediaSideCallback* pCB);
 
         /**
          设置拉流优先级的权重，被置为 focus 的流，优先保证其质量。

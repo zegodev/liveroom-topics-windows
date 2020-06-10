@@ -20,20 +20,7 @@ extern "C" {
     } ZegoAudioFrameType;
     
     /** 音频帧结构 */
-    struct ZegoAudioFrame
-    {
-        ZegoAudioFrameType frameType;
-        
-        int channels;
-        int sampleRate;
-        
-        int bufLen;
-        double timeStamp;
-        int configLen;
-        
-        int samples;
-        unsigned char* buffer;
-    };
+    struct ZegoAudioFrame;
 
     /**
      创建音频帧对象

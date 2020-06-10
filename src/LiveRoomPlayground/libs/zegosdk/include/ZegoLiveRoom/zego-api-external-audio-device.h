@@ -31,7 +31,7 @@ extern "C" {
 
      @param enable 是否启用外部音频采集
      @return 详见 enum ZegoErrorCode
-     @note 必须在InitSDK之前设置；
+     @note 必须在开启预览或者启动推流/拉流 前调用才有效；
      @discussion 开发者采用外部采集和渲染后，SDK 内部不负责声音增强、噪音抑制、回音消除等功能，需要用户自己实现。
      */
     ZEGOAVKIT_API int zego_external_audio_device_enable(bool enable);
@@ -41,6 +41,7 @@ extern "C" {
      
      @param type 辅助推流通道音频采集源类别，参考 enum ZegoAuxPublishChannelAudioSrcType
      @return 详见 enum ZegoErrorCode
+     @note 必须在开启预览或者启动推流/拉流 前调用才有效；
      */
     ZEGOAVKIT_API int zego_external_audio_device_set_audio_src_for_auxiliary_publish_channel(enum ZegoAuxPublishChannelAudioSrcType type);
     
@@ -61,11 +62,12 @@ extern "C" {
     ZEGOAVKIT_API int zego_external_audio_device_stop_capture(int publish_channel_index);
     
     /**
-     把采集到的音频数据塞进 SDK
+     把采集到的音频数据(AAC 或者 PCM） 塞给 SDK。
 
      @param publish_channel_index 选定推流通道
      @param audio_frame 采集到的音频帧
      @return 详见 enum ZegoErrorCode
+     @note 必须在启动推流以后，且已经调用了 zego_external_audio_device_start_capture API，此接口调用才有效
      */
     ZEGOAVKIT_API int zego_external_audio_device_on_record_audio_frame(int publish_channel_index, struct ZegoAudioFrame* audio_frame);
     
@@ -84,10 +86,11 @@ extern "C" {
     ZEGOAVKIT_API int zego_external_audio_device_stop_render();
     
     /**
-     从 SDK 取音频渲染数据
+     从 SDK 取音频渲染数据(PCM)
 
      @param audio_frame 得到的音频数据
      @return 详见 enum ZegoErrorCode
+     @note 必须在启动拉流以后，且已经调用了 zego_external_audio_device_start_render API，此接口调用才有效
      */
     ZEGOAVKIT_API int zego_external_audio_device_on_playback_audio_frame(struct ZegoAudioFrame* audio_frame);
     

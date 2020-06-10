@@ -52,6 +52,7 @@ namespace ZEGO
         const unsigned int kFetalError6                   = 10007106;
         const unsigned int kFetalError7                   = 10007107;
 		const unsigned int kSDKNoMoudleFunction           = 10008001; //sdk 没有编译此模块的功能 而你调用了该接口，联系技术支持 提供支持此功能的SDK
+        const unsigned int kSDKNotInit                    = 10008002; //sdk 没有初始化
 
 		const unsigned int kDeviceError = 10009001; //设备错误
 
@@ -85,6 +86,7 @@ namespace ZEGO
         const unsigned int kEngineRtpDecryptError         = 12200107;
         const unsigned int kEngineRtpDecryptNotSupport    = 12200108;
         const unsigned int kEngineRtpSockError            = 12200109;
+        const unsigned int kEngineRtpHbFrozenError        = 12200110;
         const unsigned int kEngineHttpFlvProtocolError    = 12200200;
         const unsigned int kEngineHttpFlvHttpCodeError    = 12200201;
         const unsigned int kEngineHttpFlvParseFlvError    = 12200202;

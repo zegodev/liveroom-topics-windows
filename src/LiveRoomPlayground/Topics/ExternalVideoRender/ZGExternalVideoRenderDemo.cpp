@@ -41,7 +41,7 @@ void ZGExternalVideoRenderDemo ::EnablePlayRender(bool bEnable, string streamId)
 	EXTERNAL_RENDER::EnableVideoRender(bEnable, streamId.c_str());
 }
 
-void ZGExternalVideoRenderDemo::EnableExternalRender(AV::VideoExternalRenderType type)
+void ZGExternalVideoRenderDemo::EnableExternalRender(EXTERNAL_RENDER::VideoRenderType type)
 {
     ZGENTER_FUN_LOG;
 
@@ -71,7 +71,7 @@ void ZGExternalVideoRenderDemo::EnableExternalRender(AV::VideoExternalRenderType
     LIVEROOM::SetUseTestEnv(TRUE);
     ZGManagerInstance()->InitSdk();
 
-    if (cur_external_render_type_ == ZEGO::AV::DECODE_RENDER)
+    if (cur_external_render_type_ == EXTERNAL_RENDER::VIDEO_RENDER_TYPE_EXTERNAL_INTERNAL_RGB)
     {
         // 设置内部渲染的同时，回调推流的视频数据
         // 在推流前调用
@@ -90,7 +90,7 @@ void ZGExternalVideoRenderDemo::SetVideoDataCallBack(ExternalVideoRenderDataCall
 void ZGExternalVideoRenderDemo::OnVideoRenderCallback(unsigned char **pData, int* dataLen, const char* pszStreamID, int width, int height, int strides[4], AVE::VideoPixelFormat pixel_format)
 {
     //    ZGENTER_FUN_LOG;
-    ZGLog("ZGExternalVideoRenderDemo::OnVideoDataCallback2 , pixelFormat = %s", ZGHelperInstance()->GetPixelFormatDesc(pixel_format).c_str());
+  //  ZGLog("ZGExternalVideoRenderDemo::OnVideoDataCallback , pszStreamID = %s", pszStreamID);
 
     // 通过pszStreamID 判断是 kZegoVideoDataMainPublishingStream 还是 kZegoVideoDataAuxPublishingStream 
 // kZegoVideoDataMainPublishingStream 表示主通道推流的视频数据

@@ -20,11 +20,11 @@ namespace ZEGO
         {
             /** 默认值, 不开外部渲染 */
             VIDEO_RENDER_TYPE_NONE = 0,
-            /** 默认 BGRA32（Android 为 RGBA32）, 外部渲染同时内部不渲染 */
+            /** 默认 BGRA32（Android 为 RGBA32）, 仅外部渲染，内部不渲染 */
             VIDEO_RENDER_TYPE_RGB = 1,
-            /** 默认 I420, 外部渲染同时内部不渲染 */
+            /** 默认 I420。仅外部渲染，内部不渲染 */
             VIDEO_RENDER_TYPE_YUV = 2,
-            /** 由返回参数指定类型， 外部渲染同时内部不渲染*/
+            /** 由返回参数指定类型。仅外部渲染，内部不渲染*/
             VIDEO_RENDER_TYPE_ANY = 3,
             /** 外部渲染同时内部渲染，且数据格式为 RGB。默认 BGRA32（Android 为 RGBA32） */
             VIDEO_RENDER_TYPE_EXTERNAL_INTERNAL_RGB = 4,
@@ -169,7 +169,7 @@ namespace ZEGO
          
          @param pszStreamID 播放流ID
          @param bEnable true 开启， false 不开启，默认为不开启
-         @note 只有当 VideoRenderType 设置为 VIDEO_RENDER_TYPE_EXTERNAL_INTERNAL_RGB 或者 VIDEO_RENDER_TYPE_EXTERNAL_INTERNAL_YUV，该接口才有效
+         @note 只有当 VideoRenderType 设置为非 VIDEO_RENDER_TYPE_NONE 时，该接口才有效
          @note 在拉流(startPlayingStream)之后调用有效
          */
         ZEGOAVKIT_API bool EnableVideoRender(bool bEnable, const char *pszStreamID);
@@ -179,7 +179,7 @@ namespace ZEGO
 
         @param nPlayChannel 播放通道
         @param bEnable true 开启， false 不开启，默认为不开启
-        @note 只有当 VideoRenderType 设置为 VIDEO_RENDER_TYPE_EXTERNAL_INTERNAL_RGB 或者 VIDEO_RENDER_TYPE_EXTERNAL_INTERNAL_YUV，该接口才有效
+        @note 只有当 VideoRenderType 设置为非 VIDEO_RENDER_TYPE_NONE 时，该接口才有效
         @note 在拉流(startPlayingStream)之后调用有效
         */
         ZEGOAVKIT_API bool EnableVideoRender(bool bEnable, int nPlayChannel);

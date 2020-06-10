@@ -183,40 +183,6 @@ namespace ZEGO
             virtual ~ILivePlayerCallback() {}
         };
         
-        /**
-         * 视频帧数据回调
-         * 
-         * @warning Deprecated，请使用 zego-api-external-video-render.h 中的 IZegoExternalRenderCallback2
-         */
-        class IZegoVideoRenderCallback
-        {
-        public:
-            /**
-             视频帧数据回调
-
-             @param pData 视频数据起始地址，windows 平台上回调数据格式为 RGBA32
-             @param dataLen 视频数据长度
-             @param pszStreamID 流 ID。当外部渲染拉流数据，pszStreamID 为拉流流名；当外部渲染推流数据，pszStreamID 为常量 kZegoVideoDataMainPublishingStream 时表示第一路推流数据；pszStreamID 为常量 kZegoVideoDataAuxPublishingStream 时表示第二路推流数据
-             @param width 视频宽度
-             @param height 视频高度
-             @param strides 每个平面一行字节数（RGBA 只需考虑 strides[0]）
-             */
-            virtual void OnVideoDataCallback(const unsigned char *pData, int dataLen, const char* pszStreamID, int width, int height, int strides[4]) {};
-            
-            /**
-             视频帧数据回调2
-             
-             @param pData 视频数据起始地址
-             @param dataLen 视频数据长度
-             @param pszStreamID 流 ID
-             @param width 视频宽度
-             @param height 视频高度
-             @param strides 每个平面一行字节数（RGBA 只需考虑 strides[0]）
-             @param pixel_format 视频帧数据格式
-             */
-            virtual void OnVideoDataCallback2(unsigned char **pData, int* dataLen, const char* pszStreamID, int width, int height, int strides[4], AVE::VideoPixelFormat pixel_format) {}
-
-        };
     }
 }
 

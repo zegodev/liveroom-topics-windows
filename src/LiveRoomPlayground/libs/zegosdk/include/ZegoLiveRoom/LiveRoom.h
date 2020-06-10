@@ -32,7 +32,16 @@ namespace ZEGO
          */
         ZEGO_API const char* GetSDKVersion2();
 
-        
+        /**
+         日志hook 的回调函数
+
+         @param logHook 日志的回调函数 建议外部static 函数，
+         @attention  1、回调信息为加密信息(需要zego解密工具解密)
+                             2、设置此日志回调之后sdk 将不会在写日志文件
+                             3、调用时机,应该最早时机调用此接口 InitSDK之前
+        */
+        ZEGO_API void SetLogHook(void(*log_hook)(const char* message));
+
         /**
          设置日志路径
 
@@ -56,7 +65,7 @@ namespace ZEGO
          */
         ZEGO_API bool SetLogDirAndSize(const char* pszLogDir, unsigned long long lLogFileSize = ZEGO_DEFAULT_LOG_SIZE, const char* pszSubFolder = nullptr);
         
-        
+	
         /**
          上传日志
          */
@@ -113,16 +122,29 @@ namespace ZEGO
          @return UserID
          */
         ZEGO_API const char* GetUserID();
-        
-		/**
-		 初始化引擎
 
-		 @param jvm jvm 仅用于 Android
-		 @param ctx ctx 仅用于 Android
+        /**
+         设置SDK线程回调observe，将会回调SDK 主线程执行相关耗时  建议 外部static 函数
+
+        @param OnRunLoopObserveCallback observe回调的callback
+        @param taskId sdk主线程taskid
+        @param type 任务类型 参见ZegoTaskType
+        @param taskDispatchTime 任务调度消耗时间 单位ms
+        @param taskRunTime 任务执行消耗时间 单位ms
+        @param taskTotalTime 任务总耗时，单位ms 一般情况只需关注此时间即可
+		@attention 注意此非线程安全，外部不应该在回调线程做耗时操作。建议InitSDK 前调用 UnInitSDK会清除此回调 
+        */
+        ZEGO_API void SetRunLoopObserveCallback(void(*OnRunLoopObserveCallback)(unsigned int taskId, AV::ZegoTaskType type, int taskDispatchTime, int taskRunTime, int taskTotalTime));
+        
+        /**
+         初始化引擎
+
+         @param jvm jvm 仅用于 Android
+         @param ctx ctx 仅用于 Android
          @param clsLoader 仅用于 Android
-		 @return true 成功，false 失败
-		 */
-		ZEGO_API bool InitPlatform(void* jvm = 0, void* ctx = 0, void* clsLoader = 0);
+         @return true 成功，false 失败
+        */
+        ZEGO_API bool InitPlatform(void* jvm = 0, void* ctx = 0, void* clsLoader = 0);
         
         /**
          初始化 SDK

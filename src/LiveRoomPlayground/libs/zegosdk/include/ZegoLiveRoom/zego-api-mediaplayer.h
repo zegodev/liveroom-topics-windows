@@ -292,6 +292,7 @@ namespace MEDIAPLAYER
      @param sizeInByte 缓存最大尺寸, 单位 byte, 有效值为大于等于 5000000, 如果填 0, 表示不限制
      @param index 播放器序号, 默认为 ZegoMediaPlayerIndexFirst
      @note 不允许 timeInMS 和 sizeInByte 都为 0
+     @note SDK 内部默认 timeInMS 为 5000, sizeInByte 为 15*1024*1024
      @note 在 Start 或者 Load 之前调用, 设置一次, 生命周期内一直有效
     */
     ZEGOAVKIT_API void SetOnlineResourceCache(int timeInMS, int sizeInByte, ZegoMediaPlayerIndex index = ZegoMediaPlayerIndexFirst);

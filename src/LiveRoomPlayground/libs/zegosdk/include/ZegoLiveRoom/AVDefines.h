@@ -91,6 +91,15 @@ namespace ZEGO
             */
             virtual void OnDeviceError(const char* deviceName, int errorCode) {}
 
+			/**
+			设备错误
+
+			@param deviceName 设备名称
+			@param errorCode 错误码
+			@param deviceID 出错的设备ID 目前只支持win和mac设备
+			*/
+			virtual void OnDeviceError(const char* deviceName, int errorCode, const char* deviceID) {}
+
 #ifdef WIN32
 			/**
 			开始重试设备时通知

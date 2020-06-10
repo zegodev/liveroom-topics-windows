@@ -575,33 +575,6 @@ namespace ZEGO
         ZEGO_API void SetVideoEncoderRateControlConfig(AV::ZegoVideoEncoderRateControlStrategy strategy, int encoderCRF, AV::PublishChannelIndex idx = AV::PUBLISH_CHN_MAIN);
         
         /**
-         发送媒体次要信息开关
-
-         @warning Deprecated，请使用 zego-api-media-side-info.h 中的 SetMediaSideFlags 代替
-
-         @param bStart true 开启, false 关闭
-         @param bOnlyAudioPublish true 纯音频直播，不传输视频数据, false 音视频直播，传输视频数据
-		 @param mediaInfoType 请参考 MediaInfoType 定义，建议使用 SeiZegoDefined
-         @param seiSendType 请参考 SeiSendType 定义，此参数只对发送SEI时有效，当mediaInfoType为 SideInfoZegoDefined 时此参数无效，当发送SEI时建议使用 SeiSendInVideoFrame
-         @param idx 推流 channel Index. 默认为主Channel
-         @attention onlyAudioPublish 开关在 start 开关开启时才生效
-         */
-        ZEGO_API void SetMediaSideFlags(bool bStart, bool bOnlyAudioPublish, int mediaInfoType = AV::SideInfoZegoDefined, int seiSendType = AV::SeiSendSingleFrame, AV::PublishChannelIndex idx = AV::PUBLISH_CHN_MAIN);
-        
-        /**
-         发送媒体次要信息
-
-         @warning Deprecated，请使用 zego-api-media-side-info.h 中的 SendMediaSideInfo 代替
-
-         @param inData 媒体次要信息数据
-         @param dataLen 数据长度
-         @param bPacket 是否外部已经打包好包头，true 已打包, false 未打包
-         @param idx 推流 channel Index. 默认为主Channel
-         */
-        ZEGO_API void SendMediaSideInfo(const unsigned char *inData, int dataLen, bool bPacket, AV::PublishChannelIndex idx = AV::PUBLISH_CHN_MAIN);
-        
-        
-        /**
          帧顺序检测开关
          
          @param bEnalbe true 检测帧顺序，不支持B帧； false 不检测帧顺序，支持B帧，可能出现短暂花屏
@@ -709,7 +682,7 @@ namespace ZEGO
         /**
          设置推流质量监控周期
          
-         @param timeInMS 时间周期，单位为毫秒，取值范围为(500, 60000)。默认为 3000
+         @param timeInMS 时间周期，单位为毫秒，取值范围为(500, 60000)。大于3000必须为3000整数倍，否则sdk会自动向上取整（比如设置为5000，sdk内部会取整为6000），默认为 3000
          @return true 成功，false 失败
          @attention 必须在推流前调用才能生效。该设置会影响 ILivePublisherCallback::OnPublishQualityUpdate 的回调频率
          */
