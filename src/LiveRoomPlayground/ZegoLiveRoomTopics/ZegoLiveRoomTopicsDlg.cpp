@@ -220,7 +220,7 @@ BOOL CZegoLiveRoomTopicsDlg::OnInitDialog()
     GetDlgItem(IDC_STATIC_DEMO_VERSION)->SetWindowText(CString(stra_version.GetBuffer()));
 #endif
     
-
+	SetWindowPos(NULL, 300, 300, 1280, 720, SWP_SHOWWINDOW);
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 

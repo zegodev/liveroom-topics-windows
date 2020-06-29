@@ -58,7 +58,7 @@ protected:
     CMediaRecorderDlg * media_recorder_dlg_ptr_ = nullptr;
     MediaSideInfoPannelDlg * media_side_info_dlg_ptr_ = nullptr;
     CZGExternalVideoCaptureDlg * external_video_capture_dlg_ptr_ = nullptr;
-    CExternalVideoRenderDlg * external_video_render_dlg_ptr_ = nullptr;
+	CExternalVideoRenderDlg * external_video_render_dlg_ptr_ = nullptr;
     CPublishDlg * publish_dlg_ptr_ = nullptr;
     CPlayDlg * play_dlg_ptr_ = nullptr;
     CExternalVideoFilterDlg * external_video_filter_ = nullptr;
