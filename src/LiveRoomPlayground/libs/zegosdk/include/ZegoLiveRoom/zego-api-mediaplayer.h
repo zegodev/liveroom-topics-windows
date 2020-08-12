@@ -9,7 +9,6 @@
 #define zego_api_mediaplayer_h
 
 #include <memory>
-
 #include "zego-api-defines.h"
 #include "media_player.h"
 #include "zego-api-mediaplayer-defines.h"
@@ -19,26 +18,32 @@ namespace ZEGO
 {
 namespace MEDIAPLAYER
 {
-    
-    /**
-     获取播放器 
 
-     @param type 播放器类型（AVE::IMediaPlayer::PlayerType）
-     @return 播放器指针（AVE::IMediaPlayer*）
-     @note 不要删除返回的 AVE::IMediaPlayer 指针，由引擎控制其生命周期
-     @note 播放器只有在引擎启动的情况下才有效，需要在 InitSDK 后再调用，且不能和 InitSDK 在同一个函数里调用。
-     @warning Deprecated，请使用 ZEGO::MEDIAPLAYER::InitWithType 初始化 ZegoMediaPlayer
-     */
-    ZEGOAVKIT_API AVE::IMediaPlayer* GetMediaPlayer(AVE::IMediaPlayer::PlayerType type);
-    
     /**
      初始化播放器
+     
+     @deprecated 请使用 CreatePlayer 代替
      
      @param type @see ZegoMediaPlayerType
      @param index 播放器序号, 默认为 ZegoMediaPlayerIndexFirst
      */
     ZEGOAVKIT_API void InitWithType(const ZegoMediaPlayerType type, ZegoMediaPlayerIndex index = ZegoMediaPlayerIndexFirst);
     
+    /**
+     创建播放器
+     
+     @param type @see ZegoMediaPlayerType
+     @param index 播放器序号, 详见 ZegoMediaPlayerIndex
+     */
+    ZEGOAVKIT_API void CreatePlayer(const ZegoMediaPlayerType type, ZegoMediaPlayerIndex index);
+    
+    /**
+     释放播放器
+
+     @param index 播放器序号, 详见 ZegoMediaPlayerIndex
+     */
+    ZEGOAVKIT_API void DestroyPlayer(ZegoMediaPlayerIndex index);
+
     /**
      设置本地播放音量, 如果播放器设置了推流模式, 也会设置推流音量
      
@@ -327,15 +332,6 @@ namespace MEDIAPLAYER
      */
     ZEGOAVKIT_API void SetLoadResourceTimeout(int timeoutInMS, ZegoMediaPlayerIndex index = ZegoMediaPlayerIndexFirst);
     
-    /**
-     设置播放器事件回调
-
-     @warning Deprecated，请使用 SetEventWithIndexCallback 替代
-     
-     @param callback 回调 IZegoMediaPlayerEventCallback
-     @param index 播放器序号, 默认为 ZegoMediaPlayerIndexFirst
-     */
-    ZEGOAVKIT_API void SetEventCallback(IZegoMediaPlayerEventCallback *callback, ZegoMediaPlayerIndex index = ZegoMediaPlayerIndexFirst);
     
     /**
      设置播放器事件回调
@@ -346,16 +342,6 @@ namespace MEDIAPLAYER
      */
     ZEGOAVKIT_API void SetEventWithIndexCallback(IZegoMediaPlayerEventWithIndexCallback *callback, ZegoMediaPlayerIndex index = ZegoMediaPlayerIndexFirst);
     
-    /**
-     设置视频帧数据回调
-
-     @warning Deprecated，请使用 SetVideoDataWithIndexCallback 替代
-     
-     @param callback 回调 IZegoMediaPlayerVideoDataCallback
-     @param index 播放器序号, 默认为 ZegoMediaPlayerIndexFirst
-     @param format 需要返回的视频帧数据格式，@see ZegoMediaPlayerVideoPixelFormat
-     */
-    ZEGOAVKIT_API void SetVideoDataCallback(IZegoMediaPlayerVideoDataCallback *callback, ZegoMediaPlayerVideoPixelFormat format, ZegoMediaPlayerIndex index = ZegoMediaPlayerIndexFirst);
     
     /**
      设置视频帧数据回调

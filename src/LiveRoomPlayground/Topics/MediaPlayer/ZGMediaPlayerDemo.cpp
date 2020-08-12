@@ -38,9 +38,9 @@ bool ZGMediaPlayerDemo::InitMediaPlayer()
     LIVEROOM::SetUseTestEnv(TRUE);
     ZGManagerInstance()->EnableExternalVideoCapture(&video_capture_, nullptr);
 
-    MEDIAPLAYER::InitWithType(MEDIAPLAYER::ZegoMediaPlayerType::ZegoMediaPlayerTypeAux);
-    MEDIAPLAYER::SetEventCallback(this);
-    MEDIAPLAYER::SetVideoDataCallback(&video_capture_, MEDIAPLAYER::ZegoMediaPlayerVideoPixelFormatRGBA32);
+    MEDIAPLAYER::InitWithType(MEDIAPLAYER::ZegoMediaPlayerType::ZegoMediaPlayerTypeAux, player_index_);
+    MEDIAPLAYER::SetEventWithIndexCallback(this, player_index_);
+    MEDIAPLAYER::SetVideoDataWithIndexCallback(&video_capture_, MEDIAPLAYER::ZegoMediaPlayerVideoPixelFormatRGBA32, player_index_);
     bool ret = LIVEROOM::StartPreview();
     if (!ret)
     {
@@ -61,23 +61,28 @@ void ZGMediaPlayerDemo::InitPlayerStateCallBack(ZGMediaPlayerDemoCallBack * cb)
 
 void ZGMediaPlayerDemo::SetVideoView(void * view)
 {
-    MEDIAPLAYER::SetView(view);
+    MEDIAPLAYER::SetView(view, player_index_);
 }
 
 void ZGMediaPlayerDemo::SetVolume(int volume)
 {
-    MEDIAPLAYER::SetVolume(volume);
+    MEDIAPLAYER::SetVolume(volume, player_index_);
+    MEDIAPLAYER::SetPublishVolume(volume, player_index_);
 }
 
 void ZGMediaPlayerDemo::StartPlaying(const char * url, bool repeat)
 {
     if (player_state_ == ZGPlayerState_Playing)
     {
-        MEDIAPLAYER::Stop();
+        MEDIAPLAYER::Stop(player_index_);
     }
 
-    MEDIAPLAYER::SetPlayerType(MEDIAPLAYER::ZegoMediaPlayerTypeAux);
-    MEDIAPLAYER::Start(url, repeat);
+    MEDIAPLAYER::SetPlayerType(MEDIAPLAYER::ZegoMediaPlayerTypeAux, player_index_);
+
+    MEDIAPLAYER::EnableAccurateSeek(true, player_index_);
+    MEDIAPLAYER::Start(url, repeat, player_index_);
+
+    
 
     SetCurrentPlayState(ZGPlayerState_Playing);
     SetCurrentPlaySubState(ZGPlayingSubState_Requesting);
@@ -87,7 +92,7 @@ void ZGMediaPlayerDemo::StartPlaying(const char * url, bool repeat)
 void ZGMediaPlayerDemo::Stop()
 {
     SetCurrentPlayState(ZGPlayerState_Stopping);
-    MEDIAPLAYER::Stop();
+    MEDIAPLAYER::Stop(player_index_);
 
     if (player_state_cb_)
     {
@@ -99,7 +104,7 @@ void ZGMediaPlayerDemo::Pause()
 {
     if (player_state_ == ZGPlayerState_Playing && player_sub_state_ != ZGPlayingSubState_Paused)
     {
-        MEDIAPLAYER::Pause();
+        MEDIAPLAYER::Pause(player_index_);
     }
 }
 
@@ -107,14 +112,14 @@ void ZGMediaPlayerDemo::Resume()
 {
     if (player_state_ == ZGPlayerState_Playing && player_sub_state_ == ZGPlayingSubState_Paused)
     {
-        MEDIAPLAYER::Resume();
+        MEDIAPLAYER::Resume(player_index_);
     }
 }
 
 void ZGMediaPlayerDemo::SeekTo(long millisec)
 {
 
-    MEDIAPLAYER::SeekTo(millisec);
+    MEDIAPLAYER::SeekTo(millisec, player_index_);
 
     //last_update_duration_ = millisec;
 
@@ -127,30 +132,35 @@ void ZGMediaPlayerDemo::SeekTo(long millisec)
 
 int ZGMediaPlayerDemo::GetAudioStreamCount()
 {
-    return MEDIAPLAYER::GetAudioStreamCount();
+    return MEDIAPLAYER::GetAudioStreamCount(player_index_);
 }
 
-void ZGMediaPlayerDemo::OnPlayPause()
+void ZGMediaPlayerDemo::OnPlayPause(ZegoMediaPlayerIndex index)
 {
+    ZGENTER_FUN_LOG;
     SetCurrentPlaySubState(ZGPlayingSubState_Paused);
 }
 
-void ZGMediaPlayerDemo::OnPlayResume()
+void ZGMediaPlayerDemo::OnPlayResume(ZegoMediaPlayerIndex index)
 {
+    ZGENTER_FUN_LOG;
     SetCurrentPlaySubState(ZGPlayingSubState_PlayBegin);
 }
 
-void ZGMediaPlayerDemo::OnPlayStop()
+void ZGMediaPlayerDemo::OnPlayStop(ZegoMediaPlayerIndex index)
 {
+    ZGENTER_FUN_LOG;
     SetCurrentPlayState(ZGPlayerState_Stopped);
 }
 
-void ZGMediaPlayerDemo::OnBufferBegin()
+void ZGMediaPlayerDemo::OnBufferBegin(ZegoMediaPlayerIndex index)
 {
+    ZGENTER_FUN_LOG;
 }
 
-void ZGMediaPlayerDemo::OnBufferEnd()
+void ZGMediaPlayerDemo::OnBufferEnd(ZegoMediaPlayerIndex index)
 {
+    ZGENTER_FUN_LOG;
 }
 
 void ZGMediaPlayerDemo::UpdatePlayProgressThread()
@@ -218,7 +228,7 @@ void ZGMediaPlayerDemo::UpdateCurrentPlayState()
 
 void ZGMediaPlayerDemo::UpdateProgressDesc()
 {
-    long cur_duration = MEDIAPLAYER::GetCurrentDuration();
+    long cur_duration = MEDIAPLAYER::GetCurrentDuration(player_index_);
     //if ((cur_duration - last_update_duration_)*1.0 / total_duration_ >= 0.001 || cur_duration == total_duration_)
     {
         if (player_state_cb_)
@@ -247,14 +257,14 @@ void ZGMediaPlayerDemo::SetCurrentPlaySubState(ZGPlayingSubState s)
     UpdateCurrentPlayState();
 }
 
-void ZGMediaPlayerDemo::OnPlayStart()
+void ZGMediaPlayerDemo::OnPlayStart(ZegoMediaPlayerIndex index)
 {
     ZGENTER_FUN_LOG;
 
     SetCurrentPlaySubState(ZGPlayingSubState_PlayBegin);
 
     // get duration and update
-    total_duration_ = MEDIAPLAYER::GetDuration();
+    total_duration_ = MEDIAPLAYER::GetDuration(player_index_);
     current_duration_ = 0;
     //last_update_duration_ = 0;
     if (player_state_cb_)
@@ -270,7 +280,7 @@ void ZGMediaPlayerDemo::OnPlayStart()
     }
 }
 
-void ZGMediaPlayerDemo::OnPlayError(const int code)
+void ZGMediaPlayerDemo::OnPlayError(const int code, ZegoMediaPlayerIndex index)
 {
     if (player_state_cb_)
     {
@@ -280,17 +290,17 @@ void ZGMediaPlayerDemo::OnPlayError(const int code)
     SetCurrentPlaySubState(ZGPlayingSubState_Error);
 }
 
-void ZGMediaPlayerDemo::OnVideoBegin()
+void ZGMediaPlayerDemo::OnVideoBegin(ZegoMediaPlayerIndex index)
 {
     ZGENTER_FUN_LOG;
 }
 
-void ZGMediaPlayerDemo::OnAudioBegin()
+void ZGMediaPlayerDemo::OnAudioBegin(ZegoMediaPlayerIndex index)
 {
     ZGENTER_FUN_LOG;
 }
 
-void ZGMediaPlayerDemo::OnPlayEnd()
+void ZGMediaPlayerDemo::OnPlayEnd(ZegoMediaPlayerIndex index)
 {
     ZGENTER_FUN_LOG;
     SetCurrentPlayState(ZGPlayerState_Stopped);
@@ -302,7 +312,7 @@ void ZGMediaPlayerDemo::OnPlayEnd()
     //last_update_duration_ = 0;
 }
 
-void ZGMediaPlayerDemo::OnSeekComplete(const int code, const long timestamp_ms)
+void ZGMediaPlayerDemo::OnSeekComplete(const int code, const long timestamp_ms, ZegoMediaPlayerIndex index)
 {
     ZGENTER_FUN_LOG;
     ZGLog("code = %d , timestamp_ms = %d, curduration : %ld , total duration : %ld", code, timestamp_ms, MEDIAPLAYER::GetCurrentDuration(), MEDIAPLAYER::GetDuration());
@@ -323,7 +333,8 @@ void ZGMediaPlayerDemo::OnPublishStateUpdate(string str_state)
 
 void ZGMediaPlayerDemo::SetAudioStream(long stream_index)
 {
-    MEDIAPLAYER::SetAudioStream(stream_index);
+    long ret = MEDIAPLAYER::SetAudioStream(stream_index, player_index_);
+    ZGLog("SetAudioStream = %ld", ret);
 }
 
 void ZGMediaPlayerDemo::InitMainHwnd(HWND hwnd)

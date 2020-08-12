@@ -42,6 +42,14 @@ namespace ZEGO
             
             /** 干湿比，取值范围 >= 0.0。 控制混响与直达声和早期反射声之间的比例，干(dry)的部分默认定为1，当干湿比设为较小时，湿(wet)的比例较大，此时混响较强 */
             float dryWetRatio;
+
+            ZegoAVAPIReverbParams()
+            {
+                roomSize = 0;
+                reverberance = 0;
+                damping = 0;
+                dryWetRatio = 0;
+            }
         };
         
         /**

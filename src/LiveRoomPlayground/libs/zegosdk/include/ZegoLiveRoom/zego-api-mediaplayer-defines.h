@@ -36,7 +36,7 @@ namespace MEDIAPLAYER
         ZegoMediaPlayerIndexFirst   = 0,
         ZegoMediaPlayerIndexSecond  = 1,
         ZegoMediaPlayerIndexThird   = 2,
-        ZegoMediaPlayerIndexFourth  = 3
+        ZegoMediaPlayerIndexFourth  = 3,
     };
     
     enum ZegoMediaPlayerAudioChannel
@@ -95,113 +95,7 @@ namespace MEDIAPLAYER
             this->rotation = 0;
         }
     };
-    
-    /**
-     * 媒体播放器事件回调
-     * 
-     * @warning Deprecated，请使用 IZegoMediaPlayerEventWithIndexCallback 替代
-     */ 
-    class IZegoMediaPlayerEventCallback
-    {
-    public:
-        /**
-         开始播放
-         */
-        virtual void OnPlayStart() = 0;
-        /**
-         播放出错
-         @param errCode 错误码, 详见 ZegoMediaPlayerError
-         */
-        virtual void OnPlayError(const int errCode) = 0;
-        /**
-         视频开始播放
-         */
-        virtual void OnVideoBegin() {}
-        /**
-         音频开始播放
-         */
-        virtual void OnAudioBegin() {}
-        /**
-         播放结束
-         */
-        virtual void OnPlayEnd() = 0;
-        /**
-         快进到指定时刻
-         
-         @param state >=0 成功，其它表示失败
-         @param duration 实际快进的进度，单位毫秒
-         */
-        virtual void OnSeekComplete(const int state, const long duration) {}
-        /**
-         暂停播放
-         */
-        virtual void OnPlayPause() {}
-        /**
-         恢复播放
-         */
-        virtual void OnPlayResume() {}
-        /**
-         主动停止播放
-         */
-        virtual void OnPlayStop() {}
-        /**
-         开始缓冲
-         */
-        virtual void OnBufferBegin() {}
-        /**
-         结束缓冲
-         */
-        virtual void OnBufferEnd() {}
-        
-        /**
-         截图
-         */
-        virtual void OnSnapshot(void *image) {}
-        
-        /**
-         调用 Load 接口的回调
-         */
-        virtual void OnLoadComplete() {}
-        
-        /**
-         播放进度回调
-         
-         @param timestamp 当前播放进度，单位毫秒
-         */
-        virtual void OnProcessInterval(long timestamp) {}
-    };
-    
-    /**
-     * 视频帧数据回调接口
-     * 当格式为ARGB32/ABGR32/RGBA32/BGRA32，数据通过OnPlayVideoData回调。
-     * 当格式为I420/NV12/NV21，数据通过OnPlayVideoData2回调。
-     * 其他非法格式都判定为I420
-     * 
-     * @warning Deprecated，请使用 IZegoMediaPlayerVideoDataWithIndexCallback 替代
-     */
-    class IZegoMediaPlayerVideoDataCallback
-    {
-    public:
-        /**
-         视频帧数据回调，格式为ARGB32/ABGR32/RGBA32/BGRA32
-         
-         @param data 视频帧数据
-         @param len 视频帧数据长度
-         @param format 视频帧格式信息
-         @note 同步回调，不要在回调中处理数据或进行耗时操作
-         */
-        virtual void OnPlayVideoData(const char* data, int len, ZegoMediaPlayerVideoDataFormat& format) {};
-        
-        /**
-         视频帧数据回调，格式为I420/NV12/NV21
-         
-         @param pData 视频帧数据
-         @param len 视频帧数据长度
-         @param format 视频帧格式信息
-         @note 同步回调，不要在回调中处理数据或进行耗时操作
-         */
-        virtual void OnPlayVideoData2(const char **pData, int* len, const ZegoMediaPlayerVideoDataFormat& format) {};
-    };
+
     
     class IZegoMediaPlayerEventWithIndexCallback
     {
@@ -272,6 +166,11 @@ namespace MEDIAPLAYER
          @param index   播放器序号
          */
         virtual void OnProcessInterval(long timestamp, ZegoMediaPlayerIndex index) {}
+
+        /**
+         网络文件读完结尾的回调
+         */
+        virtual void OnReadEOF(ZegoMediaPlayerIndex index) {}
     };
     
     /**

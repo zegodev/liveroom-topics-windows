@@ -117,8 +117,13 @@ namespace ZEGO
              采集视频的首帧通知
              */
             virtual void OnCaptureVideoFirstFrame() {}
-            
+
             virtual void OnCaptureVideoFirstFrame(AV::PublishChannelIndex idx) {}
+
+            /**
+             预览视频的首帧通知
+             */
+            virtual void OnPreviewVideoFirstFrame(AV::PublishChannelIndex idx) {}
             
             /**
              采集音频的首帧通知

@@ -22,11 +22,12 @@ using AVE::VideoDataFormat;
 using AVE::VideoCaptureFormat;
 
 using MEDIAPLAYER::ZegoMediaPlayerVideoDataFormat;
+using MEDIAPLAYER::ZegoMediaPlayerIndex;
 
 class ZGVideoCaptureForMediaPlayer :
     public VideoCaptureDevice,
     public VideoCaptureFactory,
-    public MEDIAPLAYER::IZegoMediaPlayerVideoDataCallback
+    public MEDIAPLAYER::IZegoMediaPlayerVideoDataWithIndexCallback
 {
 public:
     ZGVideoCaptureForMediaPlayer();
@@ -52,7 +53,7 @@ public:
     virtual int StartCapture() override;
     virtual int StopCapture() override;
 
-    virtual void OnPlayVideoData(const char* data, int len, ZegoMediaPlayerVideoDataFormat& format) override;
+    virtual void OnPlayVideoData(const char* data, int len, ZegoMediaPlayerVideoDataFormat& format, ZegoMediaPlayerIndex index) override;
 
 private:
     std::mutex capture_mutex_;

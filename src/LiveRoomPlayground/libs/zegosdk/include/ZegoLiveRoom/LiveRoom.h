@@ -42,17 +42,6 @@ namespace ZEGO
         */
         ZEGO_API void SetLogHook(void(*log_hook)(const char* message));
 
-        /**
-         设置日志路径
-
-         @warning Deprecated. 请使用 SetLogDirAndSize 代替
-
-         @param pszLogDir 日志路径
-         @param pszSubFolder 日志子目录，如果指定了子目录，则日志文件会存放在此子目录下
-         @return true 成功；flase 失败；
-         @discussion 默认日志大小 5 * 1024 * 1024 字节
-         */
-        ZEGO_API bool SetLogDir(const char* pszLogDir, const char* pszSubFolder = nullptr);
         
         /**
          设置日志路径和大小
@@ -87,15 +76,6 @@ namespace ZEGO
          */
         ZEGO_API void SetUseTestEnv(bool bTestEnv);
         
-        
-        /**
-         设置平台信息
-
-         @warning Deprecated. 不需要外部设置了
-
-         @param pszInfo 平台信息
-         */
-        ZEGO_API void SetPlatformInfo(const char* pszInfo);
 
         /**
          设置业务类型
@@ -177,7 +157,8 @@ namespace ZEGO
 
          @param audienceCreateRoom 观众是否可以创建房间。true 可以，false 不可以。默认 true
          @param userStateUpdate 用户状态（用户进入、退出房间）是否广播。true 广播，false 不广播。默认 false
-         @discussion 在登录房间前调用有效，退出房间后失效
+         @discussion 1、在登录房间前调用有效，退出房间后失效。
+                     2、userStateUpdate为房间属性而非用户属性，设置的是该房间内是否会进行用户状态的广播。如果需要在房间内用户状态改变时，其他用户能收到通知，请为所有用户设置为true；反之，设置为false。设置为true后，方可从OnUserUpdate回调收到用户状态变更通知
          */
         ZEGO_API void SetRoomConfig(bool audienceCreateRoom, bool userStateUpdate);
         
@@ -218,6 +199,16 @@ namespace ZEGO
          */
         ZEGO_API bool LogoutRoom();
         
+        /**
+        切换房间 调用成功会停止调用该接口之前的推拉流(注意：登录房间成功后，需要快速切换到其它房间时使用，切换结果回调OnLoginRoom,也会停止MultiRoom的拉流)  
+
+        @param pszRoomID 房间 ID
+        @param role 成员角色, 参见 ZegoRoomRole
+        @param pszRoomName 房间名称
+        @return true 成功，false 失败
+        */
+        ZEGO_API bool SwitchRoom(const char* pszRoomID, int role, const char* pszRoomName = "");
+
         /**
          发送自定义信令
 
@@ -473,6 +464,7 @@ namespace ZEGO
 
          @param config config 配置信息
          
+         @attention 具体配置信息请咨询技术支持
          @attention 配置项的写法，例如 "keep_audio_session_active=true", 等号后面值的类型要看下面每一项的定义
          @attention "prefer_play_ultra_source", int value, 确保在 InitSDK 前调用，但开启拉流加速(config为“prefer_play_ultra_source=1”)可在 InitSDK 之后，拉流之前调用
          @attention "keep_audio_session_active", bool value, default: false, must be setting before engine started. if set true, app need to set the session inactive yourself. just be available for iOS
@@ -483,7 +475,6 @@ namespace ZEGO
          @attention "lower_audio_cap_sample_rate", bool value, default: false. enforce to use lower audio capture sample. for Android
          @attention "alsa_capture_device_name" string value: plughw:[card_id],[device_id], eg: plughw:1,0, default is plug:default. view the device list with arecord. for Linux
          @attention "alsa_playback_device_name" string value: plughw:[card_id],[device_id], eg: plughw:1,0, default is plug:default. view the device list with aplay. for Linux
-         @attention "play_nodata_abort", bool value, default: false，设置拉流时没拉到数据是否终止拉流，设置为false表示不终止，设置为true表示终止，拉流之前调用有效
          @attention "room_retry_time", uint32 value, default:300S 设置房间异常后自动恢复最大重试时间，SDK尽最大努力恢复，单位为S，SDK默认为300s，设置为0时不重试
          @attention "av_retry_time", uint32 value, default:300S 设置推拉流异常后自动恢复最大重试时间，SDK尽最大努力恢复，单位为S，SDK默认为300s，设置为0时不重试
          @attention "device_mgr_mode=1"  设备管理模式 1：手动模式  2：半自动模式 3：全自动模式  默认选项 1

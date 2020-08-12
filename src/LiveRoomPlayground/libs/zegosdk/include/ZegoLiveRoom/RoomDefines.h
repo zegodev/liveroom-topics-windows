@@ -9,6 +9,7 @@
 #define RoomDefines_h
 
 #include "./AVDefines.h"
+#include <cstddef>
 
 #ifndef ZEGO_API
     #ifdef WIN32
@@ -119,6 +120,8 @@ namespace ZEGO
             {
                 szUserId[0] = '\0';
                 szUserName[0] = '\0';
+                udapteFlag = USER_ADDED;
+                role = UnknownRole;
             }
 
             char szUserId[ZEGO_MAX_USERID_LEN];
@@ -192,43 +195,18 @@ namespace ZEGO
                 priority = Default;
                 category = Chat;
                 sendTime = 0;
+                messageId = 0;
             }
 
             char szUserId[ZEGO_MAX_USERID_LEN];
             char szUserName[ZEGO_MAX_USERNAME_LEN];
             COMMON::ZegoRoomRole role;
-            char szContent[ZEGO_MAX_COMMON_LEN];
+            char szContent[ZEGO_MAX_ROOMMESSAGE_LEN];
             unsigned long long messageId;
             ZegoMessageType type;
             ZegoMessagePriority priority;
             ZegoMessageCategory category;
             unsigned long long sendTime;
-        };
-
-        struct ZegoConversationMessage
-        {
-            ZegoConversationMessage()
-            {
-                szUserId[0] = '\0';
-                szUserName[0] = '\0';
-                szContent[0] = '\0';
-                type = Text;
-                sendTime = 0;
-            }
-
-            char szUserId[ZEGO_MAX_USERID_LEN];
-            char szUserName[ZEGO_MAX_USERNAME_LEN];
-            char szContent[ZEGO_MAX_COMMON_LEN];
-            unsigned long long messageId;
-            ZegoMessageType type;
-            unsigned long long sendTime;
-        };
-
-        struct ZegoConverInfo
-        {
-            char szConverName[ZEGO_MAX_COMMON_LEN];
-            char szCreatorId[ZEGO_MAX_USERID_LEN];
-            int createTime;
         };
         
         struct ZegoBigRoomMessage
@@ -248,7 +226,7 @@ namespace ZEGO
             char szUserId[ZEGO_MAX_USERID_LEN];
             char szUserName[ZEGO_MAX_USERNAME_LEN];
             COMMON::ZegoRoomRole role;
-            char szContent[ZEGO_MAX_COMMON_LEN];
+            char szContent[ZEGO_MAX_ROOMMESSAGE_LEN];
             char szMessageId[ZEGO_MAX_IDENTITY_LEN];
             ZegoMessageType type;
             ZegoMessageCategory category;
@@ -269,6 +247,16 @@ namespace ZEGO
             const char *userName;
             /** 发送时间 */
             unsigned long long sendTime;
+
+            ZegoReliableMessage()
+            {
+                type = NULL;
+                latestSeq = 0;
+                content = NULL;
+                userID = NULL;
+                userName = NULL;
+                sendTime = 0;
+            }
         };
         
         struct ZegoReliableMessageInfo
@@ -277,6 +265,34 @@ namespace ZEGO
             const char *type;
             /** 当前最新消息Seq */
             unsigned int latestSeq;
+
+            ZegoReliableMessageInfo()
+            {
+                type = NULL;
+                latestSeq = 0;
+            }
+        };
+
+        struct ZegoRoomExtraInfo
+        {
+            ZegoRoomExtraInfo()
+            {
+                szKey[0] = '\0';
+                szValue[0] = '\0';
+                szUserID[0] = '\0';
+                szUserName[0] = '\0';
+                updateTime = 0;
+            }
+            /** 附加信息key */
+            char szKey[ZEGO_MAX_ROOM_EXTRA_INFO_KEY_LEN];
+            /** 附加信息值 */
+            char szValue[ZEGO_MAX_ROOM_EXTRA_INFO_VALUE_LEN];
+            /**  变更附加信息UserID */
+            char szUserID[ZEGO_MAX_USERID_LEN];
+            /** 变更附加信息UserName */
+            char szUserName[ZEGO_MAX_USERNAME_LEN];
+            /** 变更附加信息时间 */
+            unsigned long long updateTime;
         };
     }
 }

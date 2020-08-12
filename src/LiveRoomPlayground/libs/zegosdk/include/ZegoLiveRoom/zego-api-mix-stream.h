@@ -117,7 +117,7 @@ namespace MIXSTREAM
      
      * 2. 此 API 既是开始混流、更新混流接口，也是停止混流接口。
      
-     * 3.需要停止混流时，将 ZegoMixStreamConfig 参数中的 pInputStreamList 置为空列表（即清空输入流列表），pOutputList 设置为和开始或更新混流的一致，将 mixStreamID 参数设置为和开始或更新混流的一致。
+     * 3.需要停止混流时，将 ZegoMixStreamConfig 参数中的 pInputStreamList 置为空列表（即清空输入流列表），将 mixStreamID 参数设置为和开始或更新混流的一致。
      
      * 4. 当混流信息变更（例如：混流的输入流列表发生增减、调整混流视频的输出码率等）时，需要调用此接口更新 ZEGO 混流服务器上的混流配置信息，且注意每次调用时此 API 的 mixStreamID 参数需保证一致。
      

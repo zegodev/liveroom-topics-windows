@@ -11,7 +11,6 @@
 
 #include "./LiveRoomDefines.h"
 #include "./LiveRoomCallback-Player.h"
-#include "./LiveRoomDefines-Player.h"
 
 namespace AVE
 {
@@ -172,22 +171,6 @@ namespace ZEGO
          @return true 成功，false 失败
          */
         ZEGO_API bool EnableSpeaker(bool bEnable);
-
-        /**
-         默认扬声器开关
-
-         @warning Deprecated. 请使用 SetBuiltInSpeakerOn 替代
-         
-         @attention 
-         * 1. 在拉流 StartPlayingStream 或 StartPlayingStream2 之前设置,且当前的 SetAudioDeviceMode 设置为 ZEGO_AUDIO_DEVICE_MODE_COMMUNICATION 时有效。
-
-         @note
-         * 1. 设置为关闭后，扬声器无声音，耳机仍有声音输出。
-
-         @param bOn true 打开，false 关闭。默认 true
-         @return true 成功，false 失败
-         */
-        ZEGO_API bool setBuiltInSpeakerOn(bool bOn);
 
         /**
          默认扬声器开关

@@ -164,6 +164,7 @@ namespace ZEGO
         const unsigned int kLiveRoomSetStreamInfoError    = 52000123;
         const unsigned int kLiveRoomStreamInfoNotExist    = 52000138;
         const unsigned int kLiveRoomSessionError          = 52000141;
+        const unsigned int kLiveRoomSessionIdError      = 52000152;
         const unsigned int kLiveRoomQpsLimitError         = 52000201;
         const unsigned int kLiveRoomLuaSessionError       = 52001001;
         const unsigned int kLiveRoomAddUserError          = 52001002;
@@ -174,6 +175,8 @@ namespace ZEGO
         const unsigned int kLiveRoomRequiredReloginError  = 52002001;
         const unsigned int kLiveRoomThirdTokenAuthError   = 52002002;
         const unsigned int kLiveRoomNetBrokenTimeoutError = 52002003;
+        const unsigned int kLiveRoomBlackListErrcode = 52005030;
+        const unsigned int kLiveRoomTokenBlackListErrcode = 52005035;
         const unsigned int kLiveRoomAgentTimeoutError        = 55500001;
         const unsigned int kLiveRoomAgentDroppedError        = 55500002;
         
@@ -193,13 +196,18 @@ namespace ZEGO
 		const unsigned int kRoomDoSendLoginMultiRoomReqError = 60001014; 
 		const unsigned int kRoomZPushTcpClosed = 60001015;
 		const unsigned int kRoomConnectErrorQuic = 60001016;
+        
 
         const unsigned int kRoomInvalidSocketError        = 60002001;
         const unsigned int kRoomInvalidRspError           = 60003001;
+        const unsigned int kRoomZPushKickOutNeedRetry = 60004000;
+
         const unsigned int kRoomDecodeSignError           = 62001001;
 		const unsigned int kRoomDecodeLoginError          = 62001002;
         const unsigned int kRoomReplayAttacksError        = 62002001;
 		const unsigned int kRoomThirdTokenAuthError = 62002002;
+        const unsigned int kRoomBlackListErrcode = 62005030;
+        const unsigned int kRoomTokenBlackListErrcode = 62005035;
         const unsigned int kRoomLoginCreateUserError      = 62010001;
         const unsigned int kRoomLoginSameCreateUserError  = 62010002;
         const unsigned int kRoomStatusTimeoutError        = 62010005;
@@ -208,6 +216,18 @@ namespace ZEGO
 		const unsigned int kRoomDispatchTokenDecodeError = 62030012;
 		const unsigned int kRoomDispatchTokenInvalidError = 62030013;
 		const unsigned int kRoomDispatchTokenExpiredError = 62030014;
+        const unsigned int kRoomEncodeZPushTokenError = 62030015;
+        const unsigned int kRoomDecodeZPushTokenError = 62030016;
+        const unsigned int kRoomInvaildZPushTokenError = 62030017;
+        const unsigned int kRoomZPushTokenExpiredError = 62030018;
+        const unsigned int kRoomCheckZPushTokenError = 62030019;
+        const unsigned int kRoomCheckSessionNotMatchError = 62030020;
+        const unsigned int kRoomSendLiveRoomError = 62031001;
+        const unsigned int kRoomLiveRoomTimeOutError = 62031002;
+        const unsigned int kRoomLiveRoomRspError = 62031003;
+
+        const unsigned int kRoomServerSwitchCluster = 62040001;  //服务切换集群错误
+        const unsigned int kRoomServerNeedForceDispatchEnd = 62040100;  //错误码62040001 - 62040100段 sdk需要强制dispatch重试
         const unsigned int kRoomMultipleLoginKickoutError = 63000001;
         const unsigned int kRoomManualKickoutError        = 63000002;
         const unsigned int kRoomSessionErrorKickoutError  = 63000003;

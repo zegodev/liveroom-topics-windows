@@ -8,6 +8,7 @@
 #define zego_api_mix_stream_defines_h
 
 #include "zego-api-defines.h"
+#include <cstddef>
 
 namespace ZEGO
 {
@@ -50,12 +51,21 @@ namespace MIXSTREAM
          推流内容控制， 0 表示输出的混流包含音视频，1 表示只包含音频，2 表示只包含视频；默认值为 0。
          */
         int nContentControl;
+        /**
+         输入流音量, 有效范围 [0, 200], 默认是 100
+         */
+        int nVolume;
         
         ZegoMixStreamInput ()
         : uSoundLevelID(0)
         , nContentControl(0)
+        , nVolume(100)
         {
             szStreamID[0] = '\0';
+            layout.top = 0;
+            layout.left = 0;
+            layout.bottom = 0;
+            layout.right = 0;
         }
         /**
          *  原点在左上角，top/bottom/left/right 定义如下：
@@ -82,6 +92,12 @@ namespace MIXSTREAM
          isUrl 参数为 true 时，则此值为 Url；否则为流名。
          */
         char target[ZEGO_MAX_COMMON_LEN];
+
+        ZegoMixStreamOutput()
+        {
+            isUrl = false;
+            target[0] = '\0';
+        }
     };
     
     /**
@@ -125,6 +141,15 @@ namespace MIXSTREAM
          *  |                                |
          *  -------------------(right, bottom)
          */
+
+        ZegoMixStreamWatermark()
+        {
+            image[0] = '\0';
+            layout.top = 0;
+            layout.left = 0;
+            layout.bottom = 0;
+            layout.right = 0;
+        }
     };
     
     
@@ -276,7 +301,7 @@ namespace MIXSTREAM
         , nExtra(0)
         , pOutputWatermark(0)
         , bSingleStreamPassThrough(false)
-        , pAdvancedConfig(nullptr)
+        , pAdvancedConfig(NULL)
         {
             
         }

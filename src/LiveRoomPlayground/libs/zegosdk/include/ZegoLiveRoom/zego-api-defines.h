@@ -14,12 +14,16 @@
 #define ZEGO_MAX_EVENT_INFO_COUNT   (10)
 #define ZEGO_MAX_MIX_INPUT_COUNT    (12)
 #define ZEGO_MAX_IDENTITY_LEN       (64)
+#define ZEGO_MAX_ROOMMESSAGE_LEN (1024)
 
 #define ZEGO_MAX_USERID_LEN         (64)
 #define ZEGO_MAX_USERNAME_LEN       (256)
 #define ZEGO_MAX_EXTRA_INFO_LEN     (1024)
 #define ZEGO_DEFAULT_LOG_SIZE       (5242880)     // 5 * 1024 * 1024 bytes, min(default) size for single log file
 #define ZEGO_MAX_LOG_SIZE           (104857600)   // 100 * 1024 * 1024 bytes, max size for single log file
+
+#define ZEGO_MAX_ROOM_EXTRA_INFO_KEY_LEN (128)
+#define ZEGO_MAX_ROOM_EXTRA_INFO_VALUE_LEN (4096)
 
 #if defined(_MSC_VER) || defined(__BORLANDC__)
 #	define _I64_				"I64"
@@ -104,14 +108,27 @@ namespace ZEGO
         {
             char szDeviceId[ZEGO_MAX_COMMON_LEN];
             char szDeviceName[ZEGO_MAX_COMMON_LEN];
+
+            DeviceInfo()
+            {
+                szDeviceId[0] = '\0';
+                szDeviceName[0] = '\0';
+            }
         };
         
-		struct DeviceVideoCapabilityInfo
-		{
-			int height = 0;
-			int width = 0;
-			int fps = 0;
-		};
+        struct DeviceVideoCapabilityInfo
+        {
+            int height;
+            int width;
+            int fps;
+
+            DeviceVideoCapabilityInfo()
+            {
+                height = 0;
+                width = 0;
+                fps = 0;
+            }
+        };
 
         /** 设备状态 */
         enum DeviceState
@@ -137,6 +154,12 @@ namespace ZEGO
         {
             char szId[ZEGO_MAX_COMMON_LEN];
             char szName[ZEGO_MAX_COMMON_LEN];
+
+            ZegoUser() 
+            {
+                szId[0] = '\0';
+                szName[0] = '\0';
+            }
         };
         
         struct ZegoStreamInfo
@@ -270,12 +293,18 @@ namespace ZEGO
             } layout;
             unsigned int uSoundLevelID;             ///< 音浪ID，用于标识用户，注意大小是32位无符号数
             int nContentControl;                    ///< 推流内容控制，0表示音视频都要，1表示只要音频，2表示只要视频。默认值：0。
+            int nVolume;                            ///< 输入流音量, 有效值范围 [0, 200], 默认值 100
             
             ZegoMixStreamConfig ()
             : uSoundLevelID(0)
             , nContentControl(0)
+            , nVolume(100)
             {
                 szStreamID[0] = '\0';
+                layout.top = 0;
+                layout.left = 0;
+                layout.bottom = 0;
+                layout.right = 0;
             }
             /**
              *  原点在左上角，top/bottom/left/right 定义如下：
@@ -398,6 +427,7 @@ namespace ZEGO
             : uiErrorCode(0)
             , nNonExistsStreamCount(0)
             , nStreamInfoCount(0)
+            , pStreamInfoList(0)
             {}
         };
         
@@ -438,6 +468,11 @@ namespace ZEGO
             unsigned int uiInfoCount;
             const char* arrKeys[ZEGO_MAX_EVENT_INFO_COUNT];
             const char* arrValues[ZEGO_MAX_EVENT_INFO_COUNT];
+
+            EventInfo()
+            {
+                uiInfoCount = 0;
+            }
         };
         
 #if defined(WIN32) || defined(ANDROID)
@@ -474,6 +509,7 @@ namespace ZEGO
             ZEGO_AUDIO_DEVICE_MODE_AUTO = 3,             /**< 根据场景自动选择是否开启系统回声消除 */
             ZEGO_AUDIO_DEVICE_MODE_COMMUNICATION2 = 4,   /**< 开启系统回声消除，与 ZEGO_AUDIO_DEVICE_MODE_COMMUNICATION 相比，该模式会始终占用麦克风设备 */
             ZEGO_AUDIO_DEVICE_MODE_COMMUNICATION3 = 5,   /**< 开启系统回声消除，与 ZEGO_AUDIO_DEVICE_MODE_COMMUNICATION 相比，该模式下麦后释放麦克风，切回媒体音量 */
+            ZEGO_AUDIO_DEVICE_MODE_GENERAL2 = 6,                /*关闭系统回声消除  与ZEGO_AUDIO_DEVICE_MODE_GENERAL 相比 该模式使用麦克风设备后不会释放 */
         };
         
         /** 延迟模式 */
@@ -510,7 +546,7 @@ namespace ZEGO
         {
             /** 低于设置的最低码率时，停止视频发送 */
             ZEGO_TRAFFIC_CONTROL_MIN_VIDEO_BITRATE_NO_VIDEO = 0,
-            /** 低于设置的最低码率时，视频以极低的频率发送 （不超过2FPS) */
+            /** 低于设置的最低码率时，视频以极低的频率发送 （不超过3FPS) */
             ZEGO_TRAFFIC_CONTROL_MIN_VIDEO_BITRATE_ULTRA_LOW_FPS
         };
         
@@ -552,16 +588,47 @@ namespace ZEGO
             int width;              ///< 视频宽度
             int height;             ///< 视频高度
 
-            double totalBytes = 0.; ///< 已发送的总字节数，包括音频、视频及媒体次要信息等
-            double audioBytes = 0.; ///< 已发送的音频字节数
-            double videoBytes = 0.; ///< 已发送的视频字节数
+            double totalBytes;      ///< 已发送的总字节数，包括音频、视频及媒体次要信息等
+            double audioBytes;      ///< 已发送的音频字节数
+            double videoBytes;      ///< 已发送的视频字节数
             
-            double cpuAppUsage = 0.;    ///< 当前 APP 的 CPU 使用率
-            double cpuTotalUsage = 0.;  ///< 当前系统的 CPU 使用率
+            double cpuAppUsage;     ///< 当前 APP 的 CPU 使用率
+            double cpuTotalUsage;   ///< 当前系统的 CPU 使用率
             
-            double memoryAppUsage = 0.;     ///< 当前 APP 的内存使用率
-            double memoryTotalUsage = 0.;   ///< 当前系统的内存使用率
-            double memoryAppUsed = 0.;      ///< 当前 APP 的内存使用量,单位 MB
+            double memoryAppUsage;     ///< 当前 APP 的内存使用率
+            double memoryTotalUsage;   ///< 当前系统的内存使用率
+            double memoryAppUsed;      ///< 当前 APP 的内存使用量,单位 MB
+
+            PublishQuality()
+            {
+                cfps = 0;
+                vencFps = 0;
+                fps = 0;
+                kbps = 0;
+
+                acapFps = 0;
+                afps = 0;
+                akbps = 0;
+
+                rtt = 0;
+                pktLostRate = 0;
+                quality = 0;
+
+                isHardwareVenc = false;
+                width = 0;
+                height = 0;
+
+                totalBytes = 0;
+                audioBytes = 0;
+                videoBytes = 0;
+
+                cpuAppUsage = 0;
+                cpuTotalUsage = 0;
+
+                memoryAppUsage = 0;
+                memoryTotalUsage = 0;
+                memoryAppUsed = 0;
+            }
         };
         
         struct PlayQuality
@@ -591,23 +658,62 @@ namespace ZEGO
             int width;                      ///< 视频宽度
             int height;                     ///< 视频高度
 
-            double totalBytes = 0.;         ///< 已接收的总字节数，包括音频、视频及媒体次要信息等
-            double audioBytes = 0.;         ///< 已接收的音频字节数
-            double videoBytes = 0.;         ///< 已接收的视频字节数
+            double totalBytes;         ///< 已接收的总字节数，包括音频、视频及媒体次要信息等
+            double audioBytes;         ///< 已接收的音频字节数
+            double videoBytes;         ///< 已接收的视频字节数
             
-            double cpuAppUsage = 0.;        ///< 当前 APP 的 CPU 使用率
-            double cpuTotalUsage = 0.;      ///< 当前系统的 CPU 使用率
+            double cpuAppUsage;        ///< 当前 APP 的 CPU 使用率
+            double cpuTotalUsage;      ///< 当前系统的 CPU 使用率
             
-            double memoryAppUsage = 0.;         ///< 当前 APP 的内存使用率
-            double memoryTotalUsage = 0.;       ///< 当前系统的内存使用率
-            double memoryAppUsed = 0.;          ///< 当前 APP 的内存使用量,单位 MB
+            double memoryAppUsage;         ///< 当前 APP 的内存使用率
+            double memoryTotalUsage;       ///< 当前系统的内存使用率
+            double memoryAppUsed;          ///< 当前 APP 的内存使用量,单位 MB
+
+            PlayQuality()
+            {
+                fps = 0;                  
+                vdjFps = 0;               
+                vdecFps = 0;              
+                vrndFps = 0;              
+                kbps = 0;                 
+                     
+                afps = 0;                 
+                adjFps = 0;               
+                adecFps = 0;              
+                arndFps = 0;              
+                akbps = 0;                
+                     
+                audioBreakRate = 0;       
+                videoBreakRate = 0;       
+                rtt = 0;                     
+                pktLostRate = 0;             
+                peerToPeerDelay = 0;         
+                peerToPeerPktLostRate = 0;   
+                quality = 0;                 
+                delay = 0;                   
+                        
+                isHardwareVdec = false;         
+                width = 0;                   
+                height = 0;  
+
+                totalBytes = 0;      
+                audioBytes = 0;      
+                videoBytes = 0;      
+                     
+                cpuAppUsage = 0;     
+                cpuTotalUsage = 0;   
+                     
+                memoryAppUsage = 0;  
+                memoryTotalUsage = 0;
+                memoryAppUsed = 0;   
+            }
         };
         
         /** 推流通道 */
         enum PublishChannelIndex
         {
             PUBLISH_CHN_MAIN = 0,                       /**< 主推流通道，默认 */
-            PUBLISH_CHN_AUX,                            /**< 第二路推流通道，无法推出声音 */
+            PUBLISH_CHN_AUX,                            /**< 第二路推流通道，默认没有声音，需要指定音频源。 */
         };
         
         /** 视频分层类型 */
@@ -672,7 +778,13 @@ namespace ZEGO
             /**
              音量level
              */
-            unsigned char soundLevel;           
+            unsigned char soundLevel;
+
+            SoundLevelInfo()
+            {
+                soundLevelID = 0;
+                soundLevel = 0;
+            }           
         };
         
         /** 回声消除模式 */
@@ -806,7 +918,9 @@ namespace ZEGO
             /** 听筒 */
             ZEGO_AUDIO_ROUTE_RECEIVER,
             /** USB 音频设备 */
-            ZEGO_AUDIO_ROUTE_USB_AUDIO
+            ZEGO_AUDIO_ROUTE_USB_AUDIO,
+            /** air play */
+            ZEGO_AUDIO_ROUTE_AIR_PLAY
         };
 
 

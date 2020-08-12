@@ -24,6 +24,7 @@ namespace ZEGO
              @param pUserInfo 用户信息
              @param userCount 用户数
              @param type 更新类型
+             @note 该回调返回人数上限为500人
              */
             virtual void OnUserUpdate(const ZegoUserInfo *pUserInfo, unsigned int userCount, ZegoUserUpdateType type) = 0;
             

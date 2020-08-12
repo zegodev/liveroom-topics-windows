@@ -53,7 +53,7 @@ bool ZGManager::InitSdk(unsigned int uiAppID, unsigned char * sign, int len)
     {
         UninitSdk();
     }
-    LIVEROOM::SetLogDir("");
+    LIVEROOM::SetLogDirAndSize("");
     bool ret = LIVEROOM::InitSDK(uiAppID, sign, len);
     sdk_have_inited_ = ret;
     return sdk_have_inited_;

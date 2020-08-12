@@ -136,9 +136,9 @@ namespace AVE {
     class VideoCaptureTextureCallback {
     public:
         /// \brief 通知SDK采集到视频数据，SDK会同步绘制到FBO，切换到内部线程进行编码，如果缓冲队列不够，SDK会自动丢帧
-        /// \param texture_id GL_TEXTURE_2D的贴图
-        /// \param width 贴图宽
-        /// \param height 贴图高
+        /// \param texture_id GL_TEXTURE_2D的纹理
+        /// \param width 纹理宽
+        /// \param height 纹理高
         /// \param reference_time_ms 采集到该帧的时间戳，单位毫秒，不能超过2^52, 用于音画同步，如果采集实现是摄像头，最好使用系统采集回调的原始时间戳，如果不是，最好是生成该帧的UTC时间戳
         virtual void OnIncomingCapturedData(int texture_id, int width, int height, double reference_time_ms) = 0;
         
@@ -340,9 +340,9 @@ namespace AVE {
             /// \note VideoFilter::SupportBufferType返回BUFFER_TYPE_SURFACE_TEXTURE时，GetInterface返回VideoBufferPool*
             /// \note VideoBufferPool::GetInputBuffer需要返回SurfaceTexture对应的jobject, 线程模型为异步
             /// \note VideoFilter::SupportBufferType返回BUFFER_TYPE_HYBRID_MEM_GL_TEXTURE_2D时，GetInterface返回VideoFilterCallback*
-            /// \note VideoFilterCallback::OnProcess的入参buffer为贴图id转成的int*, 线程模型为异步
+            /// \note VideoFilterCallback::OnProcess的入参buffer为纹理id转成的int*, 线程模型为异步
             /// \note VideoFilter::SupportBufferType返回BUFFER_TYPE_SYNC_GL_TEXTURE_2D时，GetInterface返回VideoFilterCallback*
-            /// \note VideoFilterCallback::OnProcess的入参buffer为贴图id转成的int*, 线程模型为同步
+            /// \note VideoFilterCallback::OnProcess的入参buffer为纹理id转成的int*, 线程模型为同步
             /// \note VideoFilter::SupportBufferType返回BUFFER_TYPE_ASYNC_I420_MEM时，GetInterface返回VideoBufferPool*,
             /// \note VideoBufferPool::GetInputBuffer需要返回uint8_t*, 色彩空间为I420，线程模型为异步
             /// \note VideoFilter::SupportBufferType返回BUFFER_TYPE_ASYNC_I420_PIXEL_BUFFER时，GetInterface返回VideoBufferPool*
@@ -381,7 +381,7 @@ namespace AVE {
         /// \note VideoFilter::SupportBufferType返回BUFFER_TYPE_HYBRID_MEM_GL_TEXTURE_2D时，GetInterface返回VideoBufferPool*
         /// \note VideoBufferPool::GetInputBuffer需要返回uint8_t*, 色彩空间android为RGBA，线程模型为异步
         /// \note VideoFilter::SupportBufferType返回BUFFER_TYPE_SYNC_GL_TEXTURE_2D时，GetInterface返回VideoFilterCallback*
-        /// \note VideoFilterCallback::OnProcess的入参buffer为贴图id转成的int*, 线程模型为同步
+        /// \note VideoFilterCallback::OnProcess的入参buffer为纹理id转成的int*, 线程模型为同步
         /// \note VideoFilter::SupportBufferType返回BUFFER_TYPE_ASYNC_I420_MEM时，GetInterface返回VideoBufferPool*,
         /// \note VideoBufferPool::GetInputBuffer需要返回uint8_t*, 色彩空间为I420，线程模型为异步
         /// \note VideoFilter::SupportBufferType返回BUFFER_TYPE_ASYNC_I420_PIXEL_BUFFER时，GetInterface返回VideoBufferPool*

@@ -29,6 +29,7 @@ using COMMON::ZegoPublishingStreamInfo;
 using COMMON::ZegoUserInfo;
 using COMMON::ZegoUserUpdateType;
 using MEDIAPLAYER::ZegoMediaPlayerVideoDataFormat;
+using MEDIAPLAYER::ZegoMediaPlayerIndex;
 
 typedef enum
 {
@@ -57,7 +58,7 @@ public:
 };
 
 class ZGMediaPlayerDemo :
-    public MEDIAPLAYER::IZegoMediaPlayerEventCallback
+    public MEDIAPLAYER::IZegoMediaPlayerEventWithIndexCallback
 {
 public:
     ZGMediaPlayerDemo();
@@ -79,11 +80,11 @@ public:
 
 protected:
 
-    virtual void OnPlayPause() override;
-    virtual void OnPlayResume() override;
-    virtual void OnPlayStop() override;
-    virtual void OnBufferBegin() override;
-    virtual void OnBufferEnd() override;
+    virtual void OnPlayPause(ZegoMediaPlayerIndex index) override;
+    virtual void OnPlayResume(ZegoMediaPlayerIndex index) override;
+    virtual void OnPlayStop(ZegoMediaPlayerIndex index) override;
+    virtual void OnBufferBegin(ZegoMediaPlayerIndex index) override;
+    virtual void OnBufferEnd(ZegoMediaPlayerIndex index) override;
 
     void UpdatePlayProgressThread();
     void UpdateCurrentPlayState();
@@ -91,12 +92,12 @@ protected:
     void SetCurrentPlayState(ZGPlayerState s);
     void SetCurrentPlaySubState(ZGPlayingSubState s);
 
-    virtual void OnPlayStart() override;
-    virtual void OnPlayError(const int code) override;
-    virtual void OnVideoBegin() override;
-    virtual void OnAudioBegin() override;
-    virtual void OnPlayEnd() override;
-    virtual void OnSeekComplete(const int code, const long timestamp_ms) override;
+    virtual void OnPlayStart(ZegoMediaPlayerIndex index) override;
+    virtual void OnPlayError(const int code, ZegoMediaPlayerIndex index) override;
+    virtual void OnVideoBegin(ZegoMediaPlayerIndex index) override;
+    virtual void OnAudioBegin(ZegoMediaPlayerIndex index) override;
+    virtual void OnPlayEnd(ZegoMediaPlayerIndex index) override;
+    virtual void OnSeekComplete(const int code, const long timestamp_ms, ZegoMediaPlayerIndex index) override;
 
     void OnPublishStateUpdate(string str_state);
 private:
@@ -111,6 +112,8 @@ private:
     //long                         last_update_duration_;
     int                          play_error_code_;
     bool                         update_progress_thread_started_;
+
+    MEDIAPLAYER::ZegoMediaPlayerIndex  player_index_ = MEDIAPLAYER::ZegoMediaPlayerIndexFourth;
 };
 
 

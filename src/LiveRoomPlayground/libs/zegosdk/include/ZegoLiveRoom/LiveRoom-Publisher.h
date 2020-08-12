@@ -590,15 +590,24 @@ namespace ZEGO
         ZEGO_API void SetCapturePipelineScaleMode(AV::ZegoCapturePipelineScaleMode mode);
         
         /**
-         设置延迟模式
-
+         设置所有推流通道的延迟模式
+         
          @param mode 延迟模式，默认 ZEGO_LATENCY_MODE_NORMAL
          @attention 确保在推流前调用
          */
         ZEGO_API void SetLatencyMode(AV::ZegoAVAPILatencyMode mode);
         
         /**
-         设置推流音频声道数
+         设置指定推流通道的延迟模式
+
+         @param mode 延迟模式，默认 ZEGO_LATENCY_MODE_NORMAL
+         @param idx 推流 channel Index. 详见 AV::PublishChannelIndex
+         @attention 确保在推流前调用
+         */
+        ZEGO_API void SetLatencyModeByChannel(AV::ZegoAVAPILatencyMode mode, AV::PublishChannelIndex idx);
+        
+        /**
+         设置所有推流通道的推流音频声道数
          
          @param count 声道数，1 或 2，默认为 1（单声道）
          @attention 必须在推流前设置
@@ -606,6 +615,17 @@ namespace ZEGO
          @note 在移动端双声道通常需要配合音频前处理才能体现效果。
          */
         ZEGO_API void SetAudioChannelCount(int count);
+        
+        /**
+         设置指定推流通道的推流音频声道数
+         
+         @param count 声道数，1 或 2，默认为 1（单声道）
+         @param idx 推流 channel Index. 详见 AV::PublishChannelIndex
+         @attention 必须在推流前设置
+         @note SetLatencyMode 设置为 ZEGO_LATENCY_MODE_NORMAL, ZEGO_LATENCY_MODE_NORMAL2, ZEGO_LATENCY_MODE_LOW3 才能设置双声道
+         @note 在移动端双声道通常需要配合音频前处理才能体现效果。
+         */
+        ZEGO_API void SetAudioChannelCountByChannel(int count, AV::PublishChannelIndex idx);
         
         /**
          设置混音音量

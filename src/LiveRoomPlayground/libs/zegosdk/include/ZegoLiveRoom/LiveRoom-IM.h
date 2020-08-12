@@ -29,7 +29,7 @@ namespace ZEGO
          
          @param type 消息类型
          @param category 消息分类
-         @param messageContent 消息内容, 不超过 512 字节
+         @param messageContent 消息内容, 小于1024 字节
          @return 消息 seq
          */
         ZEGO_API int SendRoomMessageEx(ROOM::ZegoMessageType type, ROOM::ZegoMessageCategory category, const char *messageContent);
@@ -49,7 +49,7 @@ namespace ZEGO
          
          @param type 消息类型
          @param category 消息分类
-         @param messageContent 消息内容, 不超过 512 字节
+         @param messageContent 消息内容, 小于 1024 字节
          @return 消息 seq
          */
         ZEGO_API int SendBigRoomMessage(ROOM::ZegoMessageType type, ROOM::ZegoMessageCategory category, const char *messageContent);

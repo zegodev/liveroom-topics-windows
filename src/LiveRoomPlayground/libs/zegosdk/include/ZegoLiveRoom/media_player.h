@@ -37,6 +37,7 @@ namespace AVE
 			virtual void OnBufferEnd() = 0;
             virtual void OnSnapshot(void *image) = 0;
             virtual void OnProcessInterval(long timestamp_ms) = 0;
+            virtual void OnReadEOF() = 0;
         };
         
         class VideoPlayCallback
@@ -54,8 +55,8 @@ namespace AVE
         
         virtual void SetEventCallback(EventCallback* callback) = 0;
 		virtual void SetPlayerType(PlayerType type) = 0;
-		virtual void SetVolume(int volume) = 0;  // local volume: 0 ~ 100, default volume is 60
-		virtual void SetPublishVolume(int volume) = 0; // publish volume: 0 ~ 100, default volume is 60
+		virtual void SetVolume(int volume) = 0;  // local volume: 0 ~ 200, default volume is 60
+		virtual void SetPublishVolume(int volume) = 0; // publish volume: 0 ~ 200, default volume is 60
         virtual int  GetVolume() = 0;        // local volume
         virtual int  GetPublishVolume() = 0; // publish volume
 		virtual void MuteLocal(bool bMute) = 0;

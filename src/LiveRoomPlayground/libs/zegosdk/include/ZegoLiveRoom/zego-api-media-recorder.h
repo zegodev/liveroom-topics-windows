@@ -27,7 +27,8 @@ namespace ZEGO
         enum ZegoMediaRecordFormat
         {
             ZEGO_MEDIA_RECORD_FLV = 1,       /**< FLV格式 */
-            ZEGO_MEDIA_RECORD_MP4 = 2        /**< MP4格式 */
+            ZEGO_MEDIA_RECORD_MP4 = 2,       /**< MP4格式 */
+            ZEGO_MEDIA_RECORD_AAC = 4        /**< AAC格式 */
         };
 
         enum ZegoMediaRecordErrorCode

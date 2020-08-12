@@ -49,7 +49,7 @@ int ZGVideoCaptureForMediaPlayer::StopCapture()
 }
 
 
-void ZGVideoCaptureForMediaPlayer::OnPlayVideoData(const char* data, int len, ZegoMediaPlayerVideoDataFormat& format)
+void ZGVideoCaptureForMediaPlayer::OnPlayVideoData(const char* data, int len, ZegoMediaPlayerVideoDataFormat& format, ZegoMediaPlayerIndex index)
 {
     //ZGENTER_FUN_LOG;
     {

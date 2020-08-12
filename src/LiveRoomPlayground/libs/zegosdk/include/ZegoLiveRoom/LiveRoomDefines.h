@@ -54,16 +54,45 @@ namespace ZEGO
             int width;              ///< 视频宽度
             int height;             ///< 视频高度
 
-            double totalBytes = 0.; ///< 已发送的总字节数，包括音频、视频及媒体次要信息等
-            double audioBytes = 0.; ///< 已发送的音频字节数
-            double videoBytes = 0.; ///< 已发送的视频字节数
+            double totalBytes; ///< 已发送的总字节数，包括音频、视频及媒体次要信息等
+            double audioBytes; ///< 已发送的音频字节数
+            double videoBytes; ///< 已发送的视频字节数
             
-            double cpuAppUsage = 0.;    ///< 当前 APP 的 CPU 使用率
-            double cpuTotalUsage = 0.;  ///< 当前系统的 CPU 使用率
+            double cpuAppUsage;    ///< 当前 APP 的 CPU 使用率
+            double cpuTotalUsage;  ///< 当前系统的 CPU 使用率
             
-            double memoryAppUsage = 0.;         ///< 当前 APP 的内存使用率
-            double memoryTotalUsage = 0.;       ///< 当前系统的内存使用率
-            double memoryAppUsed = 0.;          ///< 当前 APP 的内存使用量, 单位 MB(win返回的是app实际占用内存工作集=专用内存工作集+共享内存工作集)
+            double memoryAppUsage;         ///< 当前 APP 的内存使用率
+            double memoryTotalUsage;       ///< 当前系统的内存使用率
+            double memoryAppUsed;          ///< 当前 APP 的内存使用量, 单位 MB(win返回的是app实际占用内存工作集=专用内存工作集+共享内存工作集)
+
+            ZegoPublishQuality()
+            {
+                cfps = 0;   
+                vencFps = 0;
+                fps = 0;    
+                kbps = 0;   
+                    
+                acapFps = 0;
+                afps = 0;   
+                akbps = 0;  
+                rtt = 0;     
+                pktLostRate = 0;  
+                quality = 0;      
+                        
+                isHardwareVenc = false;   
+                width = 0;            
+                height = 0;           
+                totalBytes = 0;  
+                audioBytes = 0;  
+                videoBytes = 0;  
+                    
+                cpuAppUsage = 0;    
+                cpuTotalUsage = 0;  
+                    
+                memoryAppUsage = 0;  
+                memoryTotalUsage = 0;
+                memoryAppUsed = 0;   
+            }
         };
         
         struct ZegoPlayQuality
@@ -93,16 +122,54 @@ namespace ZEGO
             int width;               ///< 视频宽度
             int height;              ///< 视频高度
 
-            double totalBytes = 0.; ///< 已接收的总字节数，包括音频、视频及媒体次要信息等
-            double audioBytes = 0.; ///< 已接收的音频字节数
-            double videoBytes = 0.; ///< 已接收的视频字节数
+            double totalBytes; ///< 已接收的总字节数，包括音频、视频及媒体次要信息等
+            double audioBytes; ///< 已接收的音频字节数
+            double videoBytes; ///< 已接收的视频字节数
             
-            double cpuAppUsage = 0.;        ///< 当前 APP 的 CPU 使用率
-            double cpuTotalUsage = 0.;      ///< 当前系统的 CPU 使用率
+            double cpuAppUsage;        ///< 当前 APP 的 CPU 使用率
+            double cpuTotalUsage;      ///< 当前系统的 CPU 使用率
             
-            double memoryAppUsage = 0.;         ///< 当前 APP 的内存使用率
-            double memoryTotalUsage = 0.;       ///< 当前系统的内存使用率
-            double memoryAppUsed = 0.;          ///< 当前 APP 的内存使用量, 单位 MB
+            double memoryAppUsage;         ///< 当前 APP 的内存使用率
+            double memoryTotalUsage;       ///< 当前系统的内存使用率
+            double memoryAppUsed;          ///< 当前 APP 的内存使用量, 单位 MB
+
+            ZegoPlayQuality()
+            {
+                fps = 0;           
+                vdjFps = 0;        
+                vdecFps = 0;       
+                vrndFps = 0;       
+                kbps = 0;          
+                    
+                afps = 0;          
+                adjFps = 0;        
+                adecFps = 0;       
+                arndFps = 0;       
+                akbps = 0;         
+                    
+                audioBreakRate = 0;
+                videoBreakRate = 0;
+                rtt = 0;              
+                pktLostRate = 0;      
+                peerToPeerDelay = 0;  
+                peerToPeerPktLostRate = 0;
+                quality = 0;          
+                delay = 0;            
+                        
+                isHardwareVdec = false;  
+                width = 0;            
+                height = 0;           
+                totalBytes = 0;
+                audioBytes = 0;
+                videoBytes = 0;
+                    
+                cpuAppUsage = 0;
+                cpuTotalUsage = 0;
+                    
+                memoryAppUsage = 0;
+                memoryTotalUsage = 0;
+                memoryAppUsed = 0;
+            }
         };
 
 		enum ZegoMixSysPlayoutPropertyMask
